@@ -1,6 +1,7 @@
 package vfdt.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Information about an attribute.
@@ -54,5 +55,14 @@ public class AttributeInfo {
 
     public void setType(AttributeType type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "AttributeInfo{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", values=" + Arrays.toString(values) +
+                '}';
     }
 }

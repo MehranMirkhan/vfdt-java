@@ -1,0 +1,106 @@
+package vfdt.data;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Reads .arff files
+ *
+ * @author Mehran Mirkhan
+ * @version 1.0
+ * @since 2018 Mar 03
+ */
+public class ArffReader {
+    protected FileReader fileReader;
+    protected LineNumberReader lnr;
+    protected int classIndex;
+    protected DatasetInfo datasetInfo;
+
+    public ArffReader(String fileName, int bufferSize, int classIndex) throws FileNotFoundException {
+        this.fileReader = new FileReader(fileName);
+        this.lnr = new LineNumberReader(this.fileReader, bufferSize);
+        this.classIndex = classIndex;
+        this.datasetInfo = new DatasetInfo().classIndex(classIndex);
+    }
+
+    public ArffReader(String fileName, int bufferSize) throws FileNotFoundException {
+        this.fileReader = new FileReader(fileName);
+        this.lnr = new LineNumberReader(this.fileReader, bufferSize);
+        this.datasetInfo = new DatasetInfo();
+    }
+
+    public ArffReader(String fileName) throws FileNotFoundException {
+        this.fileReader = new FileReader(fileName);
+        this.lnr = new LineNumberReader(this.fileReader);
+        this.datasetInfo = new DatasetInfo();
+    }
+
+    public void close() throws IOException {
+        this.lnr.close();
+    }
+
+    public DatasetInfo getDatasetInfo() {
+        return datasetInfo;
+    }
+
+    /**
+     * Reads the header and builds DatasetInfo.
+     */
+    public void init() throws IOException {
+        ArrayList<AttributeInfo> attInfo = new ArrayList<>();
+        String[] regex = {
+                "^[%].*",
+                "(?i)@relation\\s+(\\w+)",
+                "(?i)@attribute\\s+(\\w+)\\s+(.+)",
+                "(?i)@data"
+        };
+        Pattern[] patterns = new Pattern[regex.length];
+        for (int i=0; i<regex.length; i++)
+            patterns[i] = Pattern.compile(regex[i]);
+        String line;
+        while ((line = lnr.readLine()) != null) {
+            Matcher m;
+            // comment
+            m = patterns[0].matcher(line);
+            if (m.matches()) continue;
+            // relation
+            m = patterns[1].matcher(line);
+            if (m.matches()) {
+                this.datasetInfo.setDatasetName(m.group(1));
+                continue;
+            }
+            // attribute
+            m = patterns[2].matcher(line);
+            if (m.matches()) {
+                String attName = m.group(1);
+                String attSpec = m.group(2);
+                AttributeInfo.AttributeType type;
+                ArrayList<String> values = new ArrayList<>();
+                if (attSpec.toLowerCase().equals("numeric"))
+                    type = AttributeInfo.AttributeType.NUMERICAL;
+                else {
+                    type = AttributeInfo.AttributeType.NOMINAL;
+                    String[] valuesTemp = attSpec.split("\\W+");
+                    for (String v : valuesTemp)
+                        if (!v.isEmpty())
+                            values.add(v);
+                }
+                AttributeInfo att = new AttributeInfo(type).name(attName);
+                if (!values.isEmpty())
+                    att.setValues(values.toArray(new String[0]));
+                attInfo.add(att);
+                continue;
+            }
+            // data
+            m = patterns[3].matcher(line);
+            if (m.matches())
+                break;
+        }
+        this.datasetInfo.setAttributeInfo(attInfo.toArray(new AttributeInfo[0]));
+    }
+}
