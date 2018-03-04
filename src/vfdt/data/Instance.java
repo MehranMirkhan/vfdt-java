@@ -18,9 +18,13 @@ public class Instance {
         return this.atts[index];
     }
 
-    public void print() {
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
         for (Attribute att : this.atts) {
-            System.out.println(att);
+            sb.append(att.toString()).append(", ");
         }
+        sb.append("]");
+        return sb.toString();
     }
 }

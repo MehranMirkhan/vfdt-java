@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,5 +103,70 @@ public class ArffReader {
                 break;
         }
         this.datasetInfo.setAttributeInfo(attInfo.toArray(new AttributeInfo[0]));
+        this.lnr.setLineNumber(-2);
+    }
+
+    protected class ArffIterator implements Iterator<Instance> {
+        private DatasetInfo datasetInfo;
+        private LineNumberReader lnr;
+        private String line;
+
+        public ArffIterator(DatasetInfo datasetInfo, LineNumberReader lnr) throws IOException {
+            this.datasetInfo = datasetInfo;
+            this.lnr = lnr;
+            this.line = lnr.readLine();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.line == null;
+        }
+
+        @Override
+        public Instance next() {
+            String temp = this.line;
+            try {
+                this.line = this.lnr.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                return parseLine(temp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected Instance parseLine(String line) throws Exception {
+            int n_atts = this.datasetInfo.getNumAttributes();
+            AttributeInfo[] attsInfo = this.datasetInfo.getAttributeInfo();
+            Attribute[] atts = new Attribute[n_atts];
+            String[] values = line.split("\\s*,\\s*");
+            assert values.length == n_atts;
+            for (int i=0; i<n_atts; i++) {
+                // Create Attribute
+                AttributeInfo attInfo = attsInfo[i];
+                switch (attInfo.getType()) {
+                    case NOMINAL:
+                        atts[i] = new Attribute<String>(values[i]);
+                        break;
+                    case NUMERICAL:
+                        atts[i] = new Attribute<Double>(Double.parseDouble(values[i]));
+                        break;
+                    default:
+                        throw new Exception("Attribute type not recognized.");
+                }
+            }
+            return new Instance(atts);
+        }
+    }
+
+    public ArffIterator iterator() throws IOException {
+        return new ArffIterator(this.datasetInfo, this.lnr);
+    }
+
+    public int getInstanceIndex() {
+        return this.lnr.getLineNumber();
     }
 }

@@ -13,6 +13,7 @@ public class TestDatasetInfo {
         AttributeInfo a1 = new AttributeInfo(AttributeInfo.AttributeType.NUMERICAL)
                 .name("a1");
         DatasetInfo dsInfo = new DatasetInfo().attributeInfo(a0, a1);
-//        System.out.println(dsInfo);
+        String dsInfos = dsInfo.toString();
+//        System.out.println(dsInfos);
     }
 }

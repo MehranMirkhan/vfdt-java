@@ -57,6 +57,10 @@ public class DatasetInfo {
         this.attributeInfo = attributeInfo;
     }
 
+    public int getNumAttributes() {
+        return this.attributeInfo.length;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
