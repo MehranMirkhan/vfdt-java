@@ -8,15 +8,9 @@ package vfdt.data;
  * @since 2018 Feb 28
  */
 public class DatasetInfo {
-    private int classIndex;
-    private String datasetName;
-    private AttributeInfo[] attributeInfo;
-
-    public DatasetInfo() {
-        this.classIndex = -1;
-        this.datasetName = "Unknown";
-        this.attributeInfo = null;
-    }
+    private int classIndex = -1;
+    private String datasetName = "Unknown";
+    private AttributeInfo[] attributeInfo = null;
 
     public DatasetInfo attributeInfo(AttributeInfo... attributeInfo) {
         this.attributeInfo = attributeInfo;
@@ -59,6 +53,11 @@ public class DatasetInfo {
 
     public int getNumAttributes() {
         return this.attributeInfo.length;
+    }
+
+    public int getNumClasses() {
+        // todo: implement
+        return 0;
     }
 
     @Override

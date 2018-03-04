@@ -169,4 +169,6 @@ public class ArffReader {
     public int getInstanceIndex() {
         return this.lnr.getLineNumber();
     }
+
+    // todo: Read parts of file (train/test split)
 }

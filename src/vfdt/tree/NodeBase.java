@@ -10,7 +10,7 @@ package vfdt.tree;
 public class NodeBase implements Node {
     private Node[] children = null;
     private Node parent = null;
-    private int height = 0;
+    private int height = -1;        // -1 means unknown. Root is 0.
 
     public Node parent(Node parent) {
         this.parent = parent;

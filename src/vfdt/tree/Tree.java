@@ -9,4 +9,5 @@ package vfdt.tree;
  */
 public interface Tree {
     public Node getRoot();
+    public int getHeight();
 }
