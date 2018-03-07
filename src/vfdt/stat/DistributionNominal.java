@@ -1,6 +1,7 @@
 package vfdt.stat;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Nominal distribution.
@@ -10,26 +11,31 @@ import java.util.Hashtable;
  * @since 2018 Mar 04
  */
 public class DistributionNominal implements Distribution {
-    protected Hashtable<String, Integer> counts;
+    protected String[] values;
+    protected Counts counts;
 
-    public DistributionNominal() {
-        reset();
+    public DistributionNominal(String[] values) {
+        this.values = values;
+        counts = new Counts(values.length);
     }
 
     public void add(String value) {
-        Integer count = counts.getOrDefault(value, 0);
-        counts.put(value, count + 1);
+        int index = getIndexOfValue(value);
+        counts.increment(index);
     }
 
-    public void reset() {
-        counts = new Hashtable<>();
+    private int getIndexOfValue(String value) {
+        for (int i=0; i<values.length; i++)
+            if (values[i].equals(value))
+                return i;
+        return -1;
     }
 
     public Counts getCounts() {
-        return new Counts(counts.values());
+        return counts;
     }
 
     public Integer[] split() {
-        return counts.values().toArray(new Integer[0]);
+        return counts.getCounts();
     }
 }
