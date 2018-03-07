@@ -56,8 +56,8 @@ public class DatasetInfo {
     }
 
     public int getNumClasses() {
-        // todo: implement
-        return 0;
+        AttributeInfo attClass = attributeInfo[classIndex];
+        return attClass.getValues().length;
     }
 
     @Override

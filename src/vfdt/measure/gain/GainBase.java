@@ -1,5 +1,7 @@
 package vfdt.measure.gain;
 
+import vfdt.measure.impurity.Impurity;
+import vfdt.stat.Counts;
 import vfdt.stat.Split;
 
 /**
@@ -11,8 +13,21 @@ import vfdt.stat.Split;
  */
 public class GainBase implements Gain {
     @Override
-    public double measure(Split split) {
-        // todo: implement
-        return 0;
+    public double measure(Split split, Impurity im) throws Exception {
+        double g = im.measure(split.getOriginal());
+        Counts[] branches = split.getBranches();
+        int n_branches = branches.length;
+        double[] gi = new double[n_branches];
+        int[] ni = new int[n_branches];
+        int n = 0;
+        double result = 0;
+        for (int i=0; i<gi.length; i++) {
+            gi[i] = im.measure(branches[i]);
+            ni[i] = branches[i].sum();
+            n += ni[i];
+            result += ni[i] * gi[i];
+        }
+        result = g - result / n;
+        return result;
     }
 }

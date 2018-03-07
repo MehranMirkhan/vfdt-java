@@ -2,8 +2,7 @@ package vfdt.stat;
 
 import vfdt.data.AttributeInfo;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * The sufficient statistics stored in a node.
@@ -14,16 +13,15 @@ import java.util.Hashtable;
  * @since 2018 Mar 04
  */
 public class SufficientStatistics {
-    private Dictionary<String, AttributeStatistics> distributions;
+    private HashMap distributions;
 
     public SufficientStatistics() {
-        distributions = new Hashtable<>();
+        distributions = new HashMap<>();
     }
 
     public SufficientStatistics(AttributeInfo... availableAtts) throws Exception {
-        distributions = new Hashtable<>();
+        distributions = new HashMap<>();
         for (AttributeInfo attInfo : availableAtts) {
-            String attName = attInfo.getName();
             AttributeStatistics attStat;
             switch (attInfo.getType()) {
                 case NOMINAL:
@@ -35,7 +33,7 @@ public class SufficientStatistics {
                 default:
                     throw new Exception("Attribute type not recognized: " + attInfo.getType());
             }
-            distributions.put(attName, attStat);
+            distributions.put(attInfo, attStat);
         }
     }
 }
