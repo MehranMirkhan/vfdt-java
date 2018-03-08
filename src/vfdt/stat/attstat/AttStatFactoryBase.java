@@ -10,8 +10,8 @@ import vfdt.data.DatasetInfo;
  * @version 1.0
  * @since 2018 Mar 08
  */
-public class AttStatFactorySimple extends AttStatFactory {
-    public AttStatFactorySimple(DatasetInfo datasetInfo) {
+public class AttStatFactoryBase extends AttStatFactory {
+    public AttStatFactoryBase(DatasetInfo datasetInfo) {
         super(datasetInfo);
     }
 

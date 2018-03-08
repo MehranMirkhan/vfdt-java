@@ -55,7 +55,6 @@ public class SplitterGaussian implements Splitter {
 
     @Override
     public Decision getDecision() {
-        // todo
         return new Decision() {
             @Override
             public int decide(Attribute attribute) {

@@ -21,6 +21,10 @@ public class Instance {
         return null;
     }
 
+    public Attribute[] getAtts() {
+        return atts;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");

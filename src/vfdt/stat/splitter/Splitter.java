@@ -1,6 +1,5 @@
 package vfdt.stat.splitter;
 
-import vfdt.measure.gain.Gain;
 import vfdt.tree.Decision;
 
 /**
