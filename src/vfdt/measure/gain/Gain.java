@@ -1,7 +1,6 @@
 package vfdt.measure.gain;
 
 import vfdt.measure.impurity.Impurity;
-import vfdt.stat.Split;
 
 /**
  * %Description%
@@ -11,5 +10,5 @@ import vfdt.stat.Split;
  * @since 2018 Mar 04
  */
 public interface Gain {
-    public double measure(Split split, Impurity im) throws Exception;
+    public double measure(Split split) throws Exception;
 }

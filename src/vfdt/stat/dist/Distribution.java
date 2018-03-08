@@ -1,4 +1,4 @@
-package vfdt.stat;
+package vfdt.stat.dist;
 
 /**
  * %Description%

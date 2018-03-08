@@ -1,8 +1,6 @@
-package vfdt.stat;
+package vfdt.measure;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * %Description%
@@ -12,29 +10,25 @@ import java.util.List;
  * @since 2018 Mar 04
  */
 public class Counts {
-    private Integer[] counts;
+    private Double[] counts;
 
-    public Counts(Integer... counts) {
+    public Counts(Double... counts) {
         this.counts = counts;
     }
 
-    public Counts(Collection<Integer> counts) {
-        this.counts = counts.toArray(new Integer[0]);
-    }
-
     public Counts(Integer n) {
-        counts = new Integer[n];
+        counts = new Double[n];
     }
 
-    public Integer[] getCounts() {
+    public Double[] getCounts() {
         return counts;
     }
 
-    public Integer getCount(int index) {
+    public Double getCount(int index) {
         return counts[index];
     }
 
-    public void setCount(int index, Integer value) {
+    public void setCount(int index, Double value) {
         counts[index] = value;
     }
 
@@ -42,9 +36,13 @@ public class Counts {
         counts[index] += 1;
     }
 
+    public void add(int index, Double value) {
+        counts[index] += value;
+    }
+
     public int sum() {
         int sum = 0;
-        for (int c : counts)
+        for (Double c : counts)
             sum += c;
         return sum;
     }

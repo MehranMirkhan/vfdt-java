@@ -1,7 +1,6 @@
-package vfdt.stat;
+package vfdt.stat.dist;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import vfdt.measure.Counts;
 
 /**
  * Nominal distribution.
@@ -12,7 +11,7 @@ import java.util.Arrays;
  */
 public class DistributionNominal implements Distribution {
     protected String[] values;
-    protected Counts counts;
+    protected Counts   counts;
 
     public DistributionNominal(String[] values) {
         this.values = values;
@@ -35,7 +34,11 @@ public class DistributionNominal implements Distribution {
         return counts;
     }
 
-    public Integer[] split() {
+    public Double[] split() {
         return counts.getCounts();
+    }
+
+    public int getNumValues() {
+        return values.length;
     }
 }

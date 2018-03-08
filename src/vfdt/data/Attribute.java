@@ -8,22 +8,28 @@ package vfdt.data;
  * @since 2018 Feb 23
  */
 public class Attribute<T> {
+    private AttributeInfo attributeInfo;
     private T value;
 
-    public Attribute(T value) {
+    public Attribute(AttributeInfo attributeInfo, T value) {
+        this.attributeInfo = attributeInfo;
         this.value = value;
+    }
+
+    public AttributeInfo getAttributeInfo() {
+        return attributeInfo;
+    }
+
+    public String getName() {
+        return attributeInfo.getName();
     }
 
     public T getValue() {
         return this.value;
     }
 
-    public void setValue(T value) {
-        this.value = value;
-    }
-
     @Override
     public String toString() {
-        return this.value.toString();
+        return "" + attributeInfo.getName() + ": " + value;
     }
 }

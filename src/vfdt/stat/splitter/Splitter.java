@@ -1,5 +1,6 @@
-package vfdt.stat;
+package vfdt.stat.splitter;
 
+import vfdt.measure.gain.Gain;
 import vfdt.tree.Decision;
 
 /**
@@ -10,6 +11,6 @@ import vfdt.tree.Decision;
  * @since 2018 Mar 07
  */
 public interface Splitter {
-    public Double getSplitGain();
+    public Double getSplitGain() throws Exception;
     public Decision getDecision();
 }

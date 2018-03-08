@@ -1,6 +1,6 @@
 package vfdt.measure.impurity;
 
-import vfdt.stat.Counts;
+import vfdt.measure.Counts;
 
 /**
  * %Description%

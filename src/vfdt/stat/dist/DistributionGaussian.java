@@ -1,4 +1,4 @@
-package vfdt.stat;
+package vfdt.stat.dist;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 

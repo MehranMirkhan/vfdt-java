@@ -1,8 +1,6 @@
 package vfdt.measure.impurity;
 
-import vfdt.stat.Counts;
-
-import java.util.Arrays;
+import vfdt.measure.Counts;
 
 /**
  * Basic implementation of impurity measures.
@@ -16,7 +14,7 @@ public abstract class ImpurityBase implements Impurity {
         Exception ex = new ArithmeticException("Impurity measure error. p = " + p.toString());
         double sum = 0;
         int n_valid = 0;
-        for (int value : p.getCounts()) {
+        for (Double value : p.getCounts()) {
             sum += value;
             n_valid += value>0 ? 1 : 0;
             if (value < 0)
@@ -26,7 +24,7 @@ public abstract class ImpurityBase implements Impurity {
             throw ex;
         double[] q = new double[n_valid];
         int i=0;
-        for (int value : p.getCounts()) {
+        for (Double value : p.getCounts()) {
             if (value > 0) {
                 q[i] = value / sum;
                 i += 1;

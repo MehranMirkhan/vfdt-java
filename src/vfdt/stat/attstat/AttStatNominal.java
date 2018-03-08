@@ -1,6 +1,8 @@
-package vfdt.stat;
+package vfdt.stat.attstat;
 
 import vfdt.data.Attribute;
+import vfdt.stat.splitter.SplitterNominal;
+import vfdt.stat.dist.DistributionNominal;
 
 /**
  * %Description%
@@ -9,18 +11,21 @@ import vfdt.data.Attribute;
  * @version 1.0
  * @since 2018 Mar 07
  */
-public class AttributeStatisticsNominal extends AttributeStatistics {
+public class AttStatNominal extends AttStat {
     protected DistributionNominal[] classDist;
 
-    public AttributeStatisticsNominal(int numClasses, String[] values) {
+    public AttStatNominal(int numClasses, String[] values) {
         classDist = new DistributionNominal[numClasses];
-        for (int i=0; i<numClasses; i++)
+        for (int i = 0; i < numClasses; i++)
             classDist[i] = new DistributionNominal(values);
-        setSplitter(new SplitterNominal(this));
     }
 
     @Override
     public void update(Attribute att, int label) {
         classDist[label].add((String) att.getValue());
+    }
+
+    public DistributionNominal[] getClassDist() {
+        return classDist;
     }
 }

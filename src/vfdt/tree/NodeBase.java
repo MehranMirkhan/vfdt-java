@@ -47,12 +47,16 @@ public class NodeBase implements Node {
 
     @Override
     public Node getChild(int index) {
-        return this.children[index];
+        if (this.children == null)
+            return null;
+        else
+            return this.children[index];
     }
 
     @Override
     public void setChild(int index, Node newChild) {
-        this.children[index] = newChild;
+        if (this.children != null)
+            this.children[index] = newChild;
     }
 
     @Override

@@ -1,4 +1,6 @@
-package vfdt.stat;
+package vfdt.measure.gain;
+
+import vfdt.measure.Counts;
 
 /**
  * Stores the information about a split.

@@ -8,7 +8,7 @@ package vfdt.data;
  * @since 2018 Feb 28
  */
 public class DatasetInfo {
-    private int classIndex = -1;
+    private Integer classIndex = null;
     private String datasetName = "Unknown";
     private AttributeInfo[] attributeInfo = null;
 

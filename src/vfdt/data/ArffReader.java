@@ -149,10 +149,10 @@ public class ArffReader {
                 AttributeInfo attInfo = attsInfo[i];
                 switch (attInfo.getType()) {
                     case NOMINAL:
-                        atts[i] = new Attribute<String>(values[i]);
+                        atts[i] = new Attribute<String>(attInfo, values[i]);
                         break;
                     case NUMERICAL:
-                        atts[i] = new Attribute<Double>(Double.parseDouble(values[i]));
+                        atts[i] = new Attribute<Double>(attInfo, Double.parseDouble(values[i]));
                         break;
                     default:
                         throw new Exception("Attribute type not recognized.");

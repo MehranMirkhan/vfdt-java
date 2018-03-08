@@ -3,7 +3,7 @@ package test.measure.impurity;
 import org.junit.Assert;
 import org.junit.Test;
 import vfdt.measure.impurity.ImpurityBase;
-import vfdt.stat.Counts;
+import vfdt.measure.Counts;
 
 /**
  * %Description%
@@ -15,7 +15,7 @@ import vfdt.stat.Counts;
 public class TestImpurityBase {
     @Test
     public void testPreprocess() throws Exception {
-        Counts p = new Counts(2, 1, 3, 4);
+        Counts p = new Counts(2., 1., 3., 4.);
         double[] q = {0.2, 0.1, 0.3, 0.4};
         ImpurityBase ib = new ImpurityBase() {
             @Override
@@ -28,7 +28,7 @@ public class TestImpurityBase {
 
     @Test(expected = ArithmeticException.class)
     public void testPreprocessExceptionSum() throws Exception {
-        Counts p = new Counts(1, 0, -1);
+        Counts p = new Counts(1., 0., -1.);
         ImpurityBase ib = new ImpurityBase() {
             @Override
             public double measure(Counts p) {
@@ -40,7 +40,7 @@ public class TestImpurityBase {
 
     @Test(expected = ArithmeticException.class)
     public void testPreprocessExceptionNValid() throws Exception {
-        Counts p = new Counts(0, 0, 0);
+        Counts p = new Counts(0., 0., 0.);
         ImpurityBase ib = new ImpurityBase() {
             @Override
             public double measure(Counts p) {
@@ -52,7 +52,7 @@ public class TestImpurityBase {
 
     @Test(expected = ArithmeticException.class)
     public void testPreprocessExceptionValue() throws Exception {
-        Counts p = new Counts(1, -2, 3);
+        Counts p = new Counts(1., -2., 3.);
         ImpurityBase ib = new ImpurityBase() {
             @Override
             public double measure(Counts p) {

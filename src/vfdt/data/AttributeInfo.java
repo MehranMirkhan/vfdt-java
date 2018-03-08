@@ -57,6 +57,14 @@ public class AttributeInfo {
         this.type = type;
     }
 
+    public Integer findValue(String value) {
+        if (values != null)
+            for (int i = 0; i < values.length; i++)
+                if (values[i].equals(value))
+                    return i;
+        return null;
+    }
+
     @Override
     public String toString() {
         return "AttributeInfo{" +

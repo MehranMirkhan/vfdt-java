@@ -3,6 +3,9 @@ package vfdt.stat;
 import vfdt.data.AttributeInfo;
 import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
+import vfdt.stat.attstat.AttStat;
+import vfdt.stat.attstat.AttStatFactory;
+import vfdt.stat.splitter.Splitter;
 import vfdt.tree.Decision;
 
 import java.util.Collection;
@@ -17,30 +20,22 @@ import java.util.HashMap;
  * @since 2018 Mar 04
  */
 public class SufficientStatistics {
-    private HashMap<AttributeInfo, AttributeStatistics> attStats;
-    private DatasetInfo datasetInfo;
+    private DatasetInfo                     datasetInfo;
+    private HashMap<AttributeInfo, AttStat> attStats;
+    private AttStatFactory                  factory;
 
-    public SufficientStatistics(DatasetInfo datasetInfo) {
+    public SufficientStatistics(DatasetInfo datasetInfo,
+                                Collection<AttributeInfo> availableAtts,
+                                AttStatFactory factory) throws Exception {
         this.datasetInfo = datasetInfo;
-        attStats = new HashMap<>();
+        this.attStats = new HashMap<>();
+        this.factory = factory;
+        initAttStats(availableAtts);
     }
 
-    public SufficientStatistics(DatasetInfo datasetInfo, Collection<AttributeInfo> availableAtts) throws Exception {
-        this(datasetInfo);
-        int numClasses = datasetInfo.getNumClasses();
+    protected void initAttStats(Collection<AttributeInfo> availableAtts) throws Exception {
         for (AttributeInfo attInfo : availableAtts) {
-            AttributeStatistics attStat;
-            switch (attInfo.getType()) {
-                case NOMINAL:
-                    attStat = new AttributeStatisticsNominal(numClasses, attInfo.getValues());
-                    break;
-                case NUMERICAL:
-                    attStat = new AttributeStatisticsGaussian(numClasses);
-                    break;
-                default:
-                    throw new Exception("Attribute type not recognized: " + attInfo.getType());
-            }
-            attStats.put(attInfo, attStat);
+            attStats.put(attInfo, factory.create(attInfo));
         }
     }
 

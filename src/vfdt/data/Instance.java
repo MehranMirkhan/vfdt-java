@@ -14,15 +14,20 @@ public class Instance {
         this.atts = atts;
     }
 
-    public Attribute getAttribute(int index) {
-        return this.atts[index];
+    public Attribute getAttribute(String name) {
+        for (Attribute att : atts)
+            if (att.getName().equals(name))
+                return att;
+        return null;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        for (Attribute att : this.atts) {
-            sb.append(att.toString()).append(", ");
+        for (int i=0; i<atts.length; i++) {
+            sb.append(atts[i].toString());
+            if (i < atts.length-1)
+                sb.append(", ");
         }
         sb.append("]");
         return sb.toString();

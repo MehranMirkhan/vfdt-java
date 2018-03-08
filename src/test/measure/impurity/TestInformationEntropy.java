@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import vfdt.measure.impurity.Impurity;
 import vfdt.measure.impurity.InformationEntropy;
-import vfdt.stat.Counts;
+import vfdt.measure.Counts;
 
 /**
  * %Description%
@@ -16,7 +16,7 @@ import vfdt.stat.Counts;
 public class TestInformationEntropy {
     @Test
     public void correctness() {
-        Counts   c = new Counts(4, 3, 2, 1);
+        Counts   c = new Counts(4., 3., 2., 1.);
         Impurity im = new InformationEntropy();
         try {
             double result = im.measure(c);
