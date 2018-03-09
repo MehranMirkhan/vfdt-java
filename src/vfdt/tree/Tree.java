@@ -7,7 +7,8 @@ package vfdt.tree;
  * @version 1.0
  * @since 2018 Feb 28
  */
-public interface Tree {
-    public Node getRoot();
-    public int getHeight();
+interface Tree {
+    Node getRoot();
+    int getHeight();
+    void replaceNode(Node nodeOld, Node nodeNew) throws NoSuchFieldException;
 }

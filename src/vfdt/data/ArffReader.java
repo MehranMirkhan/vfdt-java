@@ -1,58 +1,38 @@
 package vfdt.data;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.LineNumberReader;
+import vfdt.util.Pair;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Reads .arff files
+ * %Description%
  *
  * @author Mehran Mirkhan
  * @version 1.0
- * @since 2018 Mar 03
+ * @since 2018 Mar 09
  */
-public class ArffReader {
-    protected FileReader fileReader;
-    protected LineNumberReader lnr;
-    protected int classIndex;
+public class ArffReader implements DatasetReader {
+
+    protected final String fileName;
     protected DatasetInfo datasetInfo;
 
-    public ArffReader(String fileName, int bufferSize, int classIndex) throws FileNotFoundException {
-        this.fileReader = new FileReader(fileName);
-        this.lnr = new LineNumberReader(this.fileReader, bufferSize);
-        this.classIndex = classIndex;
-        this.datasetInfo = new DatasetInfo().classIndex(classIndex);
-    }
-
-    public ArffReader(String fileName, int bufferSize) throws FileNotFoundException {
-        this.fileReader = new FileReader(fileName);
-        this.lnr = new LineNumberReader(this.fileReader, bufferSize);
-        this.datasetInfo = new DatasetInfo();
-    }
-
-    public ArffReader(String fileName) throws FileNotFoundException {
-        this.fileReader = new FileReader(fileName);
-        this.lnr = new LineNumberReader(this.fileReader);
-        this.datasetInfo = new DatasetInfo();
-    }
-
-    public void close() throws IOException {
-        this.lnr.close();
+    public ArffReader(String fileName) {
+        this.fileName = fileName;
+        datasetInfo = new DatasetInfo();
     }
 
     public DatasetInfo getDatasetInfo() {
         return datasetInfo;
     }
 
-    /**
-     * Reads the header and builds DatasetInfo.
-     */
-    public void init() throws IOException {
+    @Override
+    public DatasetInfo analyze() throws IOException {
+        FileReader fileReader = new FileReader(fileName);
+        BufferedReader reader = new BufferedReader(fileReader);
         ArrayList<AttributeInfo> attInfo = new ArrayList<>();
         String[] regex = {
                 "^[%].*",
@@ -64,7 +44,7 @@ public class ArffReader {
         for (int i=0; i<regex.length; i++)
             patterns[i] = Pattern.compile(regex[i]);
         String line;
-        while ((line = lnr.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             Matcher m;
             // comment
             m = patterns[0].matcher(line);
@@ -102,73 +82,130 @@ public class ArffReader {
             if (m.matches())
                 break;
         }
-        this.datasetInfo.setAttributeInfo(attInfo.toArray(new AttributeInfo[0]));
-        this.lnr.setLineNumber(-2);
+        datasetInfo.setAttributeInfo(attInfo.toArray(new AttributeInfo[0]));
+        return datasetInfo;
     }
 
-    protected class ArffIterator implements Iterator<Instance> {
-        private DatasetInfo datasetInfo;
+    @Override
+    public Iterator<Pair<Instance, Attribute>> onePass() throws IOException {
+        return new ArffIterator(datasetInfo, fileName, 1, null);
+    }
+
+    @Override
+    public Iterator<Pair<Instance, Attribute>> onePass(IndexCondition indexCondition) throws IOException {
+        return new ArffIterator(datasetInfo, fileName, 1, indexCondition);
+    }
+
+    @Override
+    public Iterator<Pair<Instance, Attribute>> epochs(int numEpochs) throws IOException {
+        return new ArffIterator(datasetInfo, fileName, numEpochs, null);
+    }
+
+    @Override
+    public Iterator<Pair<Instance, Attribute>> epochs(int numEpochs, IndexCondition indexCondition) throws IOException {
+        return new ArffIterator(datasetInfo, fileName, numEpochs, indexCondition);
+    }
+
+
+
+    protected class ArffIterator implements Iterator<Pair<Instance, Attribute>> {
+        private final DatasetInfo datasetInfo;
+        private final String fileName;
+        private final int numEpochs;
+        private final IndexCondition indexCondition;
+
         private LineNumberReader lnr;
         private String line;
+        private int currentEpoch;
 
-        public ArffIterator(DatasetInfo datasetInfo, LineNumberReader lnr) throws IOException {
+        public ArffIterator(DatasetInfo datasetInfo, String fileName, int numEpochs, IndexCondition indexCondition) throws IOException {
             this.datasetInfo = datasetInfo;
-            this.lnr = lnr;
-            this.line = lnr.readLine();
+            this.fileName = fileName;
+            this.numEpochs = numEpochs;
+            this.indexCondition = indexCondition;
+
+            currentEpoch = 1;
+
+            reset();
+        }
+
+        private void reset() throws IOException {
+            lnr = new LineNumberReader(new FileReader(fileName));
+            line = lnr.readLine();
+            skip();
+        }
+
+        /**
+         * Skips header part of the file.
+         */
+        private void skip() {
+            while (line != null)
+                if (line.trim().toLowerCase().equals("@data")) {
+                    lnr.setLineNumber(-2);
+                    break;
+                }
         }
 
         @Override
         public boolean hasNext() {
-            return this.line == null;
+            return line == null;
         }
 
         @Override
-        public Instance next() {
-            String temp = this.line;
+        public Pair<Instance, Attribute> next() {
             try {
-                this.line = this.lnr.readLine();
-            } catch (IOException e) {
+                while (!indexCondition.isValid(lnr.getLineNumber()))
+                    updateLine();
+                Pair<Instance, Attribute> data = parseLine(line);
+                updateLine();
+                return data;
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
-                return parseLine(temp);
-            } catch (Exception e) {
+                lnr.close();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
         }
 
-        protected Instance parseLine(String line) throws Exception {
-            int n_atts = this.datasetInfo.getNumAttributes();
-            AttributeInfo[] attsInfo = this.datasetInfo.getAttributeInfo();
-            Attribute[] atts = new Attribute[n_atts];
-            String[] values = line.split("\\s*,\\s*");
-            assert values.length == n_atts;
-            for (int i=0; i<n_atts; i++) {
-                // Create Attribute
-                AttributeInfo attInfo = attsInfo[i];
-                switch (attInfo.getType()) {
-                    case NOMINAL:
-                        atts[i] = new Attribute<String>(attInfo, values[i]);
-                        break;
-                    case NUMERICAL:
-                        atts[i] = new Attribute<Double>(attInfo, Double.parseDouble(values[i]));
-                        break;
-                    default:
-                        throw new Exception("Attribute type not recognized.");
+        protected void updateLine() throws IOException {
+            line = lnr.readLine();
+            // Check whether current epoch is ended
+            boolean eof = line == null;
+            if (eof) {      // We have reached the end of file.
+                if (currentEpoch < numEpochs) {     // But still more epochs are remained.
+                    currentEpoch += 1;
+                    reset();
                 }
             }
-            return new Instance(atts);
+        }
+
+        protected Pair<Instance, Attribute> parseLine(String line) throws Exception {
+            AttributeInfo[] attsInfo = this.datasetInfo.getAttributeInfo();
+            ArrayList<Attribute> atts = new ArrayList<>();
+            Attribute label = null;
+            String[] values = line.split("\\s*,\\s*");
+            for (int i=0; i<values.length; i++) {
+                // Create Attribute
+                AttributeInfo attInfo = attsInfo[i];
+                if (i == datasetInfo.getClassIndex()) {
+                    label = new Attribute<String>(attInfo, values[i]);
+                } else {
+                    switch (attInfo.getType()) {
+                        case NOMINAL:
+                            atts.add(new Attribute<String>(attInfo, values[i]));
+                            break;
+                        case NUMERICAL:
+                            atts.add(new Attribute<Double>(attInfo, Double.parseDouble(values[i])));
+                            break;
+                        default:
+                            throw new Exception("Attribute type not recognized.");
+                    }
+                }
+            }
+            return new Pair<>(new Instance(atts.toArray(new Attribute[0])), label);
         }
     }
-
-    public ArffIterator iterator() throws IOException {
-        return new ArffIterator(this.datasetInfo, this.lnr);
-    }
-
-    public int getInstanceIndex() {
-        return this.lnr.getLineNumber();
-    }
-
-    // todo: Read parts of file (train/test split)
 }

@@ -12,6 +12,6 @@ import vfdt.tree.Decision;
  * @version 1.0
  * @since 2018 Mar 04
  */
-public abstract class AttStat {
-    public abstract void update(Attribute att, int label);
+public interface AttStat {
+    void update(Attribute att, Attribute label);
 }

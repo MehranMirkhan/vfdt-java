@@ -1,10 +1,5 @@
 package vfdt.measure.bound;
 
-import vfdt.data.AttributeInfo;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Hoeffding bound.
  *
@@ -12,17 +7,16 @@ import java.util.Map;
  * @version 1.0
  * @since 2018 Mar 08
  */
-public class BoundHoeffding extends Bound {
+public class BoundHoeffding extends BoundThreshold {
     protected Double delta, R;
 
-    public BoundHoeffding(Double delta, Double r) {
+    public BoundHoeffding(Double delta, Double R) {
         this.delta = delta;
-        R = r;
+        this.R = R;
     }
 
     @Override
-    public AttributeInfo isSplitNeeded(HashMap<AttributeInfo, Double> gains, int numData) {
-        Pair<Map.Entry<AttributeInfo, Double>> topTwo = getTopTwo(gains);
-        return null;
+    public Double getThreshold(int numData) {
+        return R * Math.sqrt(Math.log(1/delta) / (2 * numData));
     }
 }

@@ -51,4 +51,17 @@ public class Counts {
     public String toString() {
         return Arrays.toString(counts);
     }
+
+    public Integer getIndexOfMax() {
+        Double maxValue = Double.NEGATIVE_INFINITY;
+        Integer maxIndex = null;
+        for (int index = 0; index<getCounts().length; index++) {
+            Double value = getCount(index);
+            if (value > maxValue) {
+                maxValue = value;
+                maxIndex = index;
+            }
+        }
+        return maxIndex;
+    }
 }

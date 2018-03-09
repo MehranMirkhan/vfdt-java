@@ -7,10 +7,10 @@ package vfdt.tree;
  * @version 1.0
  * @since 2018 Feb 28
  */
-public class NodeBase implements Node {
+public abstract class NodeBase implements Node {
     private Node[] children = null;
     private Node parent = null;
-    private int height = -1;        // -1 means unknown. Root is 0.
+    private Integer height = null;
 
     public Node parent(Node parent) {
         this.parent = parent;
@@ -22,7 +22,7 @@ public class NodeBase implements Node {
         return this;
     }
 
-    public Node height(int height) {
+    public Node height(Integer height) {
         this.height = height;
         return this;
     }
@@ -59,14 +59,48 @@ public class NodeBase implements Node {
             this.children[index] = newChild;
     }
 
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
     @Override
     public boolean isLeaf() {
         return this.children == null || this.children.length == 0;
     }
 
     @Override
-    public int getHeight() {
-        return this.height;
+    public int getSubHeight() {
+        int maxHeight = 0;
+        for (Node child : getChildren()) {
+            int height = child.getSubHeight();
+            if (height > maxHeight)
+                maxHeight = height;
+        }
+        return 1 + maxHeight;
+    }
+
+    @Override
+    public void replaceChild(Node nodeOld, Node nodeNew) throws NoSuchFieldException {
+        Node[] children = getChildren();
+        if (children == null)
+            throw new NullPointerException("This node has no children.");
+        else {
+            boolean success = false;
+            for (int i=0; i<children.length; i++) {
+                if (children[i] == nodeOld) {
+                    children[i] = nodeNew;
+                    success = true;
+                    break;
+                }
+            }
+            if (!success) {
+                throw new NoSuchFieldException("Child not found");
+            }
+        }
     }
 }
 

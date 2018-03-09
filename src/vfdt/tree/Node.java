@@ -1,5 +1,7 @@
 package vfdt.tree;
 
+import vfdt.data.Instance;
+
 /**
  * Interface of a node in a tree.
  *
@@ -9,15 +11,22 @@ package vfdt.tree;
  */
 public interface Node {
 
-    public Node[] getChildren();
-    public void setChildren(Node... children);
+    Node[] getChildren();
+    void setChildren(Node... children);
 
-    public Node getParent();
-    public void setParent(Node parent);
+    Node getParent();
+    void setParent(Node parent);
 
-    public Node getChild(int index);
-    public void setChild(int index, Node newChild);
+    Node getChild(int index);
+    void setChild(int index, Node newChild);
 
-    public boolean isLeaf();
-    public int getHeight();
+    Integer getHeight();
+    void setHeight(Integer height);
+    int getSubHeight();
+
+    boolean isLeaf();
+
+    void replaceChild(Node nodeOld, Node nodeNew) throws NoSuchFieldException;
+
+    NodeLeaf sortDown(Instance instance);
 }

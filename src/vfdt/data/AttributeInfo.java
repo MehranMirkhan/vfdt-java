@@ -65,6 +65,14 @@ public class AttributeInfo {
         return null;
     }
 
+    public boolean isNominal() {
+        return getType() == AttributeType.NOMINAL;
+    }
+
+    public boolean isNumerical() {
+        return getType() == AttributeType.NUMERICAL;
+    }
+
     @Override
     public String toString() {
         return "AttributeInfo{" +

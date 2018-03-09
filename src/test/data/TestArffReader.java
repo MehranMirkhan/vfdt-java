@@ -1,7 +1,7 @@
 package test.data;
 
 import org.junit.Test;
-import vfdt.data.ArffReader;
+import vfdt.data.ArffReader_old;
 import vfdt.data.Instance;
 
 import java.util.Iterator;
@@ -17,7 +17,7 @@ public class TestArffReader {
     @Test
     public void testInit() throws Exception {
         String fileName = "src/test/data/sample.arff";
-        ArffReader reader = new ArffReader(fileName);
+        ArffReader_old reader = new ArffReader_old(fileName);
         reader.init();
         String datasetInfo = reader.getDatasetInfo().toString();
 //        System.out.println(datasetInfo);
@@ -27,7 +27,7 @@ public class TestArffReader {
     @Test
     public void testRead() throws Exception {
         String fileName = "src/test/data/sample.arff";
-        ArffReader reader = new ArffReader(fileName);
+        ArffReader_old reader = new ArffReader_old(fileName);
         reader.init();
         Iterator<Instance> it = reader.iterator();
         for (int i=0; i<3; i++) {

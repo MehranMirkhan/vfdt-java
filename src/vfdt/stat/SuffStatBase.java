@@ -2,7 +2,6 @@ package vfdt.stat;
 
 import vfdt.data.Attribute;
 import vfdt.data.AttributeInfo;
-import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
 import vfdt.measure.bound.Bound;
 import vfdt.stat.attstat.AttStat;
@@ -23,25 +22,24 @@ import java.util.Map;
  * @version 1.0
  * @since 2018 Mar 04
  */
-public class SufficientStatistics {
-    private DatasetInfo                      datasetInfo;
+public class SuffStatBase implements SuffStat {
     private HashMap<AttributeInfo, AttStat>  attStats;
     private HashMap<AttributeInfo, Splitter> splitters;
     private AttStatFactory                   attStatFactory;
     private SplitterFactory                  splitterFactory;
     private AttributeInfo                    attToSplit;
     private int                              numData;
+    private Collection<AttributeInfo>        availableAtts;
 
-    public SufficientStatistics(DatasetInfo datasetInfo,
-                                Collection<AttributeInfo> availableAtts,
-                                AttStatFactory attStatFactory,
-                                SplitterFactory splitterFactory) throws Exception {
-        this.datasetInfo = datasetInfo;
+    public SuffStatBase(Collection<AttributeInfo> availableAtts,
+                        AttStatFactory attStatFactory,
+                        SplitterFactory splitterFactory) throws Exception {
         this.attStats = new HashMap<>();
         this.splitters = new HashMap<>();
         this.attStatFactory = attStatFactory;
         this.splitterFactory = splitterFactory;
         numData = 0;
+        this.availableAtts = availableAtts;
         initAttStats(availableAtts);
     }
 
@@ -53,10 +51,8 @@ public class SufficientStatistics {
         }
     }
 
-    public void update(Instance instance) {
-        int       classIndex = datasetInfo.getClassIndex();
-        Attribute classAtt   = instance.getAtts()[classIndex];
-        int       label      = classAtt.getAttributeInfo().findValue((String) classAtt.getValue());
+    @Override
+    public void update(Instance instance, Attribute label) {
         for (Attribute att : instance.getAtts()) {
             AttStat attStat = attStats.get(att.getAttributeInfo());
             attStat.update(att, label);
@@ -64,13 +60,13 @@ public class SufficientStatistics {
         numData += 1;
     }
 
-    public boolean checkSplit(Bound bound) throws Exception {
+    public AttributeInfo checkSplit(Bound bound) throws Exception {
         HashMap<AttributeInfo, Double> gains = new HashMap<>(attStats.size());
         for (Map.Entry<AttributeInfo, Splitter> entry : splitters.entrySet()) {
             gains.put(entry.getKey(), entry.getValue().getSplitGain());
         }
         attToSplit = bound.isSplitNeeded(gains, numData);
-        return attToSplit != null;
+        return attToSplit;
     }
 
     public Decision getDecision() {
@@ -78,5 +74,10 @@ public class SufficientStatistics {
             return null;
         else
             return splitters.get(attToSplit).getDecision();
+    }
+
+    @Override
+    public Collection<AttributeInfo> getAvailableAttributes() {
+        return availableAtts;
     }
 }

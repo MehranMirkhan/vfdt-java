@@ -21,6 +21,10 @@ public class Instance {
         return null;
     }
 
+    public Attribute getAttribute(int index) {
+        return atts[index];
+    }
+
     public Attribute[] getAtts() {
         return atts;
     }

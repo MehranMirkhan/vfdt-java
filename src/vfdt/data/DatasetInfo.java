@@ -17,7 +17,7 @@ public class DatasetInfo {
         return this;
     }
 
-    public DatasetInfo classIndex(int classIndex) {
+    public DatasetInfo classIndex(Integer classIndex) {
         this.classIndex = classIndex;
         return this;
     }
@@ -27,11 +27,11 @@ public class DatasetInfo {
         return this;
     }
 
-    public int getClassIndex() {
+    public Integer getClassIndex() {
         return classIndex;
     }
 
-    public void setClassIndex(int classIndex) {
+    public void setClassIndex(Integer classIndex) {
         this.classIndex = classIndex;
     }
 
@@ -60,6 +60,15 @@ public class DatasetInfo {
         return attClass.getValues().length;
     }
 
+    public Attribute getLabel(Instance instance) {
+        if (getClassIndex() == null)
+            return null;
+        else {
+            Attribute att = instance.getAttribute(getClassIndex());
+            return att;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -68,5 +77,9 @@ public class DatasetInfo {
         for (AttributeInfo attinfo : this.attributeInfo)
             sb.append(attinfo).append("\n");
         return sb.toString();
+    }
+
+    public AttributeInfo getClassAttribute() {
+        return getAttributeInfo()[getClassIndex()];
     }
 }

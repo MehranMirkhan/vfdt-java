@@ -11,7 +11,7 @@ import vfdt.stat.dist.DistributionNominal;
  * @version 1.0
  * @since 2018 Mar 07
  */
-public class AttStatNominal extends AttStat {
+public class AttStatNominal implements AttStat {
     protected DistributionNominal[] classDist;
 
     public AttStatNominal(int numClasses, String[] values) {
@@ -20,12 +20,13 @@ public class AttStatNominal extends AttStat {
             classDist[i] = new DistributionNominal(values);
     }
 
-    @Override
-    public void update(Attribute att, int label) {
-        classDist[label].add((String) att.getValue());
-    }
-
     public DistributionNominal[] getClassDist() {
         return classDist;
+    }
+
+    @Override
+    public void update(Attribute att, Attribute label) {
+        String value = (String) att.getValue();
+        classDist[label.getValueIndex()].add(value);
     }
 }

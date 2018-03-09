@@ -11,7 +11,7 @@ import vfdt.stat.dist.DistributionGaussian;
  * @version 1.0
  * @since 2018 Mar 07
  */
-public class AttStatGaussian extends AttStat {
+public class AttStatGaussian implements AttStat {
     protected DistributionGaussian[] classDist;
     protected Double minValue = Double.POSITIVE_INFINITY,
             maxValue = Double.NEGATIVE_INFINITY;
@@ -20,16 +20,6 @@ public class AttStatGaussian extends AttStat {
         classDist = new DistributionGaussian[numClasses];
         for (int i = 0; i < numClasses; i++)
             classDist[i] = new DistributionGaussian();
-    }
-
-    @Override
-    public void update(Attribute att, int label) {
-        Double value = (Double) att.getValue();
-        if (value > maxValue)
-            maxValue = value;
-        if (value < minValue)
-            minValue = value;
-        classDist[label].add(value);
     }
 
     public DistributionGaussian[] getClassDist() {
@@ -42,5 +32,15 @@ public class AttStatGaussian extends AttStat {
 
     public Double getMaxValue() {
         return maxValue;
+    }
+
+    @Override
+    public void update(Attribute att, Attribute label) {
+        Double value = (Double) att.getValue();
+        if (value > maxValue)
+            maxValue = value;
+        if (value < minValue)
+            minValue = value;
+        classDist[label.getValueIndex()].add(value);
     }
 }

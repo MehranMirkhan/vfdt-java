@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="ebda7fa1-4f7f-456f-9ba6-09ea91eecef2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/measure/bound/Bound.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/measure/bound/BoundHoeffding.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/measure/bound/BoundThreshold.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterFactoryBase.java" />
+    <list default="true" id="ebda7fa1-4f7f-456f-9ba6-09ea91eecef2" name="Default" comment="Complete implementation.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/tree/ActiveLeaf.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/data/ArffReader_old.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/data/DatasetReader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/data/IndexCondition.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/data/IndexConditionBetween.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/util/Pair.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/tree/SplitInfo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/tree/SplitPolicy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/stat/SuffStat.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/stat/SuffStatFactory.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/stat/SuffStatFactoryBase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/measure/bound/TestHoeffdingBound.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/stat/TestSuffStat.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/vfdt/tree/VFDT.java" />
+      <change type="DELETED" beforePath="D:\code2\vfdt-java\src\test\tree\TestNodeBase.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/data/ArffReader.java" afterPath="$PROJECT_DIR$/src/vfdt/data/ArffReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStat.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatGaussian.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatGaussian.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatNominal.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatNominal.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/data/Attribute.java" afterPath="$PROJECT_DIR$/src/vfdt/data/Attribute.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/data/AttributeInfo.java" afterPath="$PROJECT_DIR$/src/vfdt/data/AttributeInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/measure/bound/BoundHoeffding.java" afterPath="$PROJECT_DIR$/src/vfdt/measure/bound/BoundHoeffding.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/ml/Classifier.java" afterPath="$PROJECT_DIR$/src/vfdt/ml/Classifier.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/measure/Counts.java" afterPath="$PROJECT_DIR$/src/vfdt/measure/Counts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/data/DatasetInfo.java" afterPath="$PROJECT_DIR$/src/vfdt/data/DatasetInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/Decision.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/Decision.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/DecisionNode.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/DecisionNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/DecisionTree.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/DecisionTree.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/data/Instance.java" afterPath="$PROJECT_DIR$/src/vfdt/data/Instance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/stat/splitter/Splitter.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/splitter/Splitter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterGaussian.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterGaussian.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/stat/SufficientStatistics.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/SufficientStatistics.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/Main.java" afterPath="$PROJECT_DIR$/src/vfdt/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/Node.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/Node.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/NodeBase.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/NodeBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/NodeLeaf.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/NodeLeaf.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/data/TestArffReader.java" afterPath="$PROJECT_DIR$/src/test/data/TestArffReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/Tree.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/Tree.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/vfdt/tree/TreeBase.java" afterPath="$PROJECT_DIR$/src/vfdt/tree/TreeBase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\code2\vfdt-java\src\vfdt\stat\attstat\AttStatFactorySimple.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactoryBase.java" />
+      <change type="MOVED" beforePath="D:\code2\vfdt-java\src\vfdt\stat\SufficientStatistics.java" afterPath="$PROJECT_DIR$/src/vfdt/stat/SuffStatBase.java" />
     </list>
     <ignored path="vfdt-java.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,11 +64,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SufficientStatistics.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/vfdt/stat/SufficientStatistics.java">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/vfdt/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.83627605">
-              <caret line="79" column="59" selection-start-line="79" selection-start-column="59" selection-end-line="79" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.4542536">
+              <caret line="61" column="36" selection-start-line="61" selection-start-column="36" selection-end-line="61" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,48 +104,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/vfdt/tree/Decision.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/AttributeStatisticsBase.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/Splitter.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/AttributeStatistics.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/SplitterGaussian.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/AttributeStatisticsGaussian.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/AttributeStatisticsFactory.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/AttributeStatisticsNominal.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/DistributionNominal.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/SplitterNominal.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/ml/Model.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/ml/Classifier.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/data/DatasetInfo.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/tree/NodeBase.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/tree/NodeLeaf.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/tree/DecisionTree.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/tree/DecisionNode.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/data/Attribute.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/data/AttributeFactory.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/data/ArffReader.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttributeStatisticsFactory.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactory.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactorySimple.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/measure/gain/Gain.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/measure/gain/GainBase.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/data/AttributeInfo.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/ml/Config.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatNominal.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStat.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatGaussian.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/measure/Counts.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/stat/dist/DistributionNominal.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/measure/impurity/ImpurityBase.java" />
-        <option value="$PROJECT_DIR$/src/test/measure/impurity/TestGiniIndex.java" />
-        <option value="$PROJECT_DIR$/src/test/data/TestInstance.java" />
-        <option value="$PROJECT_DIR$/src/test/measure/gain/TestGainBase.java" />
         <option value="$PROJECT_DIR$/src/test/measure/impurity/TestInformationEntropy.java" />
         <option value="$PROJECT_DIR$/src/test/data/TestAttribute.java" />
         <option value="$PROJECT_DIR$/src/test/measure/impurity/TestMisclassificationError.java" />
         <option value="$PROJECT_DIR$/src/test/measure/impurity/TestImpurityBase.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/data/Instance.java" />
-        <option value="$PROJECT_DIR$/src/vfdt/Main.java" />
         <option value="$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterGaussian.java" />
         <option value="$PROJECT_DIR$/src/vfdt/stat/splitter/Splitter.java" />
         <option value="$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterNominal.java" />
@@ -125,6 +117,44 @@
         <option value="$PROJECT_DIR$/src/vfdt/stat/SufficientStatistics.java" />
         <option value="$PROJECT_DIR$/src/vfdt/measure/bound/Bound.java" />
         <option value="$PROJECT_DIR$/src/vfdt/measure/bound/BoundHoeffding.java" />
+        <option value="$PROJECT_DIR$/src/test/measure/bound/TestHoeffdingBound.java" />
+        <option value="$PROJECT_DIR$/src/test/stat/TestSuffStat.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/Tree.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/Instance.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/AttributeInfo.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/Label.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/LabelBase.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/ArffReader_old.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/ml/Classifier.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/util/Pair.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/TreeBase.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/Attribute.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/measure/Counts.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/DatasetInfo.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/DecisionNode.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStat.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/SuffStatFactory.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/Decision.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/InActiveLeaf.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/SuffStatFactoryBase.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/SplitInfo.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/NodeLeaf.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/NodeBase.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/Node.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/SplitPolicy.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/DecisionTree.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/SuffStat.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/ActiveLeaf.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/SuffStatBase.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/tree/VFDT.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatGaussian.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatNominal.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/Indices.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/IndexCondition.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/IndexConditionBetween.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/DatasetReader.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/Main.java" />
+        <option value="$PROJECT_DIR$/src/vfdt/data/ArffReader.java" />
       </list>
     </option>
   </component>
@@ -136,6 +166,22 @@
     <option name="y" value="42" />
     <option name="width" value="1294" />
     <option name="height" value="801" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -160,7 +206,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -198,6 +246,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="vfdt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vfdt-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vfdt-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vfdt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -485,7 +555,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tree" />
+              <option name="myItemId" value="stat" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -559,19 +629,43 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="measure" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bound" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vfdt-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vfdt-java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -583,6 +677,11 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/code2/vfdt-java/src/vfdt/stat/SufficientStatistics.java" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="vfdt.data" />
+      <recent name="vfdt.stat" />
+      <recent name="vfdt.tree" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="test.measure" />
       <recent name="vfdt" />
@@ -590,7 +689,7 @@
       <recent name="vfdt.src.core" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in vfdt-java (2)">
+  <component name="RunManager" selected="JUnit.test in vfdt-java">
     <configuration default="false" name="test in vfdt-java" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="vfdt-java" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -599,26 +698,6 @@
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="TestGainBase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="vfdt-java" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="test.measure.gain" />
-      <option name="MAIN_CLASS_NAME" value="test.measure.gain.TestGainBase" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
@@ -679,6 +758,26 @@
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestHoeffdingBound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vfdt-java" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="test.measure.bound" />
+      <option name="MAIN_CLASS_NAME" value="test.measure.bound.TestHoeffdingBound" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
@@ -790,18 +889,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.test in vfdt-java" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestGainBase" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.All in vfdt-java" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (1)" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (2)" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.All in vfdt-java" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (1)" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (2)" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TestHoeffdingBound" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (2)" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (1)" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.All in vfdt-java" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.test in vfdt-java" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestGainBase" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.test in vfdt-java" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.TestHoeffdingBound" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (2)" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.All in vfdt-java (1)" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.All in vfdt-java" />
       </list>
     </recent_temporary>
   </component>
@@ -843,7 +942,9 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924837" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="185" y="142" width="1094" height="601" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39908257" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6024465" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -860,8 +961,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924837" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="185" y="142" width="1094" height="601" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -884,7 +983,8 @@
     <MESSAGE value="Add test.&#10;Implement distributions." />
     <MESSAGE value="Implement stat." />
     <MESSAGE value="Major changes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Major changes." />
+    <MESSAGE value="Implement SuffStat." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement SuffStat." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -895,403 +995,63 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/data/TestAttributeInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30016053">
-          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/data/TestDatasetInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35473517">
-          <caret line="15" column="43" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/MisclassificationError.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4093098">
-          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/InformationEntropy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38202247">
-          <caret line="14" column="40" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/Impurity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32744783">
-          <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/GiniIndex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35473517">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/Decision.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/vfdt/tree/Tree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/ml/Classifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35473517">
-          <caret line="13" column="47" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/TreeBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/DecisionTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="57" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/DecisionNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5457464">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#299#300#0" expanded="false" />
-            <element signature="e#339#340#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/NodeLeaf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5457464">
-          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5730337">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/NodeBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55698234">
-          <caret line="52" column="40" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="40" />
-          <folding>
-            <element signature="e#1420#1421#0" expanded="false" />
-            <element signature="e#1454#1455#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/data/DatasetInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="38" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/data/ArffReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6998395">
-          <caret line="154" column="96" selection-start-line="154" selection-start-column="96" selection-end-line="154" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/data/Attribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5730337">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
-          <folding>
-            <element signature="e#454#455#0" expanded="true" />
-            <element signature="e#500#501#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/dist/Distribution.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24558587">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/gain/GainBase.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/SuffStatFactoryBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4093098">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#289#290#0" expanded="false" />
-            <element signature="e#317#318#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/gain/Gain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32744783">
-          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatNominal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48653197">
-          <caret line="19" column="59" selection-start-line="19" selection-start-column="59" selection-end-line="19" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38202247">
-          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/dist/DistributionGaussian.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028619528">
-          <caret line="11" column="59" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/gain/Split.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3148148">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/data/AttributeInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84430176">
-          <caret line="64" column="20" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="20" />
-          <folding>
-            <element signature="e#430#431#0" expanded="true" />
-            <element signature="e#462#463#0" expanded="true" />
-            <element signature="e#702#703#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/Counts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05457464">
-          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
-          <folding>
-            <element signature="e#688#689#0" expanded="true" />
-            <element signature="e#726#727#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestMisclassificationError.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/data/TestAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5514512">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestInformationEntropy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33245382">
-          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestGiniIndex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33245382">
-          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/ImpurityBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8073879">
-          <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/measure/gain/TestGainBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/data/TestInstance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29166666">
-          <caret line="10" column="48" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="104" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/dist/DistributionNominal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
-          <folding>
-            <element signature="e#802#803#0" expanded="true" />
-            <element signature="e#843#844#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestImpurityBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51187336">
-          <caret line="54" column="37" selection-start-line="54" selection-start-column="37" selection-end-line="54" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/data/Instance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5457464">
-          <caret line="23" column="34" selection-start-line="23" selection-start-column="34" selection-end-line="23" selection-end-column="34" />
-          <folding>
-            <element signature="e#518#519#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16372392">
-          <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.73675764">
+          <caret line="27" column="15" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactoryBase.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/SuffStatFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="53" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.2728732">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterGaussian.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/SuffStat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="42" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.49117175">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/splitter/Splitter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterNominal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.028619528">
           <caret line="20" column="59" selection-start-line="20" selection-start-column="59" selection-end-line="20" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatGaussian.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/splitter/SplitterGaussian.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74242425">
-          <caret line="38" column="33" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
-          <folding>
-            <element signature="e#1074#1075#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42696628">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.028619528">
+          <caret line="25" column="42" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1300,16 +1060,8 @@
         <state vertical-scroll-proportion="0.70947033">
           <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/splitter/Splitter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02728732">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1318,34 +1070,142 @@
         <state vertical-scroll-proportion="0.30016053">
           <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/bound/BoundHoeffding.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/dist/DistributionNominal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49117175">
-          <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.7138047">
+          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#802#803#0" expanded="false" />
+            <element signature="e#843#844#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/bound/BoundThreshold.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/dist/DistributionGaussian.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65489566">
-          <caret line="24" column="53" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/dist/Distribution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24558587">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatNominal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5151515">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatGaussian.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82828283">
+          <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="39" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#769#770#0" expanded="true" />
+            <element signature="e#800#801#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactoryBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32744783">
+          <caret line="13" column="56" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="56" />
+          <folding>
+            <element signature="e#329#330#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStatFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4093098">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/attstat/AttStat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/ml/Classifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35473517">
+          <caret line="14" column="46" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/Counts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67255217">
+          <caret line="61" column="33" selection-start-line="61" selection-start-column="33" selection-end-line="61" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/ImpurityBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70947033">
+          <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/impurity/Impurity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/gain/Split.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/gain/GainBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/gain/Gain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/vfdt/measure/bound/Bound.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.2552167">
+        <state vertical-scroll-proportion="0.02728732">
           <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1355,10 +1215,234 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/SufficientStatistics.java">
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/bound/BoundHoeffding.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83627605">
-          <caret line="79" column="59" selection-start-line="79" selection-start-column="59" selection-end-line="79" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.32744783">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/measure/bound/BoundThreshold.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5730337">
+          <caret line="24" column="53" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/stat/SuffStatBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9550562">
+          <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
+          <folding>
+            <element signature="e#2814#2815#0" expanded="true" />
+            <element signature="e#2850#2851#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/ActiveLeaf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42696628">
+          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#932#933#0" expanded="true" />
+            <element signature="e#988#989#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/tree/VFDT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26324236">
+          <caret line="43" column="65" selection-start-line="43" selection-start-column="65" selection-end-line="43" selection-end-column="65" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/Attribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67255217">
+          <caret line="31" column="60" selection-start-line="31" selection-start-column="60" selection-end-line="31" selection-end-column="60" />
+          <folding>
+            <element signature="e#598#599#0" expanded="true" />
+            <element signature="e#665#666#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/AttributeInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7271268">
+          <caret line="72" column="51" selection-start-line="72" selection-start-column="51" selection-end-line="72" selection-end-column="51" />
+          <folding>
+            <element signature="e#1462#1463#0" expanded="true" />
+            <element signature="e#1521#1522#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/DatasetInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.02728732">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/IndexConditionBetween.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5457464">
+          <caret line="20" column="45" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="45" />
+          <folding>
+            <element signature="e#381#382#0" expanded="true" />
+            <element signature="e#433#434#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/IndexCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24558587">
+          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/ArffReader_old.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8186196">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/DatasetReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="112" selection-start-line="20" selection-start-column="112" selection-end-line="20" selection-end-column="112" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure/bound/TestHoeffdingBound.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68218297">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure/gain/TestGainBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestGiniIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestImpurityBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestInformationEntropy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure/impurity/TestMisclassificationError.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/stat/TestSuffStat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24558587">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/data/TestInstance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/data/TestDatasetInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/data/TestAttributeInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/data/TestAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10914928">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/data/TestArffReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30016053">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/data/ArffReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19101124">
+          <caret line="154" column="49" selection-start-line="154" selection-start-column="49" selection-end-line="154" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vfdt/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4542536">
+          <caret line="61" column="36" selection-start-line="61" selection-start-column="36" selection-end-line="61" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

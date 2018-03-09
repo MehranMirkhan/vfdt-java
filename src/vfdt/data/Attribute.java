@@ -28,6 +28,10 @@ public class Attribute<T> {
         return this.value;
     }
 
+    public Integer getValueIndex() {
+        return getAttributeInfo().findValue((String) value);
+    }
+
     @Override
     public String toString() {
         return "" + attributeInfo.getName() + ": " + value;

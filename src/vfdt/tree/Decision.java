@@ -13,9 +13,9 @@ public interface Decision {
     /**
      * Chooses a branch based on attribute value.
      *
-     * @param attribute
+     * @param attribute The attribute to decide on.
      * @return index of the chosen branch
      */
-    public int decide(Attribute attribute);
-    public int getNumBranches();
+    int decide(Attribute attribute);
+    int getNumBranches();
 }

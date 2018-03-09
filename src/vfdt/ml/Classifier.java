@@ -1,5 +1,6 @@
 package vfdt.ml;
 
+import vfdt.data.Attribute;
 import vfdt.data.Instance;
 
 /**
@@ -10,6 +11,6 @@ import vfdt.data.Instance;
  * @since 2018 Mar 08
  */
 public interface Classifier {
-    public void learn(Instance instance);
-    public Integer classify(Instance instance);
+    public void learn(Instance instance, Attribute label) throws Exception;
+    public String classify(Instance instance);
 }
