@@ -17,5 +17,6 @@ public interface Decision {
      * @return index of the chosen branch
      */
     int decide(Attribute attribute);
+
     int getNumBranches();
 }

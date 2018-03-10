@@ -9,7 +9,7 @@ public class TestAttribute {
     @Test
     public void testInteger() {
         Attribute<Integer> a0 = new Attribute<>(new AttributeInfo(AttributeInfo.AttributeType.NUMERICAL), 5);
-        Assert.assertEquals(5, (int)a0.getValue());
+        Assert.assertEquals(5, (int) a0.getValue());
     }
 
     @Test

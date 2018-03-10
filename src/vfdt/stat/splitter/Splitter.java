@@ -10,6 +10,7 @@ import vfdt.tree.Decision;
  * @since 2018 Mar 07
  */
 public interface Splitter {
-    public Double getSplitGain() throws Exception;
-    public Decision getDecision();
+    Double getSplitGain() throws Exception;
+
+    Decision getDecision();
 }

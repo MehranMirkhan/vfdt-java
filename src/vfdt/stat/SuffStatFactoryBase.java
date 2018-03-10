@@ -14,8 +14,8 @@ import java.util.Collection;
  * @since 2018 Mar 09
  */
 public class SuffStatFactoryBase implements SuffStatFactory {
-    protected AttStatFactory  attStatFactory;
-    protected SplitterFactory splitterFactory;
+    private final AttStatFactory  attStatFactory;
+    private final SplitterFactory splitterFactory;
 
     public SuffStatFactoryBase(AttStatFactory attStatFactory,
                                SplitterFactory splitterFactory) {

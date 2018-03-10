@@ -22,7 +22,7 @@ public class DecisionNode extends NodeBase {
 
     public NodeLeaf sortDown(Instance instance) {
         Attribute attribute = instance.getAttribute(attributeInfo.getName());
-        int nodeIndex = decision.decide(attribute);
+        int       nodeIndex = decision.decide(attribute);
         return this.getChild(nodeIndex).sortDown(instance);
     }
 }

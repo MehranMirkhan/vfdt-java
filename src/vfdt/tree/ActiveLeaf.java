@@ -4,7 +4,6 @@ import vfdt.data.Attribute;
 import vfdt.data.AttributeInfo;
 import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
-import vfdt.measure.bound.Bound;
 import vfdt.stat.SuffStat;
 import vfdt.stat.SuffStatFactory;
 
@@ -18,8 +17,8 @@ import java.util.Collection;
  * @since 2018 Mar 09
  */
 public class ActiveLeaf extends NodeLeaf {
-    private SplitPolicy splitPolicy;
-    private final SuffStat suffStat;
+    private final SplitPolicy splitPolicy;
+    private final SuffStat    suffStat;
     private int numData = 0;
 
     public ActiveLeaf(DatasetInfo datasetInfo,

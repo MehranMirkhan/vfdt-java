@@ -11,7 +11,7 @@ import vfdt.measure.Counts;
  * @since 2018 Mar 04
  */
 public class GainBase implements Gain {
-    protected Impurity im;
+    private final Impurity im;
 
     public GainBase(Impurity im) {
         this.im = im;
@@ -19,14 +19,14 @@ public class GainBase implements Gain {
 
     @Override
     public double measure(Split split) throws Exception {
-        double g = im.measure(split.getOriginal());
-        Counts[] branches = split.getBranches();
-        int n_branches = branches.length;
-        double[] gi = new double[n_branches];
-        int[] ni = new int[n_branches];
-        int n = 0;
-        double result = 0;
-        for (int i=0; i<gi.length; i++) {
+        double   g          = im.measure(split.getOriginal());
+        Counts[] branches   = split.getBranches();
+        int      n_branches = branches.length;
+        double[] gi         = new double[n_branches];
+        int[]    ni         = new int[n_branches];
+        int      n          = 0;
+        double   result     = 0;
+        for (int i = 0; i < gi.length; i++) {
             gi[i] = im.measure(branches[i]);
             ni[i] = branches[i].sum();
             n += ni[i];

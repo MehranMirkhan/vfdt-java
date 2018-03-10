@@ -12,16 +12,21 @@ import vfdt.data.Instance;
 public interface Node {
 
     Node[] getChildren();
+
     void setChildren(Node... children);
 
     Node getParent();
+
     void setParent(Node parent);
 
     Node getChild(int index);
+
     void setChild(int index, Node newChild);
 
     Integer getHeight();
+
     void setHeight(Integer height);
+
     int getSubHeight();
 
     boolean isLeaf();

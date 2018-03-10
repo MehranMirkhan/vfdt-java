@@ -8,7 +8,7 @@ package vfdt.data;
  * @since 2018 Feb 28
  */
 public class Instance {
-    private Attribute[] atts;
+    private final Attribute[] atts;
 
     public Instance(Attribute... atts) {
         this.atts = atts;
@@ -32,9 +32,9 @@ public class Instance {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        for (int i=0; i<atts.length; i++) {
+        for (int i = 0; i < atts.length; i++) {
             sb.append(atts[i].toString());
-            if (i < atts.length-1)
+            if (i < atts.length - 1)
                 sb.append(", ");
         }
         sb.append("]");

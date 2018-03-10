@@ -1,5 +1,9 @@
 package vfdt.data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Information about dataset.
  *
@@ -8,8 +12,8 @@ package vfdt.data;
  * @since 2018 Feb 28
  */
 public class DatasetInfo {
-    private Integer classIndex = null;
-    private String datasetName = "Unknown";
+    private Integer         classIndex    = null;
+    private String          datasetName   = "Unknown";
     private AttributeInfo[] attributeInfo = null;
 
     public DatasetInfo attributeInfo(AttributeInfo... attributeInfo) {
@@ -63,17 +67,15 @@ public class DatasetInfo {
     public Attribute getLabel(Instance instance) {
         if (getClassIndex() == null)
             return null;
-        else {
-            Attribute att = instance.getAttribute(getClassIndex());
-            return att;
-        }
+        else
+            return instance.getAttribute(getClassIndex());
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Dataset name = ").append(this.datasetName).append("\n")
-          .append("Class index = ").append(this.classIndex).append("\n");
+                .append("Class index = ").append(this.classIndex).append("\n");
         for (AttributeInfo attinfo : this.attributeInfo)
             sb.append(attinfo).append("\n");
         return sb.toString();
@@ -81,5 +83,11 @@ public class DatasetInfo {
 
     public AttributeInfo getClassAttribute() {
         return getAttributeInfo()[getClassIndex()];
+    }
+
+    public List<AttributeInfo> getAttributeInfoAsList() {
+        List<AttributeInfo> atts = new ArrayList<>();
+        Collections.addAll(atts, getAttributeInfo());
+        return atts;
     }
 }

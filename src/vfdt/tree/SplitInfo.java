@@ -1,7 +1,6 @@
 package vfdt.tree;
 
 import vfdt.data.AttributeInfo;
-import vfdt.measure.bound.Bound;
 
 /**
  * %Description%
@@ -12,7 +11,7 @@ import vfdt.measure.bound.Bound;
  */
 public class SplitInfo {
     private AttributeInfo attributeInfo;
-    private Decision decision;
+    private Decision      decision;
 
     public SplitInfo(AttributeInfo attributeInfo, Decision decision) {
         this.attributeInfo = attributeInfo;

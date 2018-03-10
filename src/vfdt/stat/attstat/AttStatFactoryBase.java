@@ -21,7 +21,7 @@ public class AttStatFactoryBase extends AttStatFactory {
     }
 
     @Override
-    protected AttStat createNumerical(AttributeInfo attributeInfo) {
+    protected AttStat createNumerical() {
         return new AttStatGaussian(datasetInfo.getNumClasses());
     }
 }

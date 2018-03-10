@@ -12,8 +12,8 @@ import vfdt.stat.attstat.AttStatNominal;
  * @since 2018 Mar 08
  */
 public class SplitterFactoryBase extends SplitterFactory {
-    protected Gain gain;
-    protected int numCandidates;
+    private final Gain gain;
+    private final int  numCandidates;
 
     public SplitterFactoryBase(Gain gain, int numCandidates) {
         this.gain = gain;

@@ -8,8 +8,8 @@ package vfdt.util;
  * @since 2018 Mar 09
  */
 public class Pair<T1, T2> {
-    T1 first;
-    T2 second;
+    private final T1 first;
+    private final T2 second;
 
     public Pair(T1 first, T2 second) {
         this.first = first;

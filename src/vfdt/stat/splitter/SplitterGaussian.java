@@ -15,10 +15,10 @@ import vfdt.tree.Decision;
  * @since 2018 Mar 07
  */
 public class SplitterGaussian implements Splitter {
-    private AttStatGaussian asn;
-    private Gain gain;
-    private int numCandidates;
-    private Double bestSplitValue;
+    private final AttStatGaussian asn;
+    private final Gain            gain;
+    private final int             numCandidates;
+    private       Double          bestSplitValue;
 
     public SplitterGaussian(AttStatGaussian asn, Gain gain, int numCandidates) {
         this.asn = asn;
@@ -28,17 +28,19 @@ public class SplitterGaussian implements Splitter {
 
     @Override
     public Double getSplitGain() throws Exception {
-        int numClasses = asn.getClassDist().length;
-        Counts original = new Counts(numClasses);
-        for (int c=0; c<numClasses; c++) {
+        int    numClasses = asn.getClassDist().length;
+        Counts original   = new Counts(numClasses);
+        for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getNumData());
         }
-        Double step = (asn.getMaxValue() - asn.getMinValue()) / (numCandidates + 1);
+        Double step  = (asn.getMaxValue() - asn.getMinValue()) / (numCandidates + 1);
         Double bestG = Double.NEGATIVE_INFINITY;
-        for (int i=1; i<=numCandidates; i++) {
+        for (int i = 1; i <= numCandidates; i++) {
             Double splitValue = asn.getMinValue() + i * step;
-            Counts[] branches = new Counts[numClasses];
-            for (int c=0; c<numClasses; c++) {
+            Counts[] branches = new Counts[2];
+            branches[0] = new Counts(numClasses);
+            branches[1] = new Counts(numClasses);
+            for (int c = 0; c < numClasses; c++) {
                 Double[] result = asn.getClassDist()[c].split(splitValue);
                 branches[0].add(c, result[0]);
                 branches[1].add(c, result[1]);
@@ -59,7 +61,7 @@ public class SplitterGaussian implements Splitter {
             @Override
             public int decide(Attribute attribute) {
                 Double value = (Double) attribute.getValue();
-                int index;
+                int    index;
                 if (value > bestSplitValue)
                     index = 1;
                 else

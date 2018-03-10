@@ -10,8 +10,8 @@ import vfdt.measure.Counts;
  * @since 2018 Mar 04
  */
 public class DistributionNominal implements Distribution {
-    protected String[] values;
-    protected Counts   counts;
+    private final String[] values;
+    private final Counts   counts;
 
     public DistributionNominal(String[] values) {
         this.values = values;
@@ -24,7 +24,7 @@ public class DistributionNominal implements Distribution {
     }
 
     private int getIndexOfValue(String value) {
-        for (int i=0; i<values.length; i++)
+        for (int i = 0; i < values.length; i++)
             if (values[i].equals(value))
                 return i;
         return -1;

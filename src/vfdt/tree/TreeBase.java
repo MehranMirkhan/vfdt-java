@@ -16,6 +16,10 @@ public abstract class TreeBase implements Tree {
         return this.root;
     }
 
+    void setRoot(Node root) {
+        this.root = root;
+    }
+
     @Override
     public int getHeight() {
         return this.height;

@@ -11,6 +11,7 @@ import vfdt.data.Instance;
  * @since 2018 Mar 08
  */
 public interface Classifier {
-    public void learn(Instance instance, Attribute label) throws Exception;
-    public String classify(Instance instance);
+    void learn(Instance instance, Attribute label) throws Exception;
+
+    String classify(Instance instance);
 }

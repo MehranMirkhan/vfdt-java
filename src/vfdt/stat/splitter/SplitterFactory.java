@@ -24,7 +24,7 @@ public abstract class SplitterFactory {
         }
     }
 
-    public abstract Splitter createNominal(AttStatNominal attStatNominal);
+    protected abstract Splitter createNominal(AttStatNominal attStatNominal);
 
-    public abstract Splitter createNumerical(AttStatGaussian attStatGaussian);
+    protected abstract Splitter createNumerical(AttStatGaussian attStatGaussian);
 }

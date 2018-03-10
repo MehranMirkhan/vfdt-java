@@ -8,7 +8,8 @@ package vfdt.measure.bound;
  * @since 2018 Mar 08
  */
 public class BoundHoeffding extends BoundThreshold {
-    protected Double delta, R;
+    private final Double delta;
+    private final Double R;
 
     public BoundHoeffding(Double delta, Double R) {
         this.delta = delta;
@@ -17,6 +18,6 @@ public class BoundHoeffding extends BoundThreshold {
 
     @Override
     public Double getThreshold(int numData) {
-        return R * Math.sqrt(Math.log(1/delta) / (2 * numData));
+        return R * Math.sqrt(Math.log(1 / delta) / (2 * numData));
     }
 }

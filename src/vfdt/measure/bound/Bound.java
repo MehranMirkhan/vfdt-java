@@ -16,7 +16,8 @@ import java.util.Map;
 public abstract class Bound {
 
     protected class Pair<T> {
-        T first, second;
+        final T first;
+        final T second;
 
         public Pair(T first, T second) {
             this.first = first;
@@ -24,7 +25,7 @@ public abstract class Bound {
         }
     }
 
-    protected Pair<Map.Entry<AttributeInfo, Double>> getTopTwo(HashMap<AttributeInfo, Double> gains) {
+    Pair<Map.Entry<AttributeInfo, Double>> getTopTwo(HashMap<AttributeInfo, Double> gains) {
         AttributeInfo a1 = null, a2 = null;
         Double        g1 = Double.NEGATIVE_INFINITY, g2 = Double.NEGATIVE_INFINITY;
         for (Map.Entry<AttributeInfo, Double> entry : gains.entrySet()) {
@@ -40,9 +41,9 @@ public abstract class Bound {
                 a2 = attInfo;
             }
         }
-        Map.Entry<AttributeInfo, Double> e1 = new AbstractMap.SimpleEntry<AttributeInfo, Double>(a1, g1);
-        Map.Entry<AttributeInfo, Double> e2 = new AbstractMap.SimpleEntry<AttributeInfo, Double>(a2, g2);
-        return new Pair<Map.Entry<AttributeInfo, Double>>(e1, e2);
+        Map.Entry<AttributeInfo, Double> e1 = new AbstractMap.SimpleEntry<>(a1, g1);
+        Map.Entry<AttributeInfo, Double> e2 = new AbstractMap.SimpleEntry<>(a2, g2);
+        return new Pair<>(e1, e2);
     }
 
     public abstract AttributeInfo isSplitNeeded(HashMap<AttributeInfo, Double> gains, int numData);

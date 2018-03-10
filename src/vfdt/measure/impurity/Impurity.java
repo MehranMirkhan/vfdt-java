@@ -10,5 +10,5 @@ import vfdt.measure.Counts;
  * @since 2018 Mar 04
  */
 public interface Impurity {
-    public double measure(Counts p) throws Exception;
+    double measure(Counts p) throws Exception;
 }

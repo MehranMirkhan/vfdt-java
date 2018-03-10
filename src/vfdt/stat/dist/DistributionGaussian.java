@@ -10,13 +10,14 @@ import org.apache.commons.math3.distribution.NormalDistribution;
  * @since 2018 Mar 04
  */
 public class DistributionGaussian implements Distribution {
-    protected int numData = 0;
-    protected double sum = 0, sumSq = 0;
-    protected double minVariance = 1e-6;
-    protected double mean;
-    protected double var;                       // Variance
-    protected double std;                       // Standard deviation
-    protected boolean isStatValid = false;      // Whether mean, var and std are valid or should be updated
+    private       int    numData     = 0;
+    private       double sum         = 0;
+    private       double sumSq       = 0;
+    private final double minVariance = 1e-6;
+    private double mean;
+    private double var;                       // Variance
+    private double std;                       // Standard deviation
+    private boolean isStatValid = false;      // Whether mean, var and std are valid or should be updated
 
     public void add(Double value) {
         sum += value;
@@ -32,7 +33,7 @@ public class DistributionGaussian implements Distribution {
         isStatValid = false;
     }
 
-    public void update() {
+    private void update() {
         if (!isStatValid) {
             if (numData <= 0)
                 throw new ArithmeticException("Divide by zero: numData = " + numData);
@@ -48,8 +49,8 @@ public class DistributionGaussian implements Distribution {
     public Double[] split(Double value) {
         update();
         NormalDistribution normal = new NormalDistribution(mean, std);
-        double left = normal.cumulativeProbability(value) * numData;
-        double right = numData - left;
+        double             left   = normal.cumulativeProbability(value) * numData;
+        double             right  = numData - left;
         return new Double[]{left, right};
     }
 

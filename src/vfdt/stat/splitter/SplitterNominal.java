@@ -15,8 +15,8 @@ import vfdt.tree.Decision;
  * @since 2018 Mar 07
  */
 public class SplitterNominal implements Splitter {
-    private AttStatNominal asn;
-    private Gain gain;
+    private final AttStatNominal asn;
+    private final Gain           gain;
 
     public SplitterNominal(AttStatNominal asn, Gain gain) {
         this.asn = asn;
@@ -25,16 +25,16 @@ public class SplitterNominal implements Splitter {
 
     @Override
     public Double getSplitGain() throws Exception {
-        int numValues  = asn.getClassDist()[0].getNumValues();
-        int numClasses = asn.getClassDist().length;
-        Counts original = new Counts(numClasses);
-        for (int c=0; c<numClasses; c++) {
+        int    numValues  = asn.getClassDist()[0].getNumValues();
+        int    numClasses = asn.getClassDist().length;
+        Counts original   = new Counts(numClasses);
+        for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getCounts().sum());
         }
-        Counts[] branches   = new Counts[numValues];
-        for (int i=0; i<numValues; i++) {
+        Counts[] branches = new Counts[numValues];
+        for (int i = 0; i < numValues; i++) {
             branches[i] = new Counts(numClasses);
-            for (int c=0; c<numClasses; c++) {
+            for (int c = 0; c < numClasses; c++) {
                 branches[i].add(c, asn.getClassDist()[c].getCounts().getCount(i));
             }
         }

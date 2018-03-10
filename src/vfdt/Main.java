@@ -20,16 +20,16 @@ import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
-        String fileName = "";
-        Integer classIndex = 2;
-        int gracePeriod = 10;
-        Double delta = 0.05;
-        Double R = 2.;
-        Bound bound = new BoundHoeffding(delta, R);
-        int maxHeight = 8;
-        Impurity impurity = new GiniIndex();
-        Gain gain = new GainBase(impurity);
-        int numCadidates = 10;
+        String   fileName     = "";
+        Integer  classIndex   = 2;
+        int      gracePeriod  = 10;
+        Double   delta        = 0.05;
+        Double   R            = 2.;
+        Bound    bound        = new BoundHoeffding(delta, R);
+        int      maxHeight    = 8;
+        Impurity impurity     = new GiniIndex();
+        Gain     gain         = new GainBase(impurity);
+        int      numCadidates = 10;
 
         try {
             // Analyze dataset

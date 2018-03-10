@@ -1,10 +1,9 @@
 package test.data;
 
+import org.junit.Assert;
 import org.junit.Test;
-import vfdt.data.ArffReader_old;
-import vfdt.data.Instance;
-
-import java.util.Iterator;
+import vfdt.data.*;
+import vfdt.util.Pair;
 
 /**
  * %Description%
@@ -16,25 +15,33 @@ import java.util.Iterator;
 public class TestArffReader {
     @Test
     public void testInit() throws Exception {
-        String fileName = "src/test/data/sample.arff";
-        ArffReader_old reader = new ArffReader_old(fileName);
-        reader.init();
-        String datasetInfo = reader.getDatasetInfo().toString();
+        String        fileName    = "src/test/data/sample.arff";
+        DatasetReader reader      = new ArffReader(fileName);
+        DatasetInfo   datasetInfo = reader.analyze();
 //        System.out.println(datasetInfo);
-        reader.close();
     }
 
     @Test
     public void testRead() throws Exception {
-        String fileName = "src/test/data/sample.arff";
-        ArffReader_old reader = new ArffReader_old(fileName);
-        reader.init();
-        Iterator<Instance> it = reader.iterator();
-        for (int i=0; i<3; i++) {
-            Instance data = it.next();
-            int index = reader.getInstanceIndex();
-//            System.out.println(index + ": " + data);
-        }
-        reader.close();
+        String        fileName    = "src/test/data/sample.arff";
+        DatasetReader reader      = new ArffReader(fileName);
+        DatasetInfo   datasetInfo = reader.analyze();
+        datasetInfo.setClassIndex(2);
+        IndexCondition            cond = new IndexConditionBetween(4, 7);
+        DatasetIterator           it   = reader.onePass(cond);
+        Pair<Instance, Attribute> entry;
+        entry = it.next();
+        Assert.assertEquals((Double) entry.getFirst().getAttribute(0).getValue(), 4., 1e-6);
+        Assert.assertEquals((Double) entry.getFirst().getAttribute(1).getValue(), -4., 1e-6);
+        Assert.assertEquals(entry.getSecond().getValue(), "c0");
+        entry = it.next();
+        Assert.assertEquals((Double) entry.getFirst().getAttribute(0).getValue(), 5., 1e-6);
+        Assert.assertEquals((Double) entry.getFirst().getAttribute(1).getValue(), -5., 1e-6);
+        Assert.assertEquals(entry.getSecond().getValue(), "c1");
+        entry = it.next();
+        Assert.assertEquals((Double) entry.getFirst().getAttribute(0).getValue(), 6., 1e-6);
+        Assert.assertEquals((Double) entry.getFirst().getAttribute(1).getValue(), -6., 1e-6);
+        Assert.assertEquals(entry.getSecond().getValue(), "c0");
+        it.close();
     }
 }

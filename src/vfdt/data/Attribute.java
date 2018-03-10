@@ -8,8 +8,8 @@ package vfdt.data;
  * @since 2018 Feb 23
  */
 public class Attribute<T> {
-    private AttributeInfo attributeInfo;
-    private T value;
+    private final AttributeInfo attributeInfo;
+    private final T             value;
 
     public Attribute(AttributeInfo attributeInfo, T value) {
         this.attributeInfo = attributeInfo;

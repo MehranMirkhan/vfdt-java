@@ -10,9 +10,9 @@ import vfdt.measure.bound.Bound;
  * @since 2018 Mar 09
  */
 public class SplitPolicy {
-    private int gracePeriod;
+    private int   gracePeriod;
     private Bound bound;
-    private int maxHeight;
+    private int   maxHeight;
 
     public SplitPolicy(int gracePeriod, Bound bound, int maxHeight) {
         this.gracePeriod = gracePeriod;

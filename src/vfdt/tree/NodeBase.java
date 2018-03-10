@@ -8,9 +8,9 @@ package vfdt.tree;
  * @since 2018 Feb 28
  */
 public abstract class NodeBase implements Node {
-    private Node[] children = null;
-    private Node parent = null;
-    private Integer height = null;
+    private Node[]  children = null;
+    private Node    parent   = null;
+    private Integer height   = null;
 
     public Node parent(Node parent) {
         this.parent = parent;
@@ -90,7 +90,7 @@ public abstract class NodeBase implements Node {
             throw new NullPointerException("This node has no children.");
         else {
             boolean success = false;
-            for (int i=0; i<children.length; i++) {
+            for (int i = 0; i < children.length; i++) {
                 if (children[i] == nodeOld) {
                     children[i] = nodeNew;
                     success = true;

@@ -16,7 +16,7 @@ import vfdt.measure.Counts;
 public class TestInformationEntropy {
     @Test
     public void correctness() {
-        Counts   c = new Counts(4., 3., 2., 1.);
+        Counts   c  = new Counts(4., 3., 2., 1.);
         Impurity im = new InformationEntropy();
         try {
             double result = im.measure(c);

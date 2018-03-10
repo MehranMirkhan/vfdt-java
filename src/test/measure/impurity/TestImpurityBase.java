@@ -15,7 +15,7 @@ import vfdt.measure.Counts;
 public class TestImpurityBase {
     @Test
     public void testPreprocess() throws Exception {
-        Counts p = new Counts(2., 1., 3., 4.);
+        Counts   p = new Counts(2., 1., 3., 4.);
         double[] q = {0.2, 0.1, 0.3, 0.4};
         ImpurityBase ib = new ImpurityBase() {
             @Override

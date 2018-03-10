@@ -9,6 +9,8 @@ package vfdt.tree;
  */
 interface Tree {
     Node getRoot();
+
     int getHeight();
+
     void replaceNode(Node nodeOld, Node nodeNew) throws NoSuchFieldException;
 }

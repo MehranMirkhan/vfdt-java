@@ -23,13 +23,13 @@ import java.util.Map;
  * @since 2018 Mar 04
  */
 public class SuffStatBase implements SuffStat {
-    private HashMap<AttributeInfo, AttStat>  attStats;
-    private HashMap<AttributeInfo, Splitter> splitters;
-    private AttStatFactory                   attStatFactory;
-    private SplitterFactory                  splitterFactory;
-    private AttributeInfo                    attToSplit;
-    private int                              numData;
-    private Collection<AttributeInfo>        availableAtts;
+    private final HashMap<AttributeInfo, AttStat>  attStats;
+    private final HashMap<AttributeInfo, Splitter> splitters;
+    private final AttStatFactory                   attStatFactory;
+    private final SplitterFactory                  splitterFactory;
+    private       AttributeInfo                    attToSplit;
+    private       int                              numData;
+    private final Collection<AttributeInfo>        availableAtts;
 
     public SuffStatBase(Collection<AttributeInfo> availableAtts,
                         AttStatFactory attStatFactory,
@@ -43,7 +43,7 @@ public class SuffStatBase implements SuffStat {
         initAttStats(availableAtts);
     }
 
-    protected void initAttStats(Collection<AttributeInfo> availableAtts) throws Exception {
+    private void initAttStats(Collection<AttributeInfo> availableAtts) throws Exception {
         for (AttributeInfo attInfo : availableAtts) {
             AttStat attStat = attStatFactory.create(attInfo);
             attStats.put(attInfo, attStat);
@@ -51,6 +51,12 @@ public class SuffStatBase implements SuffStat {
         }
     }
 
+    /**
+     * Updates the statistics in this node.
+     *
+     * @param instance Data. Should not contain the label.
+     * @param label    The label of data.
+     */
     @Override
     public void update(Instance instance, Attribute label) {
         for (Attribute att : instance.getAtts()) {

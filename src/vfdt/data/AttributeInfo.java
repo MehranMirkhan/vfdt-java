@@ -1,6 +1,5 @@
 package vfdt.data;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -15,7 +14,7 @@ public class AttributeInfo {
         NOMINAL, NUMERICAL
     }
 
-    private String name = "Unknown";
+    private String   name   = "Unknown";
     private String[] values = null;
     private AttributeType type;
 

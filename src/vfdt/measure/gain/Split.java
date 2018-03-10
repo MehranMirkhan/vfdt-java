@@ -10,8 +10,8 @@ import vfdt.measure.Counts;
  * @since 2018 Mar 04
  */
 public class Split {
-    protected Counts   original;
-    protected Counts[] branches;
+    private final Counts   original;
+    private final Counts[] branches;
 
     public Split(Counts original, Counts[] branches) {
         this.original = original;

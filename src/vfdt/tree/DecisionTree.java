@@ -13,13 +13,13 @@ import vfdt.stat.SuffStatFactory;
  * @since 2018 Mar 08
  */
 public abstract class DecisionTree extends TreeBase implements Classifier {
-    protected DatasetInfo datasetInfo;
-    protected SplitPolicy splitPolicy;
-    protected SuffStatFactory suffStatFactory;
+    final DatasetInfo     datasetInfo;
+    final SplitPolicy     splitPolicy;
+    final SuffStatFactory suffStatFactory;
 
-    public DecisionTree(DatasetInfo datasetInfo,
-                        SplitPolicy splitPolicy,
-                        SuffStatFactory suffStatFactory) {
+    DecisionTree(DatasetInfo datasetInfo,
+                 SplitPolicy splitPolicy,
+                 SuffStatFactory suffStatFactory) {
         this.datasetInfo = datasetInfo;
         this.splitPolicy = splitPolicy;
         this.suffStatFactory = suffStatFactory;

@@ -10,7 +10,7 @@ import java.util.Arrays;
  * @since 2018 Mar 04
  */
 public class Counts {
-    private Double[] counts;
+    private final Double[] counts;
 
     public Counts(Double... counts) {
         this.counts = counts;
@@ -18,6 +18,8 @@ public class Counts {
 
     public Counts(Integer n) {
         counts = new Double[n];
+        for (int i = 0; i < n; i++)
+            counts[i] = 0.;
     }
 
     public Double[] getCounts() {
@@ -53,9 +55,9 @@ public class Counts {
     }
 
     public Integer getIndexOfMax() {
-        Double maxValue = Double.NEGATIVE_INFINITY;
+        Double  maxValue = Double.NEGATIVE_INFINITY;
         Integer maxIndex = null;
-        for (int index = 0; index<getCounts().length; index++) {
+        for (int index = 0; index < getCounts().length; index++) {
             Double value = getCount(index);
             if (value > maxValue) {
                 maxValue = value;

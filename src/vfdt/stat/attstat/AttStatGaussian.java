@@ -1,7 +1,6 @@
 package vfdt.stat.attstat;
 
 import vfdt.data.Attribute;
-import vfdt.stat.splitter.SplitterGaussian;
 import vfdt.stat.dist.DistributionGaussian;
 
 /**
@@ -12,9 +11,9 @@ import vfdt.stat.dist.DistributionGaussian;
  * @since 2018 Mar 07
  */
 public class AttStatGaussian implements AttStat {
-    protected DistributionGaussian[] classDist;
-    protected Double minValue = Double.POSITIVE_INFINITY,
-            maxValue = Double.NEGATIVE_INFINITY;
+    private final DistributionGaussian[] classDist;
+    private Double minValue = Double.POSITIVE_INFINITY;
+    private Double maxValue = Double.NEGATIVE_INFINITY;
 
     public AttStatGaussian(int numClasses) {
         classDist = new DistributionGaussian[numClasses];
