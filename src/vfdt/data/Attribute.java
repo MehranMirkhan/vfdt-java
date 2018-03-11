@@ -9,7 +9,7 @@ package vfdt.data;
  */
 public class Attribute<T> {
     private final AttributeInfo attributeInfo;
-    private final T             value;
+    private       T             value;
 
     public Attribute(AttributeInfo attributeInfo, T value) {
         this.attributeInfo = attributeInfo;
@@ -26,6 +26,10 @@ public class Attribute<T> {
 
     public T getValue() {
         return this.value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
     }
 
     public Integer getValueIndex() {

@@ -33,4 +33,12 @@ public class SplitInfo {
     public void setDecision(Decision decision) {
         this.decision = decision;
     }
+
+    @Override
+    public String toString() {
+        return "SplitInfo{" +
+                "attribute=" + attributeInfo.getName() +
+                ", numBranches=" + decision.getNumBranches() +
+                '}';
+    }
 }

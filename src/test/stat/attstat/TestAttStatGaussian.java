@@ -15,7 +15,7 @@ import vfdt.stat.attstat.AttStatGaussian;
  */
 public class TestAttStatGaussian {
     @Test
-    public void testCorrectness() {
+    public void test() {
         Attribute<String> label   = new Attribute<>(new AttributeInfo(AttributeInfo.AttributeType.NOMINAL).values("c0"), "c0");
         AttStatGaussian   attStat = new AttStatGaussian(1);
         attStat.update(new Attribute<>(new AttributeInfo(AttributeInfo.AttributeType.NUMERICAL), -1.), label);

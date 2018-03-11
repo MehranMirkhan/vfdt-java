@@ -1,6 +1,7 @@
 package vfdt.stat.splitter;
 
 import vfdt.data.Attribute;
+import vfdt.data.AttributeInfo;
 import vfdt.measure.Counts;
 import vfdt.measure.gain.Gain;
 import vfdt.measure.gain.Split;
@@ -53,6 +54,14 @@ public class SplitterNominal implements Splitter {
             @Override
             public int getNumBranches() {
                 return asn.getClassDist()[0].getNumValues();
+            }
+
+            @Override
+            public String[] describe(AttributeInfo attributeInfo) {
+                String[] d = new String[getNumBranches()];
+                for (int i = 0; i < d.length; i++)
+                    d[i] = attributeInfo.getName() + " == " + attributeInfo.getValues()[i];
+                return d;
             }
         };
     }

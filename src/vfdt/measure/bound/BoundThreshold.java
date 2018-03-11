@@ -16,6 +16,7 @@ public abstract class BoundThreshold extends Bound {
     public AttributeInfo isSplitNeeded(HashMap<AttributeInfo, Double> gains, int numData) {
         Pair<Map.Entry<AttributeInfo, Double>> topTwo     = getTopTwo(gains);
         Double                                 threshold  = getThreshold(numData);
+        Double                                 tiebreak   = getTieBreak();
         Double                                 firstValue = 0., secondValue = 0.;
         if (topTwo.first == null && topTwo.second == null)
             throw new NullPointerException("Bound received no attribute.");
@@ -23,11 +24,13 @@ public abstract class BoundThreshold extends Bound {
             firstValue = topTwo.first.getValue();
         if (topTwo.second != null)
             secondValue = topTwo.second.getValue();
-        if (firstValue - secondValue > threshold)
+        if (firstValue - secondValue > threshold || threshold < tiebreak)
             return topTwo.first.getKey();
         else
             return null;
     }
 
     protected abstract Double getThreshold(int numData);
+
+    protected abstract Double getTieBreak();
 }

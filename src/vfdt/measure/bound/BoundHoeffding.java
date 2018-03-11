@@ -10,14 +10,21 @@ package vfdt.measure.bound;
 public class BoundHoeffding extends BoundThreshold {
     private final Double delta;
     private final Double R;
+    private final Double tieBreak;
 
-    public BoundHoeffding(Double delta, Double R) {
+    public BoundHoeffding(Double delta, Double R, Double tieBreak) {
         this.delta = delta;
         this.R = R;
+        this.tieBreak = tieBreak;
     }
 
     @Override
     public Double getThreshold(int numData) {
         return R * Math.sqrt(Math.log(1 / delta) / (2 * numData));
+    }
+
+    @Override
+    protected Double getTieBreak() {
+        return tieBreak;
     }
 }

@@ -38,7 +38,8 @@ public class TestSuffStat {
         Gain     gain         = new GainBase(impurity);
         Double   delta        = 0.5;
         Double   R            = 2.;
-        Bound    bound        = new BoundHoeffding(delta, R);
+        Double   tieBreak     = 0.01;
+        Bound    bound        = new BoundHoeffding(delta, R, tieBreak);
         int      numCadidates = 10;
 
         AttributeInfo[] attsInfo = new AttributeInfo[]{
@@ -92,7 +93,8 @@ public class TestSuffStat {
         Gain     gain         = new GainBase(impurity);
         Double   delta        = 0.5;
         Double   R            = 2.;
-        Bound    bound        = new BoundHoeffding(delta, R);
+        Double   tieBreak     = 0.01;
+        Bound    bound        = new BoundHoeffding(delta, R, tieBreak);
         int      numCadidates = 10;
 
         AttributeInfo[] attsInfo = new AttributeInfo[]{

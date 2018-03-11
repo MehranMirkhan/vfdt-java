@@ -61,7 +61,8 @@ public class SuffStatBase implements SuffStat {
     public void update(Instance instance, Attribute label) {
         for (Attribute att : instance.getAtts()) {
             AttStat attStat = attStats.get(att.getAttributeInfo());
-            attStat.update(att, label);
+            if (attStat != null)
+                attStat.update(att, label);
         }
         numData += 1;
     }

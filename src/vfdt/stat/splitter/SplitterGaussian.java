@@ -1,6 +1,7 @@
 package vfdt.stat.splitter;
 
 import vfdt.data.Attribute;
+import vfdt.data.AttributeInfo;
 import vfdt.measure.Counts;
 import vfdt.measure.gain.Gain;
 import vfdt.measure.gain.Split;
@@ -42,6 +43,8 @@ public class SplitterGaussian implements Splitter {
             branches[1] = new Counts(numClasses);
             for (int c = 0; c < numClasses; c++) {
                 Double[] result = asn.getClassDist()[c].split(splitValue);
+                if (result == null)
+                    continue;
                 branches[0].add(c, result[0]);
                 branches[1].add(c, result[1]);
             }
@@ -72,6 +75,13 @@ public class SplitterGaussian implements Splitter {
             @Override
             public int getNumBranches() {
                 return 2;
+            }
+
+            @Override
+            public String[] describe(AttributeInfo attributeInfo) {
+                return new String[]{
+                        attributeInfo.getName() + " <= " + bestSplitValue,
+                        attributeInfo.getName() + " > " + bestSplitValue};
             }
         };
     }

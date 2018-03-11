@@ -21,6 +21,12 @@ public class NodeLeaf extends NodeBase {
         this.classCounts = new Counts(datasetInfo.getNumClasses());
     }
 
+    public NodeLeaf() {
+        // Used only for test
+        classCounts = null;
+        datasetInfo = null;
+    }
+
     @Override
     public Node children(Node... children) {
         return this;
@@ -58,5 +64,14 @@ public class NodeLeaf extends NodeBase {
     public String classify(Instance instance) {
         Integer index = classCounts.getIndexOfMax();
         return datasetInfo.getClassAttribute().getValues()[index];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<getHeight()-1; i++)
+            sb.append("|\t");
+        sb.append("Label: ").append(classify(null)).append('\n');
+        return sb.toString();
     }
 }

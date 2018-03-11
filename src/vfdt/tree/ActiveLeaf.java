@@ -30,6 +30,12 @@ public class ActiveLeaf extends NodeLeaf {
         this.suffStat = suffStatFactory.create(availableAtts);
     }
 
+    public ActiveLeaf() {
+        // Used only for test.
+        splitPolicy = null;
+        suffStat = null;
+    }
+
     public Collection<AttributeInfo> getAvailableAttributes() {
         return suffStat.getAvailableAttributes();
     }
@@ -39,7 +45,7 @@ public class ActiveLeaf extends NodeLeaf {
         super.learn(instance, label);
         numData += 1;
         this.suffStat.update(instance, label);
-        if (numData > splitPolicy.getGracePeriod()) {
+        if (numData % splitPolicy.getGracePeriod() == 0) {
             AttributeInfo attToSplit = suffStat.checkSplit(splitPolicy.getBound());
             if (attToSplit != null) {
                 Decision decision = suffStat.getDecision();

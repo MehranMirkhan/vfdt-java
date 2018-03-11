@@ -113,9 +113,13 @@ public class ArffReader implements DatasetReader {
         private final int            numEpochs;
         private final IndexCondition indexCondition;
 
-        private LineNumberReader lnr;
-        private String           line;
-        private int              currentEpoch;
+        private LineNumberReader          lnr;
+        private String                    line;
+        private int                       currentEpoch;
+        private Instance                  instance;
+        private Attribute<String>         label;
+        private int                       numAtts;
+        private Pair<Instance, Attribute> pair;
 
         public ArffIterator(DatasetInfo datasetInfo, String fileName, int numEpochs, IndexCondition indexCondition) throws IOException {
             this.datasetInfo = datasetInfo;
@@ -124,7 +128,19 @@ public class ArffReader implements DatasetReader {
             this.indexCondition = indexCondition;
 
             currentEpoch = 1;
-
+            AttributeInfo[] attsInfo = this.datasetInfo.getAttributeInfo();
+            label = new Attribute<String>(datasetInfo.getClassAttribute(), null);
+            if (datasetInfo.getClassIndex() == null)
+                numAtts = attsInfo.length;
+            else
+                numAtts = attsInfo.length - 1;
+            Attribute[] atts = new Attribute[numAtts];
+            for (int i = 0; i < attsInfo.length; i++) {
+                if (datasetInfo.getClassIndex() == null || i != datasetInfo.getClassIndex())
+                    atts[i] = new Attribute<>(attsInfo[i], null);
+            }
+            instance = new Instance(atts);
+            pair = new Pair<>(instance, label);
             reset();
         }
 
@@ -146,7 +162,8 @@ public class ArffReader implements DatasetReader {
         private void skip() throws IOException {
             while (line != null) {
                 if (line.trim().toLowerCase().equals("@data")) {
-                    lnr.setLineNumber(-1);
+                    updateLine();
+                    lnr.setLineNumber(0);
                     break;
                 }
                 updateLine();
@@ -156,7 +173,7 @@ public class ArffReader implements DatasetReader {
         @Override
         public boolean hasNext() {
             try {
-                while (!indexCondition.isValid(lnr.getLineNumber())) {
+                while (indexCondition != null && !indexCondition.isValid(lnr.getLineNumber())) {
                     updateLine();
                     if (line == null)
                         return false;
@@ -197,29 +214,23 @@ public class ArffReader implements DatasetReader {
         }
 
         Pair<Instance, Attribute> parseLine(String line) throws Exception {
-            AttributeInfo[]      attsInfo = this.datasetInfo.getAttributeInfo();
-            ArrayList<Attribute> atts     = new ArrayList<>();
-            Attribute            label    = null;
-            String[]             values   = line.split("\\s*,\\s*");
+            AttributeInfo[] attsInfo = this.datasetInfo.getAttributeInfo();
+//            String[]        values   = line.split("\\s*,\\s*");
+            String[]        values   = line.split(",");
             for (int i = 0; i < values.length; i++) {
+                String v = values[i].trim();
                 // Create Attribute
                 AttributeInfo attInfo = attsInfo[i];
                 if (i == datasetInfo.getClassIndex()) {
-                    label = new Attribute<>(attInfo, values[i]);
+                    label.setValue(v);
                 } else {
-                    switch (attInfo.getType()) {
-                        case NOMINAL:
-                            atts.add(new Attribute<>(attInfo, values[i]));
-                            break;
-                        case NUMERICAL:
-                            atts.add(new Attribute<>(attInfo, Double.parseDouble(values[i])));
-                            break;
-                        default:
-                            throw new Exception("Attribute type not recognized.");
-                    }
+                    if (attInfo.isNumerical())
+                        instance.getAttribute(i).setValue(Double.parseDouble(v));
+                    else
+                        instance.getAttribute(i).setValue(v);
                 }
             }
-            return new Pair<>(new Instance(atts.toArray(new Attribute[atts.size()])), label);
+            return pair;
         }
     }
 }

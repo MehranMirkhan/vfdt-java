@@ -23,7 +23,7 @@ public class VFDT extends DecisionTree {
         super(datasetInfo, splitPolicy, suffStatFactory);
         List<AttributeInfo> availableAtts = datasetInfo.getAttributeInfoAsList();
         availableAtts.remove(datasetInfo.getClassAttribute());
-        this.setRoot(new ActiveLeaf(datasetInfo, splitPolicy, suffStatFactory, availableAtts));
+        this.setRoot(new ActiveLeaf(datasetInfo, splitPolicy, suffStatFactory, availableAtts).height(1));
     }
 
     @Override
@@ -32,21 +32,21 @@ public class VFDT extends DecisionTree {
         NodeLeaf  leaf      = root.sortDown(instance);
         SplitInfo splitInfo = leaf.learn(instance, label);
         if (splitInfo != null) {
+            System.out.println(splitInfo);
             ActiveLeaf activeLeaf = (ActiveLeaf) leaf;
             Collection<AttributeInfo> availableAtts = new HashSet<>(activeLeaf.getAvailableAttributes());
-            availableAtts.remove(splitInfo.getAttributeInfo());
+            if (splitInfo.getAttributeInfo().isNominal())
+                availableAtts.remove(splitInfo.getAttributeInfo());
             int numBranches = splitInfo.getDecision().getNumBranches();
-            DecisionNode decisionNode = new DecisionNode(splitInfo.getAttributeInfo(), splitInfo.getDecision());
-            NodeLeaf[] children;
+            Node decisionNode = new DecisionNode(splitInfo.getAttributeInfo(), splitInfo.getDecision());
+            Node[] children = new Node[numBranches];
             if (leaf.getHeight() < splitPolicy.getMaxHeight()) {    // Leafs should be active
-                children = new ActiveLeaf[numBranches];
                 for (int i = 0; i < numBranches; i++) {
                     children[i] = new ActiveLeaf(datasetInfo, splitPolicy, suffStatFactory, availableAtts);
                     children[i].setParent(decisionNode);
                     children[i].setHeight(leaf.getHeight() + 1);
                 }
             } else {                // Leafs should not be active
-                children = new NodeLeaf[numBranches];
                 for (int i = 0; i < numBranches; i++) {
                     children[i] = new NodeLeaf(datasetInfo);
                     children[i].setParent(decisionNode);
@@ -55,7 +55,12 @@ public class VFDT extends DecisionTree {
             }
             decisionNode.setHeight(leaf.getHeight());
             decisionNode.setChildren(children);
-            leaf.replaceChild(leaf, decisionNode);
+            if (leaf.getParent() != null) {
+                decisionNode.setParent(leaf.getParent());
+                leaf.getParent().replaceChild(leaf, decisionNode);
+            }
+            else
+                this.setRoot(decisionNode);
         }
     }
 
@@ -64,5 +69,10 @@ public class VFDT extends DecisionTree {
         Node     root = getRoot();
         NodeLeaf leaf = root.sortDown(instance);
         return leaf.classify(instance);
+    }
+
+    @Override
+    public String print() {
+        return getRoot().toString();
     }
 }

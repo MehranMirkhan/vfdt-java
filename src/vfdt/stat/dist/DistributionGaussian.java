@@ -47,11 +47,14 @@ public class DistributionGaussian implements Distribution {
     }
 
     public Double[] split(Double value) {
-        update();
-        NormalDistribution normal = new NormalDistribution(mean, std);
-        double             left   = normal.cumulativeProbability(value) * numData;
-        double             right  = numData - left;
-        return new Double[]{left, right};
+        if (numData > 0) {
+            update();
+            NormalDistribution normal = new NormalDistribution(mean, std);
+            double left = normal.cumulativeProbability(value) * numData;
+            double right = numData - left;
+            return new Double[]{left, right};
+        } else
+            return null;
     }
 
     public int getNumData() {
