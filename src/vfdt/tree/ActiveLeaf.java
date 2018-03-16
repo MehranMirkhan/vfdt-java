@@ -6,6 +6,7 @@ import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
 import vfdt.stat.SuffStat;
 import vfdt.stat.SuffStatFactory;
+import vfdt.util.Logger;
 
 import java.util.Collection;
 
@@ -47,7 +48,8 @@ public class ActiveLeaf extends NodeLeaf {
         this.suffStat.update(instance, label);
         if (numData % splitPolicy.getGracePeriod() == 0) {
             AttributeInfo attToSplit = suffStat.checkSplit(splitPolicy.getBound());
-            if (attToSplit != null) {
+            if (attToSplit != null) {       // Split is required
+                Logger.append("Split Occured: (Attribute: " + attToSplit.getName() + ")\n");
                 Decision decision = suffStat.getDecision();
                 return new SplitInfo(attToSplit, decision);
             }

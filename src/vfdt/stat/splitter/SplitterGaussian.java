@@ -1,7 +1,5 @@
 package vfdt.stat.splitter;
 
-import vfdt.data.Attribute;
-import vfdt.data.AttributeInfo;
 import vfdt.measure.Counts;
 import vfdt.measure.gain.Gain;
 import vfdt.measure.gain.Split;
@@ -19,13 +17,13 @@ import vfdt.tree.DecisionNumeric;
 public class SplitterGaussian implements Splitter {
     private final AttStatGaussian asn;
     private final Gain            gain;
-    private final int             numCandidates;
+    private final int             numBins;
     private       Double          bestSplitValue;
 
-    public SplitterGaussian(AttStatGaussian asn, Gain gain, int numCandidates) {
+    public SplitterGaussian(AttStatGaussian asn, Gain gain, int numBins) {
         this.asn = asn;
         this.gain = gain;
-        this.numCandidates = numCandidates;
+        this.numBins = numBins;
     }
 
     @Override
@@ -35,9 +33,9 @@ public class SplitterGaussian implements Splitter {
         for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getNumData());
         }
-        Double step  = (asn.getMaxValue() - asn.getMinValue()) / (numCandidates + 1);
+        Double step  = (asn.getMaxValue() - asn.getMinValue()) / (numBins + 1);
         Double bestG = Double.NEGATIVE_INFINITY;
-        for (int i = 1; i <= numCandidates; i++) {
+        for (int i = 1; i <= numBins; i++) {
             Double splitValue = asn.getMinValue() + i * step;
             bestG = checkValue(original, bestG, splitValue);
         }

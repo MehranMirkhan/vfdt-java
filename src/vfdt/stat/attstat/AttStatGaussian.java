@@ -42,4 +42,12 @@ public class AttStatGaussian implements AttStat {
             minValue = value;
         classDist[label.getValueIndex()].add(value);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (DistributionGaussian dist : classDist)
+            sb.append("    " + dist.toString() + "\n");
+        return sb.toString();
+    }
 }

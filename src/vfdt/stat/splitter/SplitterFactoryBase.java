@@ -12,13 +12,13 @@ import vfdt.stat.attstat.AttStatNominal;
  * @since 2018 Mar 08
  */
 public class SplitterFactoryBase extends SplitterFactory {
-    private final Gain gain;
-    private final int  numCandidates;
+    private final Gain   gain;
+    private final int    numBins;
     private final String NumericalMethod;
 
-    public SplitterFactoryBase(Gain gain, int numCandidates, String NumericalMethod) {
+    public SplitterFactoryBase(Gain gain, int numBins, String NumericalMethod) {
         this.gain = gain;
-        this.numCandidates = numCandidates;
+        this.numBins = numBins;
         this.NumericalMethod = NumericalMethod;
     }
 
@@ -31,11 +31,11 @@ public class SplitterFactoryBase extends SplitterFactory {
     public Splitter createNumerical(AttStatGaussian attStatGaussian) {
         switch (NumericalMethod) {
             case "bin":
-                return new SplitterGaussian(attStatGaussian, gain, numCandidates);
+                return new SplitterGaussian(attStatGaussian, gain, numBins);
             case "exact":
                 return new SplitterGaussianExact(attStatGaussian, gain);
             case "delayed":
-                return new SplitterGaussianDelayed(attStatGaussian, gain, numCandidates);
+                return new SplitterGaussianDelayed(attStatGaussian, gain, numBins);
             default:
                 return null;
         }

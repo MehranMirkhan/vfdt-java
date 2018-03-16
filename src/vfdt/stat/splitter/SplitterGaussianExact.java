@@ -21,6 +21,7 @@ public class SplitterGaussianExact implements Splitter {
     private final AttStatGaussian asn;
     private final Gain            gain;
     private       Double          bestSplitValue;
+    private       Double          bestG;
 
     public SplitterGaussianExact(AttStatGaussian asn, Gain gain) {
         this.asn = asn;
@@ -34,7 +35,7 @@ public class SplitterGaussianExact implements Splitter {
         for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getNumData());
         }
-        Double bestG = Double.NEGATIVE_INFINITY;
+        bestG = Double.NEGATIVE_INFINITY;
         for (int i=0; i<numClasses; i++) {
             if (original.getCount(i) < 2)
                 continue;
@@ -46,14 +47,14 @@ public class SplitterGaussianExact implements Splitter {
                 Double[] points = DistributionGaussian.intersect(d1, d2);
 //                System.out.println("Candidates: " + points[0] + ", " + points[1]);
                 for (Double splitValue : points)
-                    if (splitValue != null)
-                        bestG = checkValue(original, bestG, splitValue);
+                    if (splitValue != null && splitValue > asn.getMinValue() && splitValue < asn.getMaxValue())
+                        bestG = checkValue(original, splitValue);
             }
         }
         return bestG;
     }
 
-    private Double checkValue(Counts original, Double bestG, Double splitValue) throws Exception {
+    private Double checkValue(Counts original, Double splitValue) throws Exception {
         int      numClasses = asn.getClassDist().length;
         Counts[] branches   = new Counts[2];
         branches[0] = new Counts(numClasses);

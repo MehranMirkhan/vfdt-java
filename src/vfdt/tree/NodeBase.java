@@ -84,6 +84,15 @@ public abstract class NodeBase implements Node {
     }
 
     @Override
+    public int getNumSubNodes() {
+        int numSubNodes = 1;
+        if (!isLeaf())
+            for (Node child : getChildren())
+                numSubNodes += child.getNumSubNodes();
+        return numSubNodes;
+    }
+
+    @Override
     public void replaceChild(Node nodeOld, Node nodeNew) throws NoSuchFieldException {
         Node[] children = getChildren();
         if (children == null)

@@ -29,6 +29,8 @@ public interface Node {
 
     int getSubHeight();
 
+    int getNumSubNodes();
+
     boolean isLeaf();
 
     void replaceChild(Node nodeOld, Node nodeNew) throws NoSuchFieldException;

@@ -7,6 +7,7 @@ import vfdt.stat.attstat.AttStatGaussian;
 import vfdt.stat.dist.DistributionGaussian;
 import vfdt.tree.Decision;
 import vfdt.tree.DecisionNumeric;
+import vfdt.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,42 +22,43 @@ import java.util.List;
 public class SplitterGaussianDelayed implements Splitter {
     private final AttStatGaussian asn;
     private final Gain            gain;
-    private final int             numCandidates;
+    private final int             numBins;
     private       Double          bestSplitValue;
-    private Counts original;
+    private       Counts          original;
+    private       Double          bestG;
 
-    public SplitterGaussianDelayed(AttStatGaussian asn, Gain gain, int numCandidates) {
+    public SplitterGaussianDelayed(AttStatGaussian asn, Gain gain, int numBins) {
         this.asn = asn;
         this.gain = gain;
-        this.numCandidates = numCandidates;
+        this.numBins = numBins;
     }
 
     @Override
     public Double getSplitGain() throws Exception {
-        int    numClasses = asn.getClassDist().length;
-        original   = new Counts(numClasses);
+        int numClasses = asn.getClassDist().length;
+        original = new Counts(numClasses);
         for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getNumData());
         }
-        Double bestG = Double.NEGATIVE_INFINITY;
+        bestG = Double.NEGATIVE_INFINITY;
         List<Double> points = getBinValues();
         for (Double splitValue : points)
-            bestG = checkValue(original, bestG, splitValue);
+            bestG = checkValue(original, splitValue);
         return bestG;
     }
 
     private List<Double> getBinValues() {
         List<Double> points = new ArrayList<>();
-        Double step  = (asn.getMaxValue() - asn.getMinValue()) / (numCandidates + 1);
-        for (int i = 1; i <= numCandidates; i++)
+        Double       step   = (asn.getMaxValue() - asn.getMinValue()) / (numBins + 1);
+        for (int i = 1; i <= numBins; i++)
             points.add(asn.getMinValue() + i * step);
         return points;
     }
 
     private List<Double> getExactValues() {
-        List<Double> points = new ArrayList<>();
-        int    numClasses = asn.getClassDist().length;
-        for (int i=0; i<numClasses; i++) {
+        List<Double> points     = new ArrayList<>();
+        int          numClasses = asn.getClassDist().length;
+        for (int i = 0; i < numClasses; i++) {
             if (original.getCount(i) < 2)
                 continue;
             DistributionGaussian d1 = asn.getClassDist()[i];
@@ -66,14 +68,14 @@ public class SplitterGaussianDelayed implements Splitter {
                 DistributionGaussian d2 = asn.getClassDist()[j];
                 Double[] X = DistributionGaussian.intersect(d1, d2);
                 for (Double x : X)
-                    if (x != null)
+                    if (x != null && x > asn.getMinValue() && x < asn.getMaxValue())
                         points.add(x);
             }
         }
         return points;
     }
 
-    private Double checkValue(Counts original, Double bestG, Double splitValue) throws Exception {
+    private Double checkValue(Counts original, Double splitValue) throws Exception {
         int      numClasses = asn.getClassDist().length;
         Counts[] branches   = new Counts[2];
         branches[0] = new Counts(numClasses);
@@ -97,14 +99,31 @@ public class SplitterGaussianDelayed implements Splitter {
 
     @Override
     public Decision getDecision() {
+        if (Logger.isDebug()) {
+            Logger.append("Original: " + original.toString() + "\n");
+            Logger.append("AttStat:\n" + asn.toString());
+            Logger.append("Bins: ");
+            for (Double splitValue : getBinValues())
+                Logger.append(Logger.df.format(splitValue) + ", ");
+            Logger.append("\n");
+            Logger.append("Best split value: " + Logger.df.format(bestSplitValue) + "\n");
+            Logger.append("Exact: ");
+        }
         List<Double> points = getExactValues();
+        bestG = Double.NEGATIVE_INFINITY;
         for (Double splitValue : points)
             try {
-                checkValue(original, 0., splitValue);
+                checkValue(original, splitValue);
+                if (Logger.isDebug())
+                    Logger.append(Logger.df.format(splitValue) + ", ");
             } catch (Exception e) {
                 System.out.println("Exception catched in SplitterGaussianDelayed.");
                 e.printStackTrace();
             }
+        if (Logger.isDebug()) {
+            Logger.append("\n");
+            Logger.append("Best split value: " + Logger.df.format(bestSplitValue) + "\n");
+        }
         return new DecisionNumeric(bestSplitValue);
     }
 }

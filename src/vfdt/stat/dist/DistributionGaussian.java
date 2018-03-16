@@ -4,6 +4,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import vfdt.util.*;
 
 import java.lang.Math;
+import java.text.DecimalFormat;
 
 /**
  * Gaussian distribution.
@@ -93,15 +94,24 @@ public class DistributionGaussian implements Distribution {
         d2.update();
         double mean1 = d1.getMean();
         double mean2 = d2.getMean();
-        double var1 = d1.getVar();
-        double var2 = d2.getVar();
-        double std1 = d1.getStd();
-        double std2 = d2.getStd();
-        double n1 = d1.getNumData();
-        double n2 = d2.getNumData();
+        double var1  = d1.getVar();
+        double var2  = d2.getVar();
+        double std1  = d1.getStd();
+        double std2  = d2.getStd();
+        double n1    = d1.getNumData();
+        double n2    = d2.getNumData();
         return vfdt.util.Math.solveEq(
-                1/var1 - 1/var2,
-                -2*(mean1/var1 - mean2/var2),
-                mean1*mean1/var1 - mean2*mean2/var2 - 2 * Math.log((n1*std2)/(n2*std1)));
+                1 / var1 - 1 / var2,
+                -2 * (mean1 / var1 - mean2 / var2),
+                mean1 * mean1 / var1 - mean2 * mean2 / var2 - 2 * Math.log((n1 * std2) / (n2 * std1)));
+    }
+
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("#.0000");
+        return "{" +
+                "mean=" + df.format(mean) +
+                ", std=" + df.format(std) +
+                '}';
     }
 }

@@ -32,4 +32,10 @@ public abstract class DecisionTree extends TreeBase implements Classifier {
         else
             return root.sortDown(instance);
     }
+
+    @Override
+    public String print() {
+        return "Height = " + getHeight() +
+               "\nNumber of nodes = " + getNumNodes() + "\n";
+    }
 }

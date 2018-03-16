@@ -12,6 +12,8 @@ interface Tree {
 
     int getHeight();
 
+    int getNumNodes();
+
     void replaceNode(Node nodeOld, Node nodeNew) throws NoSuchFieldException;
 
     String print();

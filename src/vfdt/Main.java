@@ -1,5 +1,7 @@
 package vfdt;
 
+import json.JSONObject;
+import json.JSONTokener;
 import vfdt.data.*;
 import vfdt.measure.bound.Bound;
 import vfdt.measure.bound.BoundGini;
@@ -11,6 +13,8 @@ import vfdt.measure.impurity.GiniIndex;
 import vfdt.measure.impurity.Impurity;
 import vfdt.measure.impurity.InformationEntropy;
 import vfdt.measure.impurity.MisclassificationError;
+import vfdt.ml.Classifier;
+import vfdt.ml.ClassifierFactory;
 import vfdt.ml.Evaluator;
 import vfdt.stat.SuffStatFactory;
 import vfdt.stat.SuffStatFactoryBase;
@@ -19,56 +23,98 @@ import vfdt.stat.splitter.SplitterFactoryBase;
 import vfdt.tree.DecisionTree;
 import vfdt.tree.SplitPolicy;
 import vfdt.tree.VFDT;
+import vfdt.util.Logger;
 import vfdt.util.Pair;
 
-import java.util.Iterator;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class Main {
-    public static void main(String[] args) {
-        String  fileName   = "D:/data/rbf-a30-c6-n1e5.arff";
-        Integer classIndex = 30;
+    public static Pair<DatasetReader, ClassifierFactory> loadParams(String paramFileName) throws Exception {
+        InputStream stream     = new FileInputStream(paramFileName);
+        JSONObject  obj        = new JSONObject(new JSONTokener(stream));
+        String      fileName   = obj.getString("filename");
+        Integer     classIndex = obj.getInt("classIndex");
 
-        try {
-            // Analyze dataset
-            DatasetReader reader = new ArffReader(fileName);
-            DatasetInfo datasetInfo = reader.analyze();
-            datasetInfo.setClassIndex(classIndex);
-            datasetInfo.setNumData(100000);
+        // Analyze dataset
+        DatasetReader reader      = new ArffReader(fileName);
+        DatasetInfo   datasetInfo = reader.analyze();
+        datasetInfo.setClassIndex(classIndex);
+        datasetInfo.setNumData(obj.getInt("numData"));
 
-            // hyper parameters
-            int gracePeriod = 1000;
-            Double delta = 1e-6;
-            int numClasses = datasetInfo.getNumClasses();
-            Double R = Math.log(numClasses) / Math.log(2);
-            Double tieBreak = 0.025;
-//            Bound bound = new BoundHoeffding(delta, R, tieBreak);
-//            Bound bound = new BoundGini(delta, tieBreak, numClasses);
-            Bound bound = new BoundMisclassification(delta, tieBreak);
-            int maxHeight = 8;
-//            Impurity impurity = new GiniIndex();
-//            Impurity impurity = new InformationEntropy();
-            Impurity impurity = new MisclassificationError();
-            double minBranchFrac = 1e-2;
-            Gain gain = new GainBase(impurity, minBranchFrac);
-            int numCadidates = 10;
-            String[] splitters = {"bin", "exact", "delayed"};
-
-            SplitPolicy splitPolicy = new SplitPolicy(gracePeriod, bound, maxHeight);
-            SuffStatFactory suffStatFactory = new SuffStatFactoryBase(
-                    new AttStatFactoryBase(datasetInfo),
-                    new SplitterFactoryBase(gain, numCadidates, splitters[0])
-            );
-
-            // Create model
-            DecisionTree tree = new VFDT(datasetInfo, splitPolicy, suffStatFactory);
-
-            long startTime = System.currentTimeMillis();
-            System.out.println("Accuracy = " + Evaluator.percentile(tree, reader, 0.66));
-            System.out.println(tree.print());
-            long endTime = System.currentTimeMillis();
-            System.out.println("--- " + (endTime - startTime)/1e3 + " seconds ---");
-        } catch (Exception e) {
-            e.printStackTrace();
+        // hyper parameters
+        int    gracePeriod = obj.getInt("gracePeriod");
+        Double delta       = obj.getDouble("delta");
+        int    numClasses  = datasetInfo.getNumClasses();
+        Double R, tieBreak;
+        Bound  bound       = null;
+        switch (obj.getString("bound").toLowerCase()) {
+            case "hoeffding":
+                R = Math.log(numClasses) / Math.log(2);
+                tieBreak = obj.getDouble("tieBreak");
+                bound = new BoundHoeffding(delta, R, tieBreak);
+                break;
+            case "gini":
+                tieBreak = obj.getDouble("tieBreak");
+                bound = new BoundGini(delta, tieBreak, numClasses);
+                break;
+            case "misclassification":
+                tieBreak = obj.getDouble("tieBreak");
+                bound = new BoundMisclassification(delta, tieBreak);
+                break;
         }
+        int      maxHeight = obj.getInt("maxHeight");
+        Impurity impurity  = null;
+        switch (obj.getString("impurity").toLowerCase()) {
+            case "entropy":
+                impurity = new InformationEntropy();
+                break;
+            case "gini":
+                impurity = new GiniIndex();
+                break;
+            case "misclassification":
+                impurity = new MisclassificationError();
+                break;
+        }
+        double minBranchFrac = obj.getDouble("minBranchFrac");
+        Gain   gain          = new GainBase(impurity, minBranchFrac);
+        int    numBins       = obj.getInt("numBins");
+        String splitter      = obj.getString("splitter");
+
+        SplitPolicy splitPolicy = new SplitPolicy(gracePeriod, bound, maxHeight);
+        SuffStatFactory suffStatFactory = new SuffStatFactoryBase(
+                new AttStatFactoryBase(datasetInfo),
+                new SplitterFactoryBase(gain, numBins, splitter)
+        );
+
+        // Create model
+        ClassifierFactory classifierFactory = new ClassifierFactory() {
+            @Override
+            public Classifier build() throws Exception {
+                return new VFDT(datasetInfo, splitPolicy, suffStatFactory);
+            }
+        };
+        return new Pair<>(reader, classifierFactory);
+    }
+
+    public static void main(String[] args) throws Exception {
+        String                                 paramFileName     = "params/exp.json";
+        Pair<DatasetReader, ClassifierFactory> pair              = Main.loadParams(paramFileName);
+        DatasetReader                          reader            = pair.getFirst();
+        ClassifierFactory                      classifierFactory = pair.getSecond();
+
+        Logger.setDebug(false);
+
+        if (Logger.isDebug()) {
+            DecisionTree tree = (DecisionTree) Evaluator.train(classifierFactory, reader);
+            System.out.println(tree.print());
+            System.out.println(Logger.getLog());
+        }
+
+        long startTime = System.currentTimeMillis();
+//        System.out.println("Accuracy = " + Evaluator.kfold(classifierFactory, reader, 4));
+        System.out.println("Accuracy = " + Evaluator.percentile(classifierFactory, reader, 0.75));
+        long endTime = System.currentTimeMillis();
+        System.out.println("--- " + (endTime - startTime) / 1e3 + " seconds ---");
     }
 }

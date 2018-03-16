@@ -32,7 +32,6 @@ public class VFDT extends DecisionTree {
         NodeLeaf  leaf      = root.sortDown(instance);
         SplitInfo splitInfo = leaf.learn(instance, label);
         if (splitInfo != null) {
-            System.out.println(splitInfo);
             ActiveLeaf activeLeaf = (ActiveLeaf) leaf;
             Collection<AttributeInfo> availableAtts = new HashSet<>(activeLeaf.getAvailableAttributes());
             if (splitInfo.getAttributeInfo().isNominal())
@@ -73,6 +72,8 @@ public class VFDT extends DecisionTree {
 
     @Override
     public String print() {
-        return getRoot().toString();
+        return "---------- TREE ----------\n" +
+               super.print() + getRoot().toString() +
+               "--------------------------\n";
     }
 }

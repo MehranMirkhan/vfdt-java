@@ -3,6 +3,8 @@ package vfdt.tree;
 import vfdt.data.Attribute;
 import vfdt.data.AttributeInfo;
 
+import java.text.DecimalFormat;
+
 /**
  * %Description%
  *
@@ -36,8 +38,9 @@ public class DecisionNumeric implements Decision {
 
     @Override
     public String[] describe(AttributeInfo attributeInfo) {
+        DecimalFormat df = new DecimalFormat("0.0000");
         return new String[]{
-                attributeInfo.getName() + " <= " + decisionValue,
-                attributeInfo.getName() + " > " + decisionValue};
+                attributeInfo.getName() + " <= " + df.format(decisionValue),
+                attributeInfo.getName() + " > " + df.format(decisionValue)};
     }
 }
