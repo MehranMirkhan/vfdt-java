@@ -1,6 +1,9 @@
 package vfdt.stat.dist;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
+import vfdt.util.*;
+
+import java.lang.Math;
 
 /**
  * Gaussian distribution.
@@ -83,5 +86,22 @@ public class DistributionGaussian implements Distribution {
 
     public boolean isStatValid() {
         return isStatValid;
+    }
+
+    public static Double[] intersect(DistributionGaussian d1, DistributionGaussian d2) {
+        d1.update();
+        d2.update();
+        double mean1 = d1.getMean();
+        double mean2 = d2.getMean();
+        double var1 = d1.getVar();
+        double var2 = d2.getVar();
+        double std1 = d1.getStd();
+        double std2 = d2.getStd();
+        double n1 = d1.getNumData();
+        double n2 = d2.getNumData();
+        return vfdt.util.Math.solveEq(
+                1/var1 - 1/var2,
+                -2*(mean1/var1 - mean2/var2),
+                mean1*mean1/var1 - mean2*mean2/var2 - 2 * Math.log((n1*std2)/(n2*std1)));
     }
 }

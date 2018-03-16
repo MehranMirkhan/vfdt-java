@@ -11,6 +11,8 @@ import java.io.IOException;
  * @since 2018 Mar 09
  */
 public interface DatasetReader {
+    DatasetInfo getDatasetInfo() throws IOException;
+
     DatasetInfo analyze() throws IOException;
 
     DatasetIterator onePass() throws IOException;

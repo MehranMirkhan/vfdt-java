@@ -35,7 +35,7 @@ public class TestSuffStat {
     public void testCorrectness() throws Exception {
         Integer  classIndex   = 2;
         Impurity impurity     = new GiniIndex();
-        Gain     gain         = new GainBase(impurity);
+        Gain     gain         = new GainBase(impurity, 1e-6);
         Double   delta        = 0.5;
         Double   R            = 2.;
         Double   tieBreak     = 0.01;
@@ -56,7 +56,7 @@ public class TestSuffStat {
         availableAtts.remove(datasetInfo.getClassAttribute());
 
         AttStatFactory  attStatFactory  = new AttStatFactoryBase(datasetInfo);
-        SplitterFactory splitterFactory = new SplitterFactoryBase(gain, numCadidates);
+        SplitterFactory splitterFactory = new SplitterFactoryBase(gain, numCadidates, "bin");
 
         SuffStat suffStat = new SuffStatBase(availableAtts, attStatFactory, splitterFactory);
 
@@ -90,7 +90,7 @@ public class TestSuffStat {
     public void testCorrectnessOneAttribute() throws Exception {
         Integer  classIndex   = 1;
         Impurity impurity     = new GiniIndex();
-        Gain     gain         = new GainBase(impurity);
+        Gain     gain         = new GainBase(impurity, 1e-6);
         Double   delta        = 0.5;
         Double   R            = 2.;
         Double   tieBreak     = 0.01;
@@ -110,7 +110,7 @@ public class TestSuffStat {
         availableAtts.remove(datasetInfo.getClassAttribute());
 
         AttStatFactory  attStatFactory  = new AttStatFactoryBase(datasetInfo);
-        SplitterFactory splitterFactory = new SplitterFactoryBase(gain, numCadidates);
+        SplitterFactory splitterFactory = new SplitterFactoryBase(gain, numCadidates, "bin");
 
         SuffStat suffStat = new SuffStatBase(availableAtts, attStatFactory, splitterFactory);
 

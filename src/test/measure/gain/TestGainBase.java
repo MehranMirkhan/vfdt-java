@@ -24,7 +24,7 @@ public class TestGainBase {
         };
         Split split = new Split(original, branches);
         try {
-            double result = (new GainBase(new MisclassificationError())).measure(split);
+            double result = (new GainBase(new MisclassificationError(), 1e-6)).measure(split);
             double expect = 0.2;
             Assert.assertEquals(expect, result, 1e-12);
         } catch (Exception e) {

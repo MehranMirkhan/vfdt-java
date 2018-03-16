@@ -17,19 +17,25 @@ import java.util.regex.Pattern;
 public class ArffReader implements DatasetReader {
 
     private final String      fileName;
-    private final DatasetInfo datasetInfo;
+    private DatasetInfo datasetInfo;
 
     public ArffReader(String fileName) {
         this.fileName = fileName;
-        datasetInfo = new DatasetInfo();
+        datasetInfo = null;
     }
 
-    public DatasetInfo getDatasetInfo() {
+    @Override
+    public DatasetInfo getDatasetInfo() throws IOException {
+        if (datasetInfo == null)
+            analyze();
         return datasetInfo;
     }
 
     @Override
     public DatasetInfo analyze() throws IOException {
+        if (datasetInfo != null)
+            return datasetInfo;
+        datasetInfo = new DatasetInfo();
         FileReader               fileReader = new FileReader(fileName);
         BufferedReader           reader     = new BufferedReader(fileReader);
         ArrayList<AttributeInfo> attInfo    = new ArrayList<>();

@@ -6,6 +6,7 @@ import vfdt.measure.Counts;
 import vfdt.measure.gain.Gain;
 import vfdt.measure.gain.Split;
 import vfdt.stat.attstat.AttStatGaussian;
+import vfdt.stat.dist.DistributionGaussian;
 import vfdt.tree.Decision;
 import vfdt.tree.DecisionNumeric;
 
@@ -14,18 +15,16 @@ import vfdt.tree.DecisionNumeric;
  *
  * @author Mehran Mirkhan
  * @version 1.0
- * @since 2018 Mar 07
+ * @since 2018 Mar 12
  */
-public class SplitterGaussian implements Splitter {
+public class SplitterGaussianExact implements Splitter {
     private final AttStatGaussian asn;
     private final Gain            gain;
-    private final int             numCandidates;
     private       Double          bestSplitValue;
 
-    public SplitterGaussian(AttStatGaussian asn, Gain gain, int numCandidates) {
+    public SplitterGaussianExact(AttStatGaussian asn, Gain gain) {
         this.asn = asn;
         this.gain = gain;
-        this.numCandidates = numCandidates;
     }
 
     @Override
@@ -35,11 +34,21 @@ public class SplitterGaussian implements Splitter {
         for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getNumData());
         }
-        Double step  = (asn.getMaxValue() - asn.getMinValue()) / (numCandidates + 1);
         Double bestG = Double.NEGATIVE_INFINITY;
-        for (int i = 1; i <= numCandidates; i++) {
-            Double splitValue = asn.getMinValue() + i * step;
-            bestG = checkValue(original, bestG, splitValue);
+        for (int i=0; i<numClasses; i++) {
+            if (original.getCount(i) < 2)
+                continue;
+            DistributionGaussian d1 = asn.getClassDist()[i];
+            for (int j=i+1; j<numClasses; j++) {
+                if (original.getCount(j) < 2)
+                    continue;
+                DistributionGaussian d2 = asn.getClassDist()[j];
+                Double[] points = DistributionGaussian.intersect(d1, d2);
+//                System.out.println("Candidates: " + points[0] + ", " + points[1]);
+                for (Double splitValue : points)
+                    if (splitValue != null)
+                        bestG = checkValue(original, bestG, splitValue);
+            }
         }
         return bestG;
     }
@@ -53,6 +62,7 @@ public class SplitterGaussian implements Splitter {
             Double[] result = asn.getClassDist()[c].split(splitValue);
             if (result == null)
                 continue;
+//            System.out.println("split: " + result[0] + ", " + result[1]);
             branches[0].add(c, result[0]);
             branches[1].add(c, result[1]);
         }

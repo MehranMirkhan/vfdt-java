@@ -12,9 +12,11 @@ import vfdt.measure.Counts;
  */
 public class GainBase implements Gain {
     private final Impurity im;
+    private final double minBranchFrac;
 
-    public GainBase(Impurity im) {
+    public GainBase(Impurity im, double minBranchFrac) {
         this.im = im;
+        this.minBranchFrac = minBranchFrac;
     }
 
     @Override
@@ -26,10 +28,20 @@ public class GainBase implements Gain {
         int[]    ni         = new int[n_branches];
         int      n          = 0;
         double   result     = 0;
-        for (int i = 0; i < gi.length; i++) {
-            gi[i] = im.measure(branches[i]);
+        for (int i=0; i < n_branches; i++) {
             ni[i] = branches[i].sum();
             n += ni[i];
+        }
+        int healthyBranches = 0;
+        for (int i=0; i < n_branches; i++) {
+            double p = (double) ni[i] / n;
+            if (p >= minBranchFrac)
+                healthyBranches += 1;
+        }
+        if (healthyBranches < 2)
+            return Double.NEGATIVE_INFINITY;
+        for (int i = 0; i < n_branches; i++) {
+            gi[i] = im.measure(branches[i]);
             result += ni[i] * gi[i];
         }
         result = g - result / n;

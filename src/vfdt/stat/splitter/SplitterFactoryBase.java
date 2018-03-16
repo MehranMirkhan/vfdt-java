@@ -14,10 +14,12 @@ import vfdt.stat.attstat.AttStatNominal;
 public class SplitterFactoryBase extends SplitterFactory {
     private final Gain gain;
     private final int  numCandidates;
+    private final String NumericalMethod;
 
-    public SplitterFactoryBase(Gain gain, int numCandidates) {
+    public SplitterFactoryBase(Gain gain, int numCandidates, String NumericalMethod) {
         this.gain = gain;
         this.numCandidates = numCandidates;
+        this.NumericalMethod = NumericalMethod;
     }
 
     @Override
@@ -27,6 +29,15 @@ public class SplitterFactoryBase extends SplitterFactory {
 
     @Override
     public Splitter createNumerical(AttStatGaussian attStatGaussian) {
-        return new SplitterGaussian(attStatGaussian, gain, numCandidates);
+        switch (NumericalMethod) {
+            case "bin":
+                return new SplitterGaussian(attStatGaussian, gain, numCandidates);
+            case "exact":
+                return new SplitterGaussianExact(attStatGaussian, gain);
+            case "delayed":
+                return new SplitterGaussianDelayed(attStatGaussian, gain, numCandidates);
+            default:
+                return null;
+        }
     }
 }

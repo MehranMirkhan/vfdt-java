@@ -15,6 +15,7 @@ public class DatasetInfo {
     private Integer         classIndex    = null;
     private String          datasetName   = "Unknown";
     private AttributeInfo[] attributeInfo = null;
+    private Integer numData = null;
 
     public DatasetInfo attributeInfo(AttributeInfo... attributeInfo) {
         this.attributeInfo = attributeInfo;
@@ -28,6 +29,11 @@ public class DatasetInfo {
 
     public DatasetInfo datasetName(String datasetName) {
         this.datasetName = datasetName;
+        return this;
+    }
+
+    public DatasetInfo numData(Integer numData) {
+        this.numData = numData;
         return this;
     }
 
@@ -69,6 +75,14 @@ public class DatasetInfo {
             return null;
         else
             return instance.getAttribute(getClassIndex());
+    }
+
+    public Integer getNumData() {
+        return numData;
+    }
+
+    public void setNumData(Integer numData) {
+        this.numData = numData;
     }
 
     @Override

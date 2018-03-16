@@ -24,13 +24,14 @@ public abstract class BoundThreshold extends Bound {
             firstValue = topTwo.first.getValue();
         if (topTwo.second != null)
             secondValue = topTwo.second.getValue();
+//        System.out.println(firstValue + " - " + secondValue + " > " + threshold);
         if (firstValue - secondValue > threshold || threshold < tiebreak)
             return topTwo.first.getKey();
         else
             return null;
     }
 
-    protected abstract Double getThreshold(int numData);
+    public abstract Double getThreshold(int numData);
 
     protected abstract Double getTieBreak();
 }

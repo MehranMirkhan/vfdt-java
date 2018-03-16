@@ -2,12 +2,16 @@ package vfdt;
 
 import vfdt.data.*;
 import vfdt.measure.bound.Bound;
+import vfdt.measure.bound.BoundGini;
 import vfdt.measure.bound.BoundHoeffding;
+import vfdt.measure.bound.BoundMisclassification;
 import vfdt.measure.gain.Gain;
 import vfdt.measure.gain.GainBase;
 import vfdt.measure.impurity.GiniIndex;
 import vfdt.measure.impurity.Impurity;
 import vfdt.measure.impurity.InformationEntropy;
+import vfdt.measure.impurity.MisclassificationError;
+import vfdt.ml.Evaluator;
 import vfdt.stat.SuffStatFactory;
 import vfdt.stat.SuffStatFactoryBase;
 import vfdt.stat.attstat.AttStatFactoryBase;
@@ -29,60 +33,40 @@ public class Main {
             DatasetReader reader = new ArffReader(fileName);
             DatasetInfo datasetInfo = reader.analyze();
             datasetInfo.setClassIndex(classIndex);
+            datasetInfo.setNumData(100000);
 
             // hyper parameters
-            int gracePeriod = 200;
-            Double delta = 0.01;
-            Double R = 6.;
-            Double tieBreak = 0.05;
-            Bound bound = new BoundHoeffding(delta, R, tieBreak);
-            int maxHeight = 5;
+            int gracePeriod = 1000;
+            Double delta = 1e-6;
+            int numClasses = datasetInfo.getNumClasses();
+            Double R = Math.log(numClasses) / Math.log(2);
+            Double tieBreak = 0.025;
+//            Bound bound = new BoundHoeffding(delta, R, tieBreak);
+//            Bound bound = new BoundGini(delta, tieBreak, numClasses);
+            Bound bound = new BoundMisclassification(delta, tieBreak);
+            int maxHeight = 8;
 //            Impurity impurity = new GiniIndex();
-            Impurity impurity = new InformationEntropy();
-            Gain gain = new GainBase(impurity);
+//            Impurity impurity = new InformationEntropy();
+            Impurity impurity = new MisclassificationError();
+            double minBranchFrac = 1e-2;
+            Gain gain = new GainBase(impurity, minBranchFrac);
             int numCadidates = 10;
+            String[] splitters = {"bin", "exact", "delayed"};
 
             SplitPolicy splitPolicy = new SplitPolicy(gracePeriod, bound, maxHeight);
             SuffStatFactory suffStatFactory = new SuffStatFactoryBase(
                     new AttStatFactoryBase(datasetInfo),
-                    new SplitterFactoryBase(gain, numCadidates)
+                    new SplitterFactoryBase(gain, numCadidates, splitters[0])
             );
 
             // Create model
             DecisionTree tree = new VFDT(datasetInfo, splitPolicy, suffStatFactory);
 
-            // Train model
-            DatasetIterator iter = reader.onePass();
-            int counter = 0;
-            while (iter.hasNext()) {
-                if (counter % 2000 == 0)
-                    System.out.println(counter);
-                Pair<Instance, Attribute> entry = iter.next();
-                Instance instance = entry.getFirst();
-                Attribute label = entry.getSecond();
-                tree.learn(instance, label);
-                counter += 1;
-            }
-            iter.close();
-
+            long startTime = System.currentTimeMillis();
+            System.out.println("Accuracy = " + Evaluator.percentile(tree, reader, 0.66));
             System.out.println(tree.print());
-
-            // Test model
-            double accuracy = 0;
-            int numData = 0;
-            iter = reader.onePass();
-            while (iter.hasNext()) {
-                Pair<Instance, Attribute> entry = iter.next();
-                Instance instance = entry.getFirst();
-                Attribute label = entry.getSecond();
-                String pred = tree.classify(instance);
-                if (pred.equals(label.getValue()))
-                    accuracy += 1;
-                numData += 1;
-            }
-            iter.close();
-            accuracy /= numData;
-            System.out.println("Accuracy = " + accuracy);
+            long endTime = System.currentTimeMillis();
+            System.out.println("--- " + (endTime - startTime)/1e3 + " seconds ---");
         } catch (Exception e) {
             e.printStackTrace();
         }
