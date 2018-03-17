@@ -14,10 +14,10 @@ import java.text.DecimalFormat;
  * @since 2018 Mar 12
  */
 public class Evaluator {
-    public static Classifier train(ClassifierFactory factory, DatasetReader reader) throws Exception {
+    public static Classifier train(ClassifierFactory factory, DatasetReader reader, int numEpochs) throws Exception {
         Classifier model = factory.build();
         // Train model
-        DatasetIterator iter = reader.onePass();
+        DatasetIterator iter = reader.epochs(numEpochs);
         while (iter.hasNext()) {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
@@ -28,12 +28,12 @@ public class Evaluator {
         return model;
     }
 
-    public static Double evaluate(ClassifierFactory factory, DatasetReader reader,
+    public static Double evaluate(ClassifierFactory factory, DatasetReader reader, int numEpochs,
                                   IndexCondition trainCondition, IndexCondition testCondition) throws Exception {
         Classifier model = factory.build();
 
         // Train model
-        DatasetIterator iter = reader.onePass(trainCondition);
+        DatasetIterator iter = reader.epochs(numEpochs, trainCondition);
         while (iter.hasNext()) {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
@@ -60,31 +60,36 @@ public class Evaluator {
         return accuracy;
     }
 
-    public static Double percentile(ClassifierFactory factory, DatasetReader reader, Double percentile) throws Exception {
-        DatasetInfo datasetInfo = reader.getDatasetInfo();
-        Integer numData = datasetInfo.getNumData();
-        Integer numTrain = (int)(numData * percentile);
-        IndexCondition trainCondition = new IndexConditionBetween(0, numTrain);
-        IndexCondition testCondition = new IndexConditionBetween(numTrain, numData);
+    public static Double evaluateSeparate(ClassifierFactory factory,
+                                          DatasetReader trainReader, DatasetReader testReader,
+                                          int numEpochs, IndexCondition trainCondition) throws Exception {
+        Classifier model = factory.build();
 
-        return evaluate(factory, reader, trainCondition, testCondition);
-    }
-
-    public static Double kfold(ClassifierFactory factory, DatasetReader reader, int k) throws Exception {
-        DatasetInfo datasetInfo = reader.getDatasetInfo();
-        Integer numData = datasetInfo.getNumData();
-        Integer step = (int) (numData / k);
-        DecimalFormat df = new DecimalFormat("0.00000");
-        Double accuracy = 0.;
-        for (int i=0; i<k; i++) {
-            System.out.print("Fold " + i + ": ");
-            IndexCondition trainCondition = new IndexConditionNotBetween(i * step, (i+1) * step);
-            IndexCondition testCondition = new IndexConditionBetween(i * step, (i+1) * step);
-            Double acc = evaluate(factory, reader, trainCondition, testCondition);;
-            accuracy += acc;
-            System.out.println("Accuracy = " + df.format(acc));
+        // Train model
+        DatasetIterator iter = trainReader.epochs(numEpochs, trainCondition);
+        while (iter.hasNext()) {
+            Pair<Instance, Attribute> entry = iter.next();
+            Instance instance = entry.getFirst();
+            Attribute label = entry.getSecond();
+            model.learn(instance, label);
         }
+        iter.close();
 
-        return accuracy / k;
+        // Test model
+        iter = testReader.onePass();
+        Double accuracy = 0.0;
+        int numTestData = 0;
+        while (iter.hasNext()) {
+            Pair<Instance, Attribute> entry = iter.next();
+            Instance instance = entry.getFirst();
+            Attribute label = entry.getSecond();
+            String pred = model.classify(instance);
+            if (pred.equals(label.getValue()))
+                accuracy += 1;
+            numTestData += 1;
+        }
+        iter.close();
+        accuracy /= numTestData;
+        return accuracy;
     }
 }

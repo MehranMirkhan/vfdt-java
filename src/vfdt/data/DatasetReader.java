@@ -12,6 +12,7 @@ import java.io.IOException;
  */
 public interface DatasetReader {
     DatasetInfo getDatasetInfo() throws IOException;
+    void setDatasetInfo(DatasetInfo datasetInfo);
 
     DatasetInfo analyze() throws IOException;
 

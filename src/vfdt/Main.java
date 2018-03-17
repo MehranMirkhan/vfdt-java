@@ -16,6 +16,7 @@ import vfdt.measure.impurity.MisclassificationError;
 import vfdt.ml.Classifier;
 import vfdt.ml.ClassifierFactory;
 import vfdt.ml.Evaluator;
+import vfdt.ml.TrainMethod;
 import vfdt.stat.SuffStatFactory;
 import vfdt.stat.SuffStatFactoryBase;
 import vfdt.stat.attstat.AttStatFactoryBase;
@@ -23,6 +24,7 @@ import vfdt.stat.splitter.SplitterFactoryBase;
 import vfdt.tree.DecisionTree;
 import vfdt.tree.SplitPolicy;
 import vfdt.tree.VFDT;
+import vfdt.util.Config;
 import vfdt.util.Logger;
 import vfdt.util.Pair;
 
@@ -94,26 +96,25 @@ public class Main {
                 return new VFDT(datasetInfo, splitPolicy, suffStatFactory);
             }
         };
+        stream.close();
         return new Pair<>(reader, classifierFactory);
     }
 
     public static void main(String[] args) throws Exception {
-        String                                 paramFileName     = "params/exp.json";
-        Pair<DatasetReader, ClassifierFactory> pair              = Main.loadParams(paramFileName);
-        DatasetReader                          reader            = pair.getFirst();
-        ClassifierFactory                      classifierFactory = pair.getSecond();
+        String      paramFileName = "params/exp.json";
+        Config      config        = new Config(paramFileName);
+        TrainMethod trainMethod   = (TrainMethod) config.getParam("trainMethod");
 
         Logger.setDebug(false);
 
         if (Logger.isDebug()) {
-            DecisionTree tree = (DecisionTree) Evaluator.train(classifierFactory, reader);
-            System.out.println(tree.print());
+            VFDT model = (VFDT) trainMethod.onlyTrain();
+            System.out.println(model.print());
             System.out.println(Logger.getLog());
         }
 
         long startTime = System.currentTimeMillis();
-//        System.out.println("Accuracy = " + Evaluator.kfold(classifierFactory, reader, 4));
-        System.out.println("Accuracy = " + Evaluator.percentile(classifierFactory, reader, 0.75));
+        System.out.println("Accuracy = " + trainMethod.evaluate());
         long endTime = System.currentTimeMillis();
         System.out.println("--- " + (endTime - startTime) / 1e3 + " seconds ---");
     }

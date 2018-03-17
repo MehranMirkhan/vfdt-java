@@ -32,6 +32,11 @@ public class ArffReader implements DatasetReader {
     }
 
     @Override
+    public void setDatasetInfo(DatasetInfo datasetInfo) {
+        this.datasetInfo = datasetInfo;
+    }
+
+    @Override
     public DatasetInfo analyze() throws IOException {
         if (datasetInfo != null)
             return datasetInfo;
