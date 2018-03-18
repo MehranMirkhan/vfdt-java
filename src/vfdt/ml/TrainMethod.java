@@ -3,6 +3,7 @@ package vfdt.ml;
 import vfdt.data.ArffReader;
 import vfdt.data.DatasetInfo;
 import vfdt.data.DatasetReader;
+import vfdt.util.Pair;
 
 /**
  * %Description%
@@ -30,5 +31,5 @@ public abstract class TrainMethod {
         return Evaluator.train(classifierFactory, reader, numEpochs);
     }
 
-    public abstract Double evaluate() throws Exception;
+    public abstract Pair<Classifier, Double> evaluate() throws Exception;
 }

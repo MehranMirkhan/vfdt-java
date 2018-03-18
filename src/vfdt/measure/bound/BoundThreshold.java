@@ -19,7 +19,8 @@ public abstract class BoundThreshold extends Bound {
         Double                                 tiebreak   = getTieBreak();
         Double                                 firstValue = 0., secondValue = 0.;
         if (topTwo.first == null && topTwo.second == null)
-            throw new NullPointerException("Bound received no attribute.");
+            return null;
+//            throw new NullPointerException("Bound received no attribute.");
         if (topTwo.first != null)
             firstValue = topTwo.first.getValue();
         if (topTwo.second != null)

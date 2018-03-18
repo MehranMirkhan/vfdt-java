@@ -28,8 +28,11 @@ public class Evaluator {
         return model;
     }
 
-    public static Double evaluate(ClassifierFactory factory, DatasetReader reader, int numEpochs,
-                                  IndexCondition trainCondition, IndexCondition testCondition) throws Exception {
+    public static Pair<Classifier, Double> evaluate(ClassifierFactory factory,
+                                                    DatasetReader reader,
+                                                    int numEpochs,
+                                                    IndexCondition trainCondition,
+                                                    IndexCondition testCondition) throws Exception {
         Classifier model = factory.build();
 
         // Train model
@@ -44,8 +47,8 @@ public class Evaluator {
 
         // Test model
         iter = reader.onePass(testCondition);
-        Double accuracy = 0.0;
-        int numTestData = 0;
+        Double accuracy    = 0.0;
+        int    numTestData = 0;
         while (iter.hasNext()) {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
@@ -57,12 +60,14 @@ public class Evaluator {
         }
         iter.close();
         accuracy /= numTestData;
-        return accuracy;
+        return new Pair<>(model, accuracy);
     }
 
-    public static Double evaluateSeparate(ClassifierFactory factory,
-                                          DatasetReader trainReader, DatasetReader testReader,
-                                          int numEpochs, IndexCondition trainCondition) throws Exception {
+    public static Pair<Classifier, Double> evaluateSeparate(ClassifierFactory factory,
+                                                            DatasetReader trainReader,
+                                                            DatasetReader testReader,
+                                                            int numEpochs,
+                                                            IndexCondition trainCondition) throws Exception {
         Classifier model = factory.build();
 
         // Train model
@@ -77,8 +82,8 @@ public class Evaluator {
 
         // Test model
         iter = testReader.onePass();
-        Double accuracy = 0.0;
-        int numTestData = 0;
+        Double accuracy    = 0.0;
+        int    numTestData = 0;
         while (iter.hasNext()) {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
@@ -90,6 +95,6 @@ public class Evaluator {
         }
         iter.close();
         accuracy /= numTestData;
-        return accuracy;
+        return new Pair<>(model, accuracy);
     }
 }

@@ -1,6 +1,7 @@
 package vfdt.ml;
 
 import vfdt.data.*;
+import vfdt.util.Pair;
 
 import java.text.DecimalFormat;
 
@@ -21,22 +22,27 @@ public class TrainMethodKFold extends TrainMethod {
     }
 
     @Override
-    public Double evaluate() throws Exception {
+    public Pair<Classifier, Double> evaluate() throws Exception {
         DatasetReader reader = new ArffReader(trainFile);
         reader.setDatasetInfo(datasetInfo);
         Integer       numData     = datasetInfo.getNumData();
         Integer       step        = numData / k;
         DecimalFormat df          = new DecimalFormat("0.00000");
         Double        accuracy    = 0.;
+        Classifier model = null;
         for (int i = 0; i < k; i++) {
             System.out.print("Fold " + i + ": ");
             IndexCondition trainCondition = new IndexConditionNotBetween(i * step, (i + 1) * step);
             IndexCondition testCondition = new IndexConditionBetween(i * step, (i + 1) * step);
-            Double acc = Evaluator.evaluate(classifierFactory, reader, numEpochs, trainCondition, testCondition);
+            Pair<Classifier, Double> result = Evaluator.evaluate(classifierFactory, reader,
+                    numEpochs, trainCondition, testCondition);
+            if (i == 0)
+                model = result.getFirst();
+            Double acc = result.getSecond();
             accuracy += acc;
             System.out.println("Accuracy = " + df.format(acc));
         }
 
-        return accuracy / k;
+        return new Pair<>(model, accuracy / k);
     }
 }

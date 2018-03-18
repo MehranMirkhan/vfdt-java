@@ -39,7 +39,7 @@ public class VFDT extends DecisionTree {
             int numBranches = splitInfo.getDecision().getNumBranches();
             Node decisionNode = new DecisionNode(splitInfo.getAttributeInfo(), splitInfo.getDecision());
             Node[] children = new Node[numBranches];
-            if (leaf.getHeight() < splitPolicy.getMaxHeight()) {    // Leafs should be active
+            if (leaf.getHeight() < splitPolicy.getMaxHeight() - 1) {    // Leafs should be active
                 for (int i = 0; i < numBranches; i++) {
                     children[i] = new ActiveLeaf(datasetInfo, splitPolicy, suffStatFactory, availableAtts);
                     children[i].setParent(decisionNode);

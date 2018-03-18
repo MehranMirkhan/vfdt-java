@@ -1,6 +1,7 @@
 package vfdt.ml;
 
 import vfdt.data.*;
+import vfdt.util.Pair;
 
 /**
  * %Description%
@@ -17,7 +18,7 @@ public class TrainMethodSame extends TrainMethod {
     }
 
     @Override
-    public Double evaluate() throws Exception {
+    public Pair<Classifier, Double> evaluate() throws Exception {
         DatasetReader reader = new ArffReader(trainFile);
         reader.setDatasetInfo(datasetInfo);
         Integer        numData   = datasetInfo.getNumData();

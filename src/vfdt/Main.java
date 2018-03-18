@@ -107,14 +107,17 @@ public class Main {
 
         Logger.setDebug(false);
 
+        long startTime = System.currentTimeMillis();
         if (Logger.isDebug()) {
             VFDT model = (VFDT) trainMethod.onlyTrain();
             System.out.println(model.print());
             System.out.println(Logger.getLog());
+        } else {
+            Pair<Classifier, Double> result = trainMethod.evaluate();
+            System.out.println("Accuracy = " + result.getSecond());
+            VFDT model = (VFDT) result.getFirst();
+            System.out.println(model.print());
         }
-
-        long startTime = System.currentTimeMillis();
-        System.out.println("Accuracy = " + trainMethod.evaluate());
         long endTime = System.currentTimeMillis();
         System.out.println("--- " + (endTime - startTime) / 1e3 + " seconds ---");
     }
