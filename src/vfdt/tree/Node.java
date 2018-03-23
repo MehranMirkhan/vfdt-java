@@ -36,4 +36,6 @@ public interface Node {
     void replaceChild(Node nodeOld, Node nodeNew) throws NoSuchFieldException;
 
     NodeLeaf sortDown(Instance instance);
+
+    Integer getNumLeaves();
 }

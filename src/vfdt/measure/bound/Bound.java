@@ -41,6 +41,10 @@ public abstract class Bound {
                 a2 = attInfo;
             }
         }
+        if (a1 == null)
+            g1 = 0.0;
+        if (a2 == null)
+            g2 = 0.0;
         Map.Entry<AttributeInfo, Double> e1 = new AbstractMap.SimpleEntry<>(a1, g1);
         Map.Entry<AttributeInfo, Double> e2 = new AbstractMap.SimpleEntry<>(a2, g2);
         return new Pair<>(e1, e2);

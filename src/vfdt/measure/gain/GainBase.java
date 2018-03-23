@@ -12,7 +12,7 @@ import vfdt.measure.Counts;
  */
 public class GainBase implements Gain {
     private final Impurity im;
-    private final double minBranchFrac;
+    private final double   minBranchFrac;
 
     public GainBase(Impurity im, double minBranchFrac) {
         this.im = im;
@@ -24,25 +24,23 @@ public class GainBase implements Gain {
         double   g          = im.measure(split.getOriginal());
         Counts[] branches   = split.getBranches();
         int      n_branches = branches.length;
-        double[] gi         = new double[n_branches];
-        int[]    ni         = new int[n_branches];
-        int      n          = 0;
+        double[] G          = new double[n_branches];
+        double[] N          = new double[n_branches];
+        double   n          = split.getOriginal().sum();
         double   result     = 0;
-        for (int i=0; i < n_branches; i++) {
-            ni[i] = branches[i].sum();
-            n += ni[i];
-        }
+        for (int i = 0; i < n_branches; i++)
+            N[i] = branches[i].sum();
         int healthyBranches = 0;
-        for (int i=0; i < n_branches; i++) {
-            double p = (double) ni[i] / n;
+        for (int i = 0; i < n_branches; i++) {
+            double p = N[i] / n;
             if (p >= minBranchFrac)
-                healthyBranches += 1;
+                healthyBranches++;
         }
         if (healthyBranches < 2)
-            return Double.NEGATIVE_INFINITY;
+            return 0;
         for (int i = 0; i < n_branches; i++) {
-            gi[i] = im.measure(branches[i]);
-            result += ni[i] * gi[i];
+            G[i] = im.measure(branches[i]);
+            result += N[i] * G[i];
         }
         result = g - result / n;
         return result;

@@ -15,7 +15,6 @@ import vfdt.measure.impurity.InformationEntropy;
 import vfdt.measure.impurity.MisclassificationError;
 import vfdt.ml.Classifier;
 import vfdt.ml.ClassifierFactory;
-import vfdt.ml.Evaluator;
 import vfdt.ml.TrainMethod;
 import vfdt.stat.SuffStatFactory;
 import vfdt.stat.SuffStatFactoryBase;
@@ -101,7 +100,12 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        String      paramFileName = "params/exp.json";
+        String[] exp = {
+                "rbf-a30-k6-n1e5",
+                "rbf-a10-c20-k2-n1e5",
+                "rbf-a10-c20-k10-n1e5"
+        };
+        String      paramFileName = "params/" + exp[0] + ".json";
         Config      config        = new Config(paramFileName);
         TrainMethod trainMethod   = (TrainMethod) config.getParam("trainMethod");
 
@@ -109,14 +113,14 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
         if (Logger.isDebug()) {
-            VFDT model = (VFDT) trainMethod.onlyTrain();
-            System.out.println(model.print());
+            DecisionTree model = (DecisionTree) trainMethod.onlyTrain();
+            System.out.println(model.print(true));
             System.out.println(Logger.getLog());
         } else {
             Pair<Classifier, Double> result = trainMethod.evaluate();
             System.out.println("Accuracy = " + result.getSecond());
-            VFDT model = (VFDT) result.getFirst();
-            System.out.println(model.print());
+            DecisionTree model = (DecisionTree) result.getFirst();
+            System.out.println(model.print(false));
         }
         long endTime = System.currentTimeMillis();
         System.out.println("--- " + (endTime - startTime) / 1e3 + " seconds ---");

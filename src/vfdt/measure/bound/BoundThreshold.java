@@ -1,6 +1,7 @@
 package vfdt.measure.bound;
 
 import vfdt.data.AttributeInfo;
+import vfdt.util.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,17 +18,25 @@ public abstract class BoundThreshold extends Bound {
         Pair<Map.Entry<AttributeInfo, Double>> topTwo     = getTopTwo(gains);
         Double                                 threshold  = getThreshold(numData);
         Double                                 tiebreak   = getTieBreak();
-        Double                                 firstValue = 0., secondValue = 0.;
-        if (topTwo.first == null && topTwo.second == null)
+        AttributeInfo a1 = topTwo.first.getKey();
+        Double g1 = topTwo.first.getValue();
+        AttributeInfo a2 = topTwo.second.getKey();
+        Double g2 = topTwo.second.getValue();
+        if (a1 == null || g1 == 0.)
             return null;
-//            throw new NullPointerException("Bound received no attribute.");
-        if (topTwo.first != null)
-            firstValue = topTwo.first.getValue();
-        if (topTwo.second != null)
-            secondValue = topTwo.second.getValue();
-//        System.out.println(firstValue + " - " + secondValue + " > " + threshold);
-        if (firstValue - secondValue > threshold || threshold < tiebreak)
-            return topTwo.first.getKey();
+        if (g1 - g2 > threshold || threshold < tiebreak) {     // Split is needed
+            Logger.append("Gains: ");
+            for (Map.Entry<AttributeInfo, Double> entry : gains.entrySet()) {
+                String attName = entry.getKey().getName();
+                String g = Logger.df.format(entry.getValue());
+                Logger.append("(" + attName + ", " + g + ") ");
+            }
+            Logger.append("\n");
+            Logger.append("First: (" + a1.getName() + ", " + g1 + ") \n");
+            if (a2 != null)
+                Logger.append("Second: (" + a2.getName() + ", " + g2 + ") \n");
+            return a1;
+        }
         else
             return null;
     }

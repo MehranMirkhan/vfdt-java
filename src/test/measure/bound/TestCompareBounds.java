@@ -16,8 +16,8 @@ import vfdt.measure.bound.BoundMisclassification;
 public class TestCompareBounds {
     @Test
     public void testCompare() {
-        Double delta = 1e-6;
-        int numClasses = 3;
+        Double delta = 1e-7;
+        int numClasses = 10;
         Double R = Math.log(numClasses) / Math.log(2);
         Double tieBreak = 0.025;
 
@@ -25,7 +25,7 @@ public class TestCompareBounds {
         BoundGini bound2 = new BoundGini(delta, tieBreak, numClasses);
         BoundMisclassification bound3 = new BoundMisclassification(delta, tieBreak);
 
-        int[] numData = {10, 100, 1000, 10000};
+        int[] numData = {10, 50, 100, 500, 1000, 5000, 10000};
         for (int n : numData) {
 //            System.out.println(
 //                    "N=" + n +

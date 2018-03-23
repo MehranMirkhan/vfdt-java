@@ -9,6 +9,7 @@ import vfdt.stat.attstat.AttStatFactory;
 import vfdt.stat.splitter.Splitter;
 import vfdt.stat.splitter.SplitterFactory;
 import vfdt.tree.Decision;
+import vfdt.util.Logger;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -79,8 +80,14 @@ public class SuffStatBase implements SuffStat {
     public Decision getDecision() {
         if (attToSplit == null)
             return null;
-        else
+        else {
+//            if (Logger.isDebug())
+//                for (Map.Entry<AttributeInfo, Splitter> entry : splitters.entrySet()) {
+//                    Logger.append(entry.getKey().getName() + ":\n");
+//                    entry.getValue().getDecision();
+//                }
             return splitters.get(attToSplit).getDecision();
+        }
     }
 
     @Override

@@ -40,10 +40,11 @@ public class SplitterGaussianDelayed implements Splitter {
         for (int c = 0; c < numClasses; c++) {
             original.add(c, (double) asn.getClassDist()[c].getNumData());
         }
-        bestG = Double.NEGATIVE_INFINITY;
+        bestG = 0.;
+        bestSplitValue = null;
         List<Double> points = getBinValues();
         for (Double splitValue : points)
-            bestG = checkValue(original, splitValue);
+            checkValue(original, splitValue, false);
         return bestG;
     }
 
@@ -75,7 +76,7 @@ public class SplitterGaussianDelayed implements Splitter {
         return points;
     }
 
-    private Double checkValue(Counts original, Double splitValue) throws Exception {
+    private Double checkValue(Counts original, Double splitValue, boolean debug) throws Exception {
         int      numClasses = asn.getClassDist().length;
         Counts[] branches   = new Counts[2];
         branches[0] = new Counts(numClasses);
@@ -90,6 +91,13 @@ public class SplitterGaussianDelayed implements Splitter {
         }
         Split  split = new Split(original, branches);
         Double g     = gain.measure(split);
+        if (debug && Logger.isDebug()) {
+            Logger.append("~~~~ split on value " + splitValue + " ~~~~\n");
+            Logger.append("b1: " + branches[0].toString() + "\n");
+            Logger.append("b2: " + branches[1].toString() + "\n");
+            Logger.append("g: " + g + "\n");
+            Logger.append("~~~~~~~~\n");
+        }
         if (g > bestG) {
             bestG = g;
             bestSplitValue = splitValue;
@@ -100,29 +108,28 @@ public class SplitterGaussianDelayed implements Splitter {
     @Override
     public Decision getDecision() {
         if (Logger.isDebug()) {
+            Logger.append("numData: " + original.sum() + "\n");
             Logger.append("Original: " + original.toString() + "\n");
             Logger.append("AttStat:\n" + asn.toString());
             Logger.append("Bins: ");
             for (Double splitValue : getBinValues())
                 Logger.append(Logger.df.format(splitValue) + ", ");
             Logger.append("\n");
-            Logger.append("Best split value: " + Logger.df.format(bestSplitValue) + "\n");
+            Logger.append("Best split value: " + bestSplitValue + "\n");
+            Logger.append("Best gain: " + bestG + "\n");
             Logger.append("Exact: ");
         }
         List<Double> points = getExactValues();
-        bestG = Double.NEGATIVE_INFINITY;
         for (Double splitValue : points)
             try {
-                checkValue(original, splitValue);
-                if (Logger.isDebug())
-                    Logger.append(Logger.df.format(splitValue) + ", ");
+                checkValue(original, splitValue, true);
             } catch (Exception e) {
                 System.out.println("Exception catched in SplitterGaussianDelayed.");
                 e.printStackTrace();
             }
         if (Logger.isDebug()) {
-            Logger.append("\n");
-            Logger.append("Best split value: " + Logger.df.format(bestSplitValue) + "\n");
+            Logger.append("Best split value: " + bestSplitValue + "\n");
+            Logger.append("Best gain: " + bestG + "\n\n");
         }
         return new DecisionNumeric(bestSplitValue);
     }

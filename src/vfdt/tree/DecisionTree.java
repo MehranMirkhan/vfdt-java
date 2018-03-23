@@ -27,15 +27,19 @@ public abstract class DecisionTree extends TreeBase implements Classifier {
 
     public NodeLeaf sortDown(Instance instance) {
         Node root = getRoot();
-        if (root instanceof NodeLeaf)
+        if (root.isLeaf())
             return (NodeLeaf) root;
         else
             return root.sortDown(instance);
     }
 
-    @Override
-    public String print() {
+    public Integer getNumLeaves() {
+        return getRoot().getNumLeaves();
+    }
+
+    public String print(boolean drawTree) {
         return "Height = " + getHeight() +
-               "\nNumber of nodes = " + getNumNodes() + "\n";
+               "\nNumber of nodes = " + getNumNodes() +
+               "\nNumber of leaves = " + getNumLeaves() + "\n";
     }
 }

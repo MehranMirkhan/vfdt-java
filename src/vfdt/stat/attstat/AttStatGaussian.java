@@ -46,8 +46,11 @@ public class AttStatGaussian implements AttStat {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (DistributionGaussian dist : classDist)
-            sb.append("    " + dist.toString() + "\n");
+        int counter = 0;
+        for (DistributionGaussian dist : classDist) {
+            sb.append("-- c" + counter + ": " + dist.toString() + "\n");
+            counter++;
+        }
         return sb.toString();
     }
 }

@@ -71,9 +71,9 @@ public class VFDT extends DecisionTree {
     }
 
     @Override
-    public String print() {
+    public String print(boolean drawTree) {
         return "---------- TREE ----------\n" +
-               super.print() + getRoot().toString() +
+               super.print(drawTree) + (drawTree ? getRoot().toString() : "") +
                "--------------------------\n";
     }
 }
