@@ -8,5 +8,5 @@ package vfdt.measure.gain;
  * @since 2018 Mar 04
  */
 public interface Gain {
-    double measure(Split split) throws Exception;
+    Double measure(Split split) throws Exception;
 }

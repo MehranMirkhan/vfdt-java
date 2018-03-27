@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public class MisclassificationError extends ImpurityBase {
     @Override
-    public double measure(Counts p) throws Exception {
+    public double measure(Counts p) throws ArithmeticException {
         double[] q = this.preprocess(p);
         return 1 - Arrays.stream(q).max().getAsDouble();
     }

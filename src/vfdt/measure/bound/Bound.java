@@ -3,7 +3,7 @@ package vfdt.measure.bound;
 import vfdt.data.AttributeInfo;
 
 import java.util.AbstractMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -25,12 +25,14 @@ public abstract class Bound {
         }
     }
 
-    Pair<Map.Entry<AttributeInfo, Double>> getTopTwo(HashMap<AttributeInfo, Double> gains) {
+    Pair<Map.Entry<AttributeInfo, Double>> getTopTwo(LinkedHashMap<AttributeInfo, Double> gains) {
         AttributeInfo a1 = null, a2 = null;
         Double        g1 = Double.NEGATIVE_INFINITY, g2 = Double.NEGATIVE_INFINITY;
         for (Map.Entry<AttributeInfo, Double> entry : gains.entrySet()) {
             AttributeInfo attInfo = entry.getKey();
             Double gain = entry.getValue();
+            if (attInfo == null || gain == null)
+                continue;
             if (gain > g1) {
                 g2 = g1;
                 g1 = gain;
@@ -50,5 +52,5 @@ public abstract class Bound {
         return new Pair<>(e1, e2);
     }
 
-    public abstract AttributeInfo isSplitNeeded(HashMap<AttributeInfo, Double> gains, int numData);
+    public abstract AttributeInfo isSplitNeeded(LinkedHashMap<AttributeInfo, Double> gains, int numData);
 }

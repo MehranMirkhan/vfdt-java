@@ -103,9 +103,12 @@ public class Main {
         String[] exp = {
                 "rbf-a30-k6-n1e5",
                 "rbf-a10-c20-k2-n1e5",
-                "rbf-a10-c20-k10-n1e5"
+                "rbf-a10-c20-k10-n1e5",
+                "rbf-a10-c50-k2-n1e5",
+                "rbf-a10-c50-k10-n1e5",
+                "covertype"
         };
-        String      paramFileName = "params/" + exp[0] + ".json";
+        String      paramFileName = "params/" + exp[5] + ".json";
         Config      config        = new Config(paramFileName);
         TrainMethod trainMethod   = (TrainMethod) config.getParam("trainMethod");
 

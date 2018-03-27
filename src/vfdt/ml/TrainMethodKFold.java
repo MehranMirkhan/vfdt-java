@@ -1,6 +1,7 @@
 package vfdt.ml;
 
 import vfdt.data.*;
+import vfdt.tree.VFDT;
 import vfdt.util.Pair;
 
 import java.text.DecimalFormat;
@@ -51,24 +52,27 @@ public class TrainMethodKFold extends TrainMethod {
         private int                      step;
         private Pair<Classifier, Double> result;
 
-        public FoldTrainer(int fold, ClassifierFactory classifierFactory, DatasetReader reader, int numEpochs, int step) {
+        public FoldTrainer(int fold, ClassifierFactory classifierFactory,
+                           DatasetReader reader, int numEpochs, int step) {
+            super("Fold_" + fold);
             this.fold = fold;
             this.classifierFactory = classifierFactory;
             this.reader = reader;
             this.numEpochs = numEpochs;
             this.step = step;
+            result = null;
         }
 
         @Override
         public void run() {
             super.run();
-            DecimalFormat  df             = new DecimalFormat("0.00000");
+//            DecimalFormat  df             = new DecimalFormat("0.00000");
             IndexCondition trainCondition = new IndexConditionNotBetween(fold * step, (fold + 1) * step);
             IndexCondition testCondition  = new IndexConditionBetween(fold * step, (fold + 1) * step);
             try {
                 result = Evaluator.evaluate(classifierFactory, reader,
                         numEpochs, trainCondition, testCondition);
-                System.out.println("Fold " + fold + ": Accuracy = " + df.format(result.getSecond()));
+                System.out.println("Fold " + fold + ": Accuracy = " + result.getSecond());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -11,7 +11,7 @@ import vfdt.measure.Counts;
  */
 public class GiniIndex extends ImpurityBase {
     @Override
-    public double measure(Counts p) throws Exception {
+    public double measure(Counts p) throws ArithmeticException {
         double[] q      = this.preprocess(p);
         double   result = 0;
         for (double v : q) {

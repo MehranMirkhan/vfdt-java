@@ -36,6 +36,10 @@ public class Attribute<T> {
         return getAttributeInfo().findValue((String) value);
     }
 
+    public Attribute clone() {
+        return new Attribute<T>(attributeInfo, value);
+    }
+
     @Override
     public String toString() {
         return "" + attributeInfo.getName() + ": " + value;

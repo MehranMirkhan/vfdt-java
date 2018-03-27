@@ -6,9 +6,7 @@ import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
 import vfdt.stat.SuffStatFactory;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * %Description%
@@ -33,7 +31,8 @@ public class VFDT extends DecisionTree {
         SplitInfo splitInfo = leaf.learn(instance, label);
         if (splitInfo != null) {
             ActiveLeaf activeLeaf = (ActiveLeaf) leaf;
-            Collection<AttributeInfo> availableAtts = new HashSet<>(activeLeaf.getAvailableAttributes());
+//            Collection<AttributeInfo> availableAtts = new HashSet<>(activeLeaf.getAvailableAttributes());
+            Collection<AttributeInfo> availableAtts = new ArrayList<>(activeLeaf.getAvailableAttributes());
             if (splitInfo.getAttributeInfo().isNominal())
                 availableAtts.remove(splitInfo.getAttributeInfo());
             int numBranches = splitInfo.getDecision().getNumBranches();

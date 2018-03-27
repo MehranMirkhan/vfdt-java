@@ -32,6 +32,28 @@ public class AttributeInfo {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttributeInfo that = (AttributeInfo) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(values, that.values)) return false;
+        return type == that.type;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (values != null ? Arrays.hashCode(values) : 0);
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
     public String getName() {
         return this.name;
     }

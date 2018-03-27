@@ -20,7 +20,8 @@ public class DistributionNominal implements Distribution {
 
     public void add(String value) {
         int index = getIndexOfValue(value);
-        counts.increment(index);
+        if (index != -1)
+            counts.increment(index);
     }
 
     private int getIndexOfValue(String value) {

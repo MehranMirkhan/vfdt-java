@@ -10,10 +10,10 @@ import vfdt.measure.Counts;
  * @since 2018 Mar 04
  */
 public abstract class ImpurityBase implements Impurity {
-    public double[] preprocess(Counts p) throws Exception {
-        Exception ex      = new ArithmeticException("Impurity measure error. p = " + p.toString());
-        double    sum     = 0;
-        int       n_valid = 0;
+    public double[] preprocess(Counts p) throws ArithmeticException {
+        ArithmeticException ex      = new ArithmeticException("Impurity measure error. p = " + p.toString());
+        double              sum     = 0;
+        int                 n_valid = 0;
         for (Double value : p.getCounts()) {
             sum += value;
             n_valid += value > 0 ? 1 : 0;

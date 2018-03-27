@@ -29,6 +29,14 @@ public class Instance {
         return atts;
     }
 
+    public Instance clone() {
+        Attribute[] attributes = new Attribute[atts.length];
+        for (int i=0; i<atts.length; i++) {
+            attributes[i] = atts[i].clone();
+        }
+        return new Instance(attributes);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");

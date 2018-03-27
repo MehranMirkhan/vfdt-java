@@ -3,7 +3,7 @@ package vfdt.measure.bound;
 import vfdt.data.AttributeInfo;
 import vfdt.util.Logger;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Map;
  * @since 2018 Mar 08
  */
 public abstract class BoundThreshold extends Bound {
-    public AttributeInfo isSplitNeeded(HashMap<AttributeInfo, Double> gains, int numData) {
+    public AttributeInfo isSplitNeeded(LinkedHashMap<AttributeInfo, Double> gains, int numData) {
         Pair<Map.Entry<AttributeInfo, Double>> topTwo     = getTopTwo(gains);
         Double                                 threshold  = getThreshold(numData);
         Double                                 tiebreak   = getTieBreak();
@@ -27,8 +27,12 @@ public abstract class BoundThreshold extends Bound {
         if (g1 - g2 > threshold || threshold < tiebreak) {     // Split is needed
             Logger.append("Gains: ");
             for (Map.Entry<AttributeInfo, Double> entry : gains.entrySet()) {
-                String attName = entry.getKey().getName();
-                String g = Logger.df.format(entry.getValue());
+                AttributeInfo attInfo = entry.getKey();
+                Double gain = entry.getValue();
+                if (attInfo == null || gain == null)
+                    continue;
+                String attName = attInfo.getName();
+                String g = Logger.df.format(gain);
                 Logger.append("(" + attName + ", " + g + ") ");
             }
             Logger.append("\n");

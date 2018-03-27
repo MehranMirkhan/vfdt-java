@@ -20,29 +20,33 @@ public class GainBase implements Gain {
     }
 
     @Override
-    public double measure(Split split) throws Exception {
-        double   g          = im.measure(split.getOriginal());
-        Counts[] branches   = split.getBranches();
-        int      n_branches = branches.length;
-        double[] G          = new double[n_branches];
-        double[] N          = new double[n_branches];
-        double   n          = split.getOriginal().sum();
-        double   result     = 0;
-        for (int i = 0; i < n_branches; i++)
-            N[i] = branches[i].sum();
-        int healthyBranches = 0;
-        for (int i = 0; i < n_branches; i++) {
-            double p = N[i] / n;
-            if (p >= minBranchFrac)
-                healthyBranches++;
+    public Double measure(Split split) {
+        try {
+            double   g          = im.measure(split.getOriginal());
+            Counts[] branches   = split.getBranches();
+            int      n_branches = branches.length;
+            double[] G          = new double[n_branches];
+            double[] N          = new double[n_branches];
+            double   n          = split.getOriginal().sum();
+            double   result     = 0;
+            for (int i = 0; i < n_branches; i++)
+                N[i] = branches[i].sum();
+            int healthyBranches = 0;
+            for (int i = 0; i < n_branches; i++) {
+                double p = N[i] / n;
+                if (p >= minBranchFrac)
+                    healthyBranches++;
+            }
+            if (healthyBranches < 2)
+                return 0.;
+            for (int i = 0; i < n_branches; i++) {
+                G[i] = im.measure(branches[i]);
+                result += N[i] * G[i];
+            }
+            result = g - result / n;
+            return result;
+        } catch (ArithmeticException e) {
+            return null;
         }
-        if (healthyBranches < 2)
-            return 0;
-        for (int i = 0; i < n_branches; i++) {
-            G[i] = im.measure(branches[i]);
-            result += N[i] * G[i];
-        }
-        result = g - result / n;
-        return result;
     }
 }

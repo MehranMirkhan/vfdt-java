@@ -24,9 +24,9 @@ public class TrainMethodSeparate extends TrainMethod {
     public Pair<Classifier, Double> evaluate() throws Exception {
         DatasetReader trainReader = new ArffReader(trainFile);
         trainReader.setDatasetInfo(datasetInfo);
-        Integer        numDataTrain     = datasetInfo.getNumData();
-        IndexCondition conditionTrain   = new IndexConditionBetween(0, numDataTrain);
-        DatasetReader testReader = new ArffReader(testFile);
+        Integer        numDataTrain   = datasetInfo.getNumData();
+        IndexCondition conditionTrain = new IndexConditionBetween(0, numDataTrain);
+        DatasetReader  testReader     = new ArffReader(testFile);
 
         return Evaluator.evaluateSeparate(classifierFactory, trainReader, testReader, numEpochs, conditionTrain);
     }

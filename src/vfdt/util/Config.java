@@ -2,9 +2,7 @@ package vfdt.util;
 
 import json.JSONObject;
 import json.JSONTokener;
-import vfdt.data.ArffReader;
-import vfdt.data.DatasetInfo;
-import vfdt.data.DatasetReader;
+import vfdt.data.*;
 import vfdt.measure.bound.Bound;
 import vfdt.measure.bound.BoundGini;
 import vfdt.measure.bound.BoundHoeffding;

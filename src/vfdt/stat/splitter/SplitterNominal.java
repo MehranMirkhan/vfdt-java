@@ -48,7 +48,10 @@ public class SplitterNominal implements Splitter {
         return new Decision() {
             @Override
             public int decide(Attribute attribute) {
-                return attribute.getAttributeInfo().findValue((String) attribute.getValue());
+                AttributeInfo attInfo = attribute.getAttributeInfo();
+                String value = (String) attribute.getValue();
+                Integer index = attInfo.findValue(value);
+                return index;
             }
 
             @Override

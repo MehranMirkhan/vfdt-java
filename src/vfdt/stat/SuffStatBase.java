@@ -12,7 +12,7 @@ import vfdt.tree.Decision;
 import vfdt.util.Logger;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -24,19 +24,19 @@ import java.util.Map;
  * @since 2018 Mar 04
  */
 public class SuffStatBase implements SuffStat {
-    private final HashMap<AttributeInfo, AttStat>  attStats;
-    private final HashMap<AttributeInfo, Splitter> splitters;
-    private final AttStatFactory                   attStatFactory;
-    private final SplitterFactory                  splitterFactory;
-    private       AttributeInfo                    attToSplit;
-    private       int                              numData;
-    private final Collection<AttributeInfo>        availableAtts;
+    private final LinkedHashMap<AttributeInfo, AttStat> attStats;
+    private final LinkedHashMap<AttributeInfo, Splitter>      splitters;
+    private final AttStatFactory                        attStatFactory;
+    private final SplitterFactory                       splitterFactory;
+    private       AttributeInfo                         attToSplit;
+    private       int                                   numData;
+    private final Collection<AttributeInfo>             availableAtts;
 
     public SuffStatBase(Collection<AttributeInfo> availableAtts,
                         AttStatFactory attStatFactory,
                         SplitterFactory splitterFactory) throws Exception {
-        this.attStats = new HashMap<>();
-        this.splitters = new HashMap<>();
+        this.attStats = new LinkedHashMap<>();
+        this.splitters = new LinkedHashMap<>();
         this.attStatFactory = attStatFactory;
         this.splitterFactory = splitterFactory;
         numData = 0;
@@ -69,7 +69,7 @@ public class SuffStatBase implements SuffStat {
     }
 
     public AttributeInfo checkSplit(Bound bound) throws Exception {
-        HashMap<AttributeInfo, Double> gains = new HashMap<>(attStats.size());
+        LinkedHashMap<AttributeInfo, Double> gains = new LinkedHashMap<>(attStats.size());
         for (Map.Entry<AttributeInfo, Splitter> entry : splitters.entrySet()) {
             gains.put(entry.getKey(), entry.getValue().getSplitGain());
         }

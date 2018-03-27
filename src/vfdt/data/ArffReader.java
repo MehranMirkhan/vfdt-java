@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class ArffReader implements DatasetReader {
 
     private final String      fileName;
-    private DatasetInfo datasetInfo;
+    private       DatasetInfo datasetInfo;
 
     public ArffReader(String fileName) {
         this.fileName = fileName;
@@ -47,7 +47,7 @@ public class ArffReader implements DatasetReader {
         String[] regex = {
                 "^[%].*",
                 "(?i)@relation\\s+(\\w+)",
-                "(?i)@attribute\\s+(\\w+)\\s+(.+)",
+                "(?i)@attribute\\s+([\\w|-]+)\\s+(.+)",
                 "(?i)@data"
         };
         Pattern[] patterns = new Pattern[regex.length];
@@ -69,6 +69,7 @@ public class ArffReader implements DatasetReader {
             m = patterns[2].matcher(line);
             if (m.matches()) {
                 String attName = m.group(1);
+//                System.out.println(attName);
                 String attSpec = m.group(2);
                 AttributeInfo.AttributeType type;
                 ArrayList<String> values = new ArrayList<>();
@@ -76,10 +77,13 @@ public class ArffReader implements DatasetReader {
                     type = AttributeInfo.AttributeType.NUMERICAL;
                 else {
                     type = AttributeInfo.AttributeType.NOMINAL;
-                    String[] valuesTemp = attSpec.split("\\W+");
+//                    String[] valuesTemp = attSpec.split("\\W+");
+                    String[] valuesTemp = attSpec.split("[,|\\s|{|}]");
                     for (String v : valuesTemp)
-                        if (!v.isEmpty())
+                        if (!v.isEmpty()) {
+//                            System.out.println(v);
                             values.add(v);
+                        }
                 }
                 AttributeInfo att = new AttributeInfo(type).name(attName);
                 if (!values.isEmpty())
@@ -219,6 +223,7 @@ public class ArffReader implements DatasetReader {
             if (eof) {      // We have reached the end of file.
                 if (currentEpoch < numEpochs) {     // But still more epochs are remained.
                     currentEpoch += 1;
+                    lnr.close();
                     reset();
                 }
             }
@@ -227,7 +232,7 @@ public class ArffReader implements DatasetReader {
         Pair<Instance, Attribute> parseLine(String line) throws Exception {
             AttributeInfo[] attsInfo = this.datasetInfo.getAttributeInfo();
 //            String[]        values   = line.split("\\s*,\\s*");
-            String[]        values   = line.split(",");
+            String[] values = line.split(",");
             for (int i = 0; i < values.length; i++) {
                 String v = values[i].trim();
                 // Create Attribute

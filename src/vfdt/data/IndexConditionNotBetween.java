@@ -18,6 +18,6 @@ public class IndexConditionNotBetween implements IndexCondition {
 
     @Override
     public boolean isValid(Integer index) {
-        return start < index || index >= end;
+        return index < start || index >= end;
     }
 }
