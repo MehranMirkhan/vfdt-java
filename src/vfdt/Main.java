@@ -101,14 +101,19 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         String[] exp = {
-                "rbf-a30-k6-n1e5",
-                "rbf-a10-c20-k2-n1e5",
-                "rbf-a10-c20-k10-n1e5",
-                "rbf-a10-c50-k2-n1e5",
-                "rbf-a10-c50-k10-n1e5",
-                "covertype"
+                "rbf-a5-c50-k10-n1e5",       // 0
+                "rbf-a10-c20-k2-n1e5",       // 1
+                "rbf-a10-c20-k10-n1e5",      // 2
+                "rbf-a10-c50-k2-n1e5",       // 3
+                "rbf-a10-c50-k4-n1e5",       // 4
+                "rbf-a10-c50-k6-n1e5",       // 5
+                "rbf-a10-c50-k8-n1e5",       // 6
+                "rbf-a10-c50-k10-n1e5",      // 7
+                "rbf-a15-c50-k10-n1e5",      // 8
+                "rbf-a20-c50-k10-n1e5",      // 9
+                "covertype"                  // 10
         };
-        String      paramFileName = "params/" + exp[5] + ".json";
+        String      paramFileName = "params/" + exp[0] + ".json";
         Config      config        = new Config(paramFileName);
         TrainMethod trainMethod   = (TrainMethod) config.getParam("trainMethod");
 

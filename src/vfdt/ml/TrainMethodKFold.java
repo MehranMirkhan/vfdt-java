@@ -1,6 +1,7 @@
 package vfdt.ml;
 
 import vfdt.data.*;
+import vfdt.tree.DecisionTree;
 import vfdt.tree.VFDT;
 import vfdt.util.Pair;
 
@@ -36,12 +37,24 @@ public class TrainMethodKFold extends TrainMethod {
         for (FoldTrainer trainer : trainers)
             trainer.join();
         Classifier model    = trainers[0].getResult().getFirst();
-        Double     accuracy = 0.;
+        Double     accuracy = 0., height = 0., numNodes = 0., numLeaves = 0.;
         for (FoldTrainer trainer : trainers) {
             accuracy += trainer.getResult().getSecond();
+            height += ((DecisionTree) trainer.getResult().getFirst()).getHeight();
+            numNodes += ((DecisionTree) trainer.getResult().getFirst()).getNumNodes();
+            numLeaves += ((DecisionTree) trainer.getResult().getFirst()).getNumLeaves();
         }
 
-        return new Pair<>(model, accuracy / k);
+        accuracy /= k;
+        height /= k;
+        numNodes /= k;
+        numLeaves /= k;
+
+        System.out.println("Average numNodes  = " + numNodes);
+        System.out.println("Average numLeaves = " + numLeaves);
+        System.out.println("Average height    = " + height);
+
+        return new Pair<>(model, accuracy);
     }
 
     private class FoldTrainer extends Thread {
