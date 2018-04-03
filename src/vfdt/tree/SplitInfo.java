@@ -38,7 +38,8 @@ public class SplitInfo {
     public String toString() {
         return "SplitInfo{" +
                 "attribute=" + attributeInfo.getName() +
-                ", numBranches=" + decision.getNumBranches() +
+                ", Decision=" + decision +
+//                ", numBranches=" + decision.getNumBranches() +
                 '}';
     }
 }

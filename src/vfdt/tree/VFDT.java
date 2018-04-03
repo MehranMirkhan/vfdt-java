@@ -1,5 +1,7 @@
 package vfdt.tree;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import vfdt.data.Attribute;
 import vfdt.data.AttributeInfo;
 import vfdt.data.DatasetInfo;
@@ -16,6 +18,7 @@ import java.util.*;
  * @since 2018 Mar 09
  */
 public class VFDT extends DecisionTree {
+    private static final Logger logger = LogManager.getLogger();
 
     public VFDT(DatasetInfo datasetInfo, SplitPolicy splitPolicy, SuffStatFactory suffStatFactory) throws Exception {
         super(datasetInfo, splitPolicy, suffStatFactory);
@@ -45,6 +48,7 @@ public class VFDT extends DecisionTree {
                     children[i].setHeight(leaf.getHeight() + 1);
                 }
             } else {                // Leafs should not be active
+                logger.debug("Maximum height is reached. Split is done with inActive leaves.");
                 for (int i = 0; i < numBranches; i++) {
                     children[i] = new NodeLeaf(datasetInfo);
                     children[i].setParent(decisionNode);

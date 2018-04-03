@@ -1,13 +1,15 @@
 package vfdt.tree;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import vfdt.data.Attribute;
 import vfdt.data.AttributeInfo;
 import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
 import vfdt.stat.SuffStat;
 import vfdt.stat.SuffStatFactory;
-import vfdt.util.Logger;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -21,6 +23,7 @@ public class ActiveLeaf extends NodeLeaf {
     private final SplitPolicy splitPolicy;
     private final SuffStat    suffStat;
     private int numData = 0;
+    private static final Logger logger = LogManager.getLogger();
 
     public ActiveLeaf(DatasetInfo datasetInfo,
                       SplitPolicy splitPolicy,
@@ -49,9 +52,12 @@ public class ActiveLeaf extends NodeLeaf {
         if (numData % splitPolicy.getGracePeriod() == 0) {
             AttributeInfo attToSplit = suffStat.checkSplit(splitPolicy.getBound());
             if (attToSplit != null) {       // Split is required
-                Logger.append("Split Occured: (Attribute: " + attToSplit.getName() + ")\n");
                 Decision decision = suffStat.getDecision();
-                return new SplitInfo(attToSplit, decision);
+                SplitInfo splitInfo = new SplitInfo(attToSplit, decision);
+                logger.debug("Split is required. Num data = {}. {}",
+                        numData,
+                        Arrays.toString(decision.describe(attToSplit)));
+                return splitInfo;
             }
         }
         return null;

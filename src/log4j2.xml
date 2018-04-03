@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{YYYY-MMM-dd HH:mm:ss.SSS} [%t] (%level) %class{36} %L %M: %msg%n"/>
+        </Console>
+        <File name="OutputFile" fileName="log/output.log" bufferedIO="true">
+            <PatternLayout pattern="%d{YYYY-MMM-dd HH:mm:ss.SSS} [%t] (%level) %class{36} %L %M: %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="TRACE">
+            <AppenderRef ref="Console" level="INFO"/>
+        </Root>
+        <Logger name="vfdt">
+            <AppenderRef ref="OutputFile"/>
+        </Logger>
+    </Loggers>
+</Configuration>

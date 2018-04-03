@@ -1,11 +1,13 @@
 package vfdt.ml;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import vfdt.data.*;
 import vfdt.tree.DecisionTree;
-import vfdt.tree.VFDT;
 import vfdt.util.Pair;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * %Description%
@@ -16,6 +18,7 @@ import java.text.DecimalFormat;
  */
 public class TrainMethodKFold extends TrainMethod {
     private final int k;
+    private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodKFold(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
                             String trainFile, int numEpochs, int k) {
@@ -24,7 +27,10 @@ public class TrainMethodKFold extends TrainMethod {
     }
 
     @Override
-    public Pair<Classifier, Double> evaluate() throws Exception {
+    public List<Pair<Classifier, Double>> evaluate() throws Exception {
+        logger.traceEntry();
+        List<Pair<Classifier, Double>> result = new ArrayList<>();
+
         DatasetReader reader = new ArffReader(trainFile);
         reader.setDatasetInfo(datasetInfo);
         Integer       numData  = datasetInfo.getNumData();
@@ -36,7 +42,8 @@ public class TrainMethodKFold extends TrainMethod {
             trainer.start();
         for (FoldTrainer trainer : trainers)
             trainer.join();
-        Classifier model    = trainers[0].getResult().getFirst();
+        for (FoldTrainer trainer : trainers)
+            result.add(trainer.getResult());
         Double     accuracy = 0., height = 0., numNodes = 0., numLeaves = 0.;
         for (FoldTrainer trainer : trainers) {
             accuracy += trainer.getResult().getSecond();
@@ -50,11 +57,12 @@ public class TrainMethodKFold extends TrainMethod {
         numNodes /= k;
         numLeaves /= k;
 
-        System.out.println("Average numNodes  = " + numNodes);
-        System.out.println("Average numLeaves = " + numLeaves);
-        System.out.println("Average height    = " + height);
+        logger.info("Average accuracy = " + accuracy);
+        logger.info("Average size     = " + numNodes);
+        logger.info("Average leaves   = " + numLeaves);
+        logger.info("Average height   = " + height);
 
-        return new Pair<>(model, accuracy);
+        return logger.traceExit(result);
     }
 
     private class FoldTrainer extends Thread {
@@ -64,6 +72,7 @@ public class TrainMethodKFold extends TrainMethod {
         private int                      numEpochs;
         private int                      step;
         private Pair<Classifier, Double> result;
+        private final Logger logger = LogManager.getLogger();
 
         public FoldTrainer(int fold, ClassifierFactory classifierFactory,
                            DatasetReader reader, int numEpochs, int step) {
@@ -79,15 +88,17 @@ public class TrainMethodKFold extends TrainMethod {
         @Override
         public void run() {
             super.run();
-//            DecimalFormat  df             = new DecimalFormat("0.00000");
+            logger.traceEntry();
             IndexCondition trainCondition = new IndexConditionNotBetween(fold * step, (fold + 1) * step);
             IndexCondition testCondition  = new IndexConditionBetween(fold * step, (fold + 1) * step);
             try {
                 result = Evaluator.evaluate(classifierFactory, reader,
                         numEpochs, trainCondition, testCondition);
-                System.out.println("Fold " + fold + ": Accuracy = " + result.getSecond());
+                logger.info("Fold " + fold + ": Accuracy = " + result.getSecond());
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                logger.traceExit();
             }
         }
 

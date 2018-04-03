@@ -5,6 +5,8 @@ import vfdt.data.DatasetInfo;
 import vfdt.data.DatasetReader;
 import vfdt.util.Pair;
 
+import java.util.List;
+
 /**
  * %Description%
  *
@@ -31,5 +33,5 @@ public abstract class TrainMethod {
         return Evaluator.train(classifierFactory, reader, numEpochs);
     }
 
-    public abstract Pair<Classifier, Double> evaluate() throws Exception;
+    public abstract List<Pair<Classifier, Double>> evaluate() throws Exception;
 }

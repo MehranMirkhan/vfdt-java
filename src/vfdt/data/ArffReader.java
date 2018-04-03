@@ -20,6 +20,7 @@ public class ArffReader implements DatasetReader {
     private       DatasetInfo datasetInfo;
 
     public ArffReader(String fileName) {
+        fileName = fileName.replaceFirst("^~", System.getProperty("user.home"));
         this.fileName = fileName;
         datasetInfo = null;
     }
