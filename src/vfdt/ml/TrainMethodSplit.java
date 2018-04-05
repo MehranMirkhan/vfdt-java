@@ -21,8 +21,8 @@ public class TrainMethodSplit extends TrainMethod {
     private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodSplit(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
-                            String trainFile, int numEpochs, Double percent) {
-        super(classifierFactory, datasetInfo, trainFile, numEpochs);
+                            String trainFile, Double percent, int numEpochs, StopCriterion stopCriterion) {
+        super(classifierFactory, datasetInfo, trainFile, numEpochs, stopCriterion);
         this.percent = percent;
     }
 
@@ -38,7 +38,7 @@ public class TrainMethodSplit extends TrainMethod {
         IndexCondition trainCondition = new IndexConditionBetween(0, numTrain);
         IndexCondition testCondition  = new IndexConditionBetween(numTrain, numData);
         Pair<Classifier, Double> result = Evaluator.evaluate(
-                classifierFactory, reader, numEpochs, trainCondition, testCondition);
+                classifierFactory, reader, numEpochs, trainCondition, testCondition, stopCriterion);
         DecisionTree tree = (DecisionTree) result.getFirst();
         logger.info("Accuracy = " + result.getSecond());
         logger.info("Size     = " + tree.getNumNodes());

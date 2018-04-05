@@ -3,9 +3,6 @@ package vfdt.ml;
 import vfdt.data.*;
 import vfdt.util.Pair;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
-
 /**
  * %Description%
  *
@@ -14,7 +11,7 @@ import java.text.DecimalFormat;
  * @since 2018 Mar 12
  */
 public class Evaluator {
-    public static Classifier train(ClassifierFactory factory, DatasetReader reader, int numEpochs) throws Exception {
+    public static Classifier train(ClassifierFactory factory, DatasetReader reader, int numEpochs, StopCriterion stopCriterion) throws Exception {
         Classifier model = factory.build();
         // Train model
         DatasetIterator iter = reader.epochs(numEpochs);
@@ -32,7 +29,8 @@ public class Evaluator {
                                                     DatasetReader reader,
                                                     int numEpochs,
                                                     IndexCondition trainCondition,
-                                                    IndexCondition testCondition) throws Exception {
+                                                    IndexCondition testCondition,
+                                                    StopCriterion stopCriterion) throws Exception {
         Classifier model = factory.build();
 
         // Train model
@@ -42,6 +40,7 @@ public class Evaluator {
             Instance instance = entry.getFirst();
             Attribute label = entry.getSecond();
             model.learn(instance, label);
+            if (stopCriterion != null && stopCriterion.shouldStop(model)) break;
         }
         iter.close();
 
@@ -67,16 +66,17 @@ public class Evaluator {
                                                             DatasetReader trainReader,
                                                             DatasetReader testReader,
                                                             int numEpochs,
-                                                            IndexCondition trainCondition) throws Exception {
+                                                            StopCriterion stopCriterion) throws Exception {
         Classifier model = factory.build();
 
         // Train model
-        DatasetIterator iter = trainReader.epochs(numEpochs, trainCondition);
+        DatasetIterator iter = trainReader.epochs(numEpochs);
         while (iter.hasNext()) {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
             Attribute label = entry.getSecond();
             model.learn(instance, label);
+            if (stopCriterion != null && stopCriterion.shouldStop(model)) break;
         }
         iter.close();
 

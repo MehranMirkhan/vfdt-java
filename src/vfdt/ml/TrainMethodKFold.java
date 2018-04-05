@@ -21,8 +21,8 @@ public class TrainMethodKFold extends TrainMethod {
     private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodKFold(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
-                            String trainFile, int numEpochs, int k) {
-        super(classifierFactory, datasetInfo, trainFile, numEpochs);
+                            String trainFile, int numEpochs, int k, StopCriterion stopCriterion) {
+        super(classifierFactory, datasetInfo, trainFile, numEpochs, stopCriterion);
         this.k = k;
     }
 
@@ -33,18 +33,18 @@ public class TrainMethodKFold extends TrainMethod {
 
         DatasetReader reader = new ArffReader(trainFile);
         reader.setDatasetInfo(datasetInfo);
-        Integer       numData  = datasetInfo.getNumData();
-        Integer       step     = numData / k;
+        Integer numData = datasetInfo.getNumData();
+        Integer step = numData / k;
         FoldTrainer[] trainers = new FoldTrainer[k];
         for (int i = 0; i < k; i++)
-            trainers[i] = new FoldTrainer(i, classifierFactory, reader, numEpochs, step);
+            trainers[i] = new FoldTrainer(i, reader, step);
         for (FoldTrainer trainer : trainers)
             trainer.start();
         for (FoldTrainer trainer : trainers)
             trainer.join();
         for (FoldTrainer trainer : trainers)
             result.add(trainer.getResult());
-        Double     accuracy = 0., height = 0., numNodes = 0., numLeaves = 0.;
+        Double accuracy = 0., height = 0., numNodes = 0., numLeaves = 0.;
         for (FoldTrainer trainer : trainers) {
             accuracy += trainer.getResult().getSecond();
             height += ((DecisionTree) trainer.getResult().getFirst()).getHeight();
@@ -66,21 +66,16 @@ public class TrainMethodKFold extends TrainMethod {
     }
 
     private class FoldTrainer extends Thread {
-        private int                      fold;
-        private ClassifierFactory        classifierFactory;
-        private DatasetReader            reader;
-        private int                      numEpochs;
-        private int                      step;
+        private int fold;
+        private DatasetReader reader;
+        private int step;
         private Pair<Classifier, Double> result;
         private final Logger logger = LogManager.getLogger();
 
-        public FoldTrainer(int fold, ClassifierFactory classifierFactory,
-                           DatasetReader reader, int numEpochs, int step) {
+        FoldTrainer(int fold, DatasetReader reader, int step) {
             super("Fold_" + fold);
             this.fold = fold;
-            this.classifierFactory = classifierFactory;
             this.reader = reader;
-            this.numEpochs = numEpochs;
             this.step = step;
             result = null;
         }
@@ -90,10 +85,10 @@ public class TrainMethodKFold extends TrainMethod {
             super.run();
             logger.traceEntry();
             IndexCondition trainCondition = new IndexConditionNotBetween(fold * step, (fold + 1) * step);
-            IndexCondition testCondition  = new IndexConditionBetween(fold * step, (fold + 1) * step);
+            IndexCondition testCondition = new IndexConditionBetween(fold * step, (fold + 1) * step);
             try {
                 result = Evaluator.evaluate(classifierFactory, reader,
-                        numEpochs, trainCondition, testCondition);
+                        numEpochs, trainCondition, testCondition, stopCriterion);
                 logger.info("Fold " + fold + ": Accuracy = " + result.getSecond());
             } catch (Exception e) {
                 e.printStackTrace();

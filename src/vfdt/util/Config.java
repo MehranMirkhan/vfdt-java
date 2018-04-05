@@ -35,8 +35,8 @@ import java.util.HashMap;
  * @since 2018 Mar 17
  */
 public class Config {
-    private final String                  paramFileName;
-    private       HashMap<String, Object> config;
+    private final String paramFileName;
+    private HashMap<String, Object> config;
 
     public Config(String paramFileName) throws Exception {
         this.paramFileName = paramFileName;
@@ -50,7 +50,7 @@ public class Config {
 
     public void loadParams() throws Exception {
         InputStream stream = new FileInputStream(paramFileName);
-        JSONObject  obj    = new JSONObject(new JSONTokener(stream));
+        JSONObject obj = new JSONObject(new JSONTokener(stream));
 
         DatasetInfo datasetInfo = getDatasetInfo(obj);
         config.put("datasetInfo", datasetInfo);
@@ -59,11 +59,11 @@ public class Config {
         Integer gracePeriod = null;
         Double delta = null;
         Double R, tieBreak = null;
-        Bound  bound       = null;
+        Bound bound = null;
         Double minGain = null;
         if (obj.has("gracePeriod"))
             gracePeriod = obj.getInt("gracePeriod");
-        int    numClasses  = datasetInfo.getNumClasses();
+        int numClasses = datasetInfo.getNumClasses();
         if (obj.has("tieBreak"))
             tieBreak = obj.getDouble("tieBreak");
         if (obj.has("delta"))
@@ -82,8 +82,8 @@ public class Config {
                 bound = new BoundMisclassification(delta, tieBreak, minGain);
                 break;
         }
-        int      maxHeight = obj.getInt("maxHeight");
-        Impurity impurity  = null;
+        int maxHeight = obj.getInt("maxHeight");
+        Impurity impurity = null;
         switch (obj.getString("impurity").toLowerCase()) {
             case "entropy":
                 impurity = new InformationEntropy();
@@ -96,11 +96,11 @@ public class Config {
                 break;
         }
         double minBranchFrac = obj.getDouble("minBranchFrac");
-        Gain   gain          = new GainBase(impurity, minBranchFrac);
+        Gain gain = new GainBase(impurity, minBranchFrac);
         Integer numBins = null;
         if (obj.has("numBins"))
             numBins = obj.getInt("numBins");
-        String splitter      = obj.getString("splitter");
+        String splitter = obj.getString("splitter");
 
         SplitPolicy splitPolicy = new SplitPolicy(gracePeriod, bound, maxHeight);
         SuffStatFactory suffStatFactory = new SuffStatFactoryBase(
@@ -123,41 +123,45 @@ public class Config {
     }
 
     private DatasetInfo getDatasetInfo(JSONObject obj) throws IOException {
-        JSONObject    di_obj      = obj.getJSONObject("datasetInfo");
-        String        fileName    = di_obj.getString("fileName");
-        int           classIndex  = di_obj.getInt("classIndex");
-        int           numData     = di_obj.getInt("numData");
-        DatasetReader reader      = new ArffReader(fileName);
-        DatasetInfo   datasetInfo = reader.analyze();
+        JSONObject di_obj = obj.getJSONObject("datasetInfo");
+        String fileName = di_obj.getString("fileName");
+        int classIndex = di_obj.getInt("classIndex");
+        int numData = di_obj.getInt("numData");
+        DatasetReader reader = new ArffReader(fileName);
+        DatasetInfo datasetInfo = reader.analyze();
         datasetInfo.setClassIndex(classIndex);
         datasetInfo.setNumData(numData);
         return datasetInfo;
     }
 
     private TrainMethod getTrainMethod(JSONObject obj, ClassifierFactory classifierFactory, DatasetInfo datasetInfo) {
-        TrainMethod tm        = null;
-        JSONObject  tm_obj    = obj.getJSONObject("trainMethod");
-        String      method    = tm_obj.getString("method");
-        int         numEpochs = tm_obj.getInt("numEpochs");
+        TrainMethod tm = null;
+        JSONObject sc_obj = obj.has("stopCriterion") ? obj.getJSONObject("stopCriterion") : null;
+        StopCriterion stopCriterion = sc_obj != null ? new StopCriterion() : null;
+
+        JSONObject tm_obj = obj.getJSONObject("trainMethod");
+        int numEpochs = tm_obj.getInt("numEpochs");
+        String method = tm_obj.getString("method");
         switch (method) {
             case "same":
                 tm = new TrainMethodSame(classifierFactory, datasetInfo,
-                        tm_obj.getString("fileName"), numEpochs);
+                        tm_obj.getString("fileName"),
+                        numEpochs, stopCriterion);
                 break;
             case "split":
                 tm = new TrainMethodSplit(classifierFactory, datasetInfo,
-                        tm_obj.getString("fileName"), numEpochs,
-                        tm_obj.getDouble("percent"));
+                        tm_obj.getString("fileName"), tm_obj.getDouble("percent"),
+                        numEpochs, stopCriterion);
                 break;
             case "separate":
                 tm = new TrainMethodSeparate(classifierFactory, datasetInfo,
                         tm_obj.getString("trainFile"), tm_obj.getString("testFile"),
-                        numEpochs);
+                        numEpochs, stopCriterion);
                 break;
             case "kfold":
                 tm = new TrainMethodKFold(classifierFactory, datasetInfo,
-                        tm_obj.getString("fileName"), numEpochs,
-                        tm_obj.getInt("k"));
+                        tm_obj.getString("fileName"), tm_obj.getInt("k"),
+                        numEpochs, stopCriterion);
                 break;
         }
         return tm;

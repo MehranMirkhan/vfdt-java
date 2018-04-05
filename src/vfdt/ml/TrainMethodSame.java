@@ -20,8 +20,8 @@ public class TrainMethodSame extends TrainMethod {
     private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodSame(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
-                           String trainFile, int numEpochs) {
-        super(classifierFactory, datasetInfo, trainFile, numEpochs);
+                           String trainFile, int numEpochs, StopCriterion stopCriterion) {
+        super(classifierFactory, datasetInfo, trainFile, numEpochs, stopCriterion);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class TrainMethodSame extends TrainMethod {
         IndexCondition condition = new IndexConditionBetween(0, numData);
 
         Pair<Classifier, Double> result = Evaluator.evaluate(
-                classifierFactory, reader, numEpochs, condition, condition);
+                classifierFactory, reader, numEpochs, condition, condition, stopCriterion);
         DecisionTree tree = (DecisionTree) result.getFirst();
         logger.info("Accuracy = " + result.getSecond());
         logger.info("Size     = " + tree.getNumNodes());

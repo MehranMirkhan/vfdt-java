@@ -21,8 +21,8 @@ public class TrainMethodSeparate extends TrainMethod {
     private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodSeparate(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
-                               String trainFile, String testFile, int numEpochs) {
-        super(classifierFactory, datasetInfo, trainFile, numEpochs);
+                               String trainFile, String testFile, int numEpochs, StopCriterion stopCriterion) {
+        super(classifierFactory, datasetInfo, trainFile, numEpochs, stopCriterion);
         this.testFile = testFile;
     }
 
@@ -38,7 +38,7 @@ public class TrainMethodSeparate extends TrainMethod {
         DatasetReader  testReader     = new ArffReader(testFile);
 
         Pair<Classifier, Double> result = Evaluator.evaluateSeparate(
-                classifierFactory, trainReader, testReader, numEpochs, conditionTrain);
+                classifierFactory, trainReader, testReader, numEpochs, stopCriterion);
         DecisionTree tree = (DecisionTree) result.getFirst();
         logger.info("Accuracy = " + result.getSecond());
         logger.info("Size     = " + tree.getNumNodes());
