@@ -38,4 +38,6 @@ public interface Node {
     NodeLeaf sortDown(Instance instance);
 
     Integer getNumLeaves();
+
+    void makeLeavesInActive();
 }

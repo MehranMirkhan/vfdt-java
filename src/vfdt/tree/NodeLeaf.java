@@ -13,7 +13,7 @@ import vfdt.measure.Counts;
  * @since 2018 Mar 08
  */
 public class NodeLeaf extends NodeBase {
-    private final Counts      classCounts;
+    private Counts      classCounts;
     private final DatasetInfo datasetInfo;
 
     public NodeLeaf(DatasetInfo datasetInfo) {
@@ -25,6 +25,14 @@ public class NodeLeaf extends NodeBase {
         // Used only for test
         classCounts = null;
         datasetInfo = null;
+    }
+
+    public DatasetInfo getDatasetInfo() {
+        return datasetInfo;
+    }
+
+    public void setClassCounts(Counts classCounts) {
+        this.classCounts = classCounts;
     }
 
     @Override

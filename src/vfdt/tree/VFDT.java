@@ -6,6 +6,7 @@ import vfdt.data.Attribute;
 import vfdt.data.AttributeInfo;
 import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
+import vfdt.ml.StopCriterion;
 import vfdt.stat.SuffStatFactory;
 
 import java.util.*;
@@ -19,6 +20,7 @@ import java.util.*;
  */
 public class VFDT extends DecisionTree {
     private static final Logger logger = LogManager.getLogger();
+    private boolean isLearningEnded = false;
 
     public VFDT(DatasetInfo datasetInfo, SplitPolicy splitPolicy, SuffStatFactory suffStatFactory) throws Exception {
         super(datasetInfo, splitPolicy, suffStatFactory);
@@ -28,13 +30,16 @@ public class VFDT extends DecisionTree {
     }
 
     @Override
-    public void learn(Instance instance, Attribute label) throws Exception {
+    public void learn(Instance instance, Attribute label, StopCriterion stopCriterion) throws Exception {
+        if (!isLearningEnded && stopCriterion.shouldStop(this)) {
+            makeLeavesInActive();
+            isLearningEnded = true;
+        }
         Node      root      = getRoot();
         NodeLeaf  leaf      = root.sortDown(instance);
         SplitInfo splitInfo = leaf.learn(instance, label);
         if (splitInfo != null) {
             ActiveLeaf activeLeaf = (ActiveLeaf) leaf;
-//            Collection<AttributeInfo> availableAtts = new HashSet<>(activeLeaf.getAvailableAttributes());
             Collection<AttributeInfo> availableAtts = new ArrayList<>(activeLeaf.getAvailableAttributes());
             if (splitInfo.getAttributeInfo().isNominal())
                 availableAtts.remove(splitInfo.getAttributeInfo());
@@ -63,6 +68,17 @@ public class VFDT extends DecisionTree {
             }
             else
                 this.setRoot(decisionNode);
+        }
+    }
+
+    private void makeLeavesInActive() {
+        Node      root      = getRoot();
+        if (root instanceof ActiveLeaf) {
+            NodeLeaf leaf = new NodeLeaf(((ActiveLeaf) root).getDatasetInfo());
+            leaf.setClassCounts(((ActiveLeaf) root).getClassCounts());
+            setRoot(leaf);
+        } else {
+            root.makeLeavesInActive();
         }
     }
 

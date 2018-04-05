@@ -137,7 +137,11 @@ public class Config {
     private TrainMethod getTrainMethod(JSONObject obj, ClassifierFactory classifierFactory, DatasetInfo datasetInfo) {
         TrainMethod tm = null;
         JSONObject sc_obj = obj.has("stopCriterion") ? obj.getJSONObject("stopCriterion") : null;
-        StopCriterion stopCriterion = sc_obj != null ? new StopCriterion() : null;
+        StopCriterion stopCriterion = null;
+        if (sc_obj != null) {
+            Integer maxSize = sc_obj.has("maxSize") ? sc_obj.getInt("maxSize") : null;
+            stopCriterion = new StopCriterion(maxSize);
+        }
 
         JSONObject tm_obj = obj.getJSONObject("trainMethod");
         int numEpochs = tm_obj.getInt("numEpochs");

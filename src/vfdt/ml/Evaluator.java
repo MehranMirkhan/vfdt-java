@@ -19,7 +19,7 @@ public class Evaluator {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
             Attribute label = entry.getSecond();
-            model.learn(instance, label);
+            model.learn(instance, label, stopCriterion);
         }
         iter.close();
         return model;
@@ -39,8 +39,8 @@ public class Evaluator {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
             Attribute label = entry.getSecond();
-            model.learn(instance, label);
-            if (stopCriterion != null && stopCriterion.shouldStop(model)) break;
+            model.learn(instance, label, stopCriterion);
+//            if (stopCriterion != null && stopCriterion.shouldStop(model)) break;
         }
         iter.close();
 
@@ -75,8 +75,8 @@ public class Evaluator {
             Pair<Instance, Attribute> entry = iter.next();
             Instance instance = entry.getFirst();
             Attribute label = entry.getSecond();
-            model.learn(instance, label);
-            if (stopCriterion != null && stopCriterion.shouldStop(model)) break;
+            model.learn(instance, label, stopCriterion);
+//            if (stopCriterion != null && stopCriterion.shouldStop(model)) break;
         }
         iter.close();
 

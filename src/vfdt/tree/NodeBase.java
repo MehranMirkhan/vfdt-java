@@ -123,5 +123,19 @@ public abstract class NodeBase implements Node {
             }
         }
     }
+
+    @Override
+    public void makeLeavesInActive() {
+        for (int i=0; i<children.length; i++) {
+            Node child = children[i];
+            if (child instanceof ActiveLeaf) {
+                NodeLeaf leaf = new NodeLeaf(((ActiveLeaf) child).getDatasetInfo());
+                leaf.setClassCounts(((ActiveLeaf) child).getClassCounts());
+                children[i] = leaf;
+            } else if (!child.isLeaf()) {
+                child.makeLeavesInActive();
+            }
+        }
+    }
 }
 
