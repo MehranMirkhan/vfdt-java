@@ -19,11 +19,15 @@ import java.util.*;
  * @since 2018 Mar 09
  */
 public class VFDT extends DecisionTree {
+    private final SplitPolicy     splitPolicy;
+    private final SuffStatFactory suffStatFactory;
     private static final Logger logger = LogManager.getLogger();
     private boolean isLearningEnded = false;
 
     public VFDT(DatasetInfo datasetInfo, SplitPolicy splitPolicy, SuffStatFactory suffStatFactory) throws Exception {
-        super(datasetInfo, splitPolicy, suffStatFactory);
+        super(datasetInfo);
+        this.splitPolicy = splitPolicy;
+        this.suffStatFactory = suffStatFactory;
         List<AttributeInfo> availableAtts = datasetInfo.getAttributeInfoAsList();
         availableAtts.remove(datasetInfo.getClassAttribute());
         this.setRoot(new ActiveLeaf(datasetInfo, splitPolicy, suffStatFactory, availableAtts).height(1));
@@ -84,8 +88,7 @@ public class VFDT extends DecisionTree {
 
     @Override
     public String classify(Instance instance) {
-        Node     root = getRoot();
-        NodeLeaf leaf = root.sortDown(instance);
+        NodeLeaf leaf = sortDown(instance);
         return leaf.classify(instance);
     }
 

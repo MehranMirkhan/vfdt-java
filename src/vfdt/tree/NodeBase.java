@@ -74,6 +74,8 @@ public abstract class NodeBase implements Node {
 
     @Override
     public int getSubHeight() {
+        if (isLeaf())
+            return 1;
         int maxHeight = 0;
         for (Node child : getChildren()) {
             int height = child.getSubHeight();

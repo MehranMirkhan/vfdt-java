@@ -14,15 +14,9 @@ import vfdt.stat.SuffStatFactory;
  */
 public abstract class DecisionTree extends TreeBase implements Classifier {
     final DatasetInfo     datasetInfo;
-    final SplitPolicy     splitPolicy;
-    final SuffStatFactory suffStatFactory;
 
-    DecisionTree(DatasetInfo datasetInfo,
-                 SplitPolicy splitPolicy,
-                 SuffStatFactory suffStatFactory) {
+    DecisionTree(DatasetInfo datasetInfo) {
         this.datasetInfo = datasetInfo;
-        this.splitPolicy = splitPolicy;
-        this.suffStatFactory = suffStatFactory;
     }
 
     public NodeLeaf sortDown(Instance instance) {

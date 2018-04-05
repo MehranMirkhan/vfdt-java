@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import vfdt.ml.Classifier;
 import vfdt.ml.TrainMethod;
+import vfdt.tree.TreeMaker;
 import vfdt.util.Config;
 import vfdt.util.Pair;
 
@@ -11,6 +12,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+//        train();
+        synthesize();
+    }
+
+    static void train() throws Exception {
         Logger logger = LogManager.getLogger();
         logger.traceEntry();
         String[] exp = {
@@ -38,6 +44,21 @@ public class Main {
         List<Pair<Classifier, Double>> results = trainMethod.evaluate();
         long endTime = System.currentTimeMillis();
         logger.info("Training time: " + (endTime - startTime) / 1e3 + " seconds");
-        logger.traceExit();
+        logger.traceExit();}
+
+    static void synthesize() {
+        Integer numAttributes = 3;
+        Integer numClasses = 3;
+        Double minAttValue = 0.;
+        Double maxAttValue = 1.;
+        Integer minHeight = 3;
+        Integer maxHeight = 5;
+        Double leafProb = 0.2;
+        long seed = 0;
+        TreeMaker.SimpleDecisionTree tree = TreeMaker.createTree(
+                numAttributes, numClasses, minAttValue, maxAttValue,
+                minHeight, maxHeight, leafProb, seed);
+        System.out.println(tree.getDatasetInfo());
+        System.out.println(tree.draw());
     }
 }
