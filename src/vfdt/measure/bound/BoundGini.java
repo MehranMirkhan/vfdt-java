@@ -13,11 +13,13 @@ public class BoundGini extends BoundThreshold {
     private final Double delta;
     private final Double tieBreak;
     private final int    numClasses;
+    private final Double minGain;
 
-    public BoundGini(Double delta, Double tieBreak, int numClasses) {
+    public BoundGini(Double delta, Double tieBreak, int numClasses, Double minGain) {
         this.delta = delta;
         this.tieBreak = tieBreak;
         this.numClasses = numClasses;
+        this.minGain = minGain;
     }
 
     @Override
@@ -32,5 +34,9 @@ public class BoundGini extends BoundThreshold {
     @Override
     protected Double getTieBreak() {
         return tieBreak;
+    }
+
+    public Double getMinGain() {
+        return minGain;
     }
 }

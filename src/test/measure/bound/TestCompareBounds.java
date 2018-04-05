@@ -1,7 +1,6 @@
 package test.measure.bound;
 
 import org.junit.Test;
-import vfdt.measure.bound.Bound;
 import vfdt.measure.bound.BoundGini;
 import vfdt.measure.bound.BoundHoeffding;
 import vfdt.measure.bound.BoundMisclassification;
@@ -20,10 +19,11 @@ public class TestCompareBounds {
         int numClasses = 10;
         Double R = Math.log(numClasses) / Math.log(2);
         Double tieBreak = 0.025;
+        Double minGain = null;
 
-        BoundHoeffding bound1 = new BoundHoeffding(delta, R, tieBreak);
-        BoundGini bound2 = new BoundGini(delta, tieBreak, numClasses);
-        BoundMisclassification bound3 = new BoundMisclassification(delta, tieBreak);
+        BoundHoeffding bound1 = new BoundHoeffding(delta, R, tieBreak, minGain);
+        BoundGini bound2 = new BoundGini(delta, tieBreak, numClasses, minGain);
+        BoundMisclassification bound3 = new BoundMisclassification(delta, tieBreak, minGain);
 
         int[] numData = {10, 50, 100, 500, 1000, 5000, 10000};
         for (int n : numData) {

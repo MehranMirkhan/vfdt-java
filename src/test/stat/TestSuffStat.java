@@ -39,7 +39,8 @@ public class TestSuffStat {
         Double   delta        = 0.5;
         Double   R            = 2.;
         Double   tieBreak     = 0.01;
-        Bound    bound        = new BoundHoeffding(delta, R, tieBreak);
+        Double minGain = null;
+        Bound    bound        = new BoundHoeffding(delta, R, tieBreak, minGain);
         int      numCadidates = 10;
 
         AttributeInfo[] attsInfo = new AttributeInfo[]{
@@ -94,7 +95,8 @@ public class TestSuffStat {
         Double   delta        = 0.5;
         Double   R            = 2.;
         Double   tieBreak     = 0.01;
-        Bound    bound        = new BoundHoeffding(delta, R, tieBreak);
+        Double minGain = null;
+        Bound    bound        = new BoundHoeffding(delta, R, tieBreak, minGain);
         int      numCadidates = 10;
 
         AttributeInfo[] attsInfo = new AttributeInfo[]{

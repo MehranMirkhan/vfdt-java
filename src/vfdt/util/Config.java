@@ -56,24 +56,30 @@ public class Config {
         config.put("datasetInfo", datasetInfo);
 
         // hyper parameters
-        int    gracePeriod = obj.getInt("gracePeriod");
-        Double delta       = obj.getDouble("delta");
-        int    numClasses  = datasetInfo.getNumClasses();
-        Double R, tieBreak;
+        Integer gracePeriod = null;
+        Double delta = null;
+        Double R, tieBreak = null;
         Bound  bound       = null;
+        Double minGain = null;
+        if (obj.has("gracePeriod"))
+            gracePeriod = obj.getInt("gracePeriod");
+        int    numClasses  = datasetInfo.getNumClasses();
+        if (obj.has("tieBreak"))
+            tieBreak = obj.getDouble("tieBreak");
+        if (obj.has("delta"))
+            delta = obj.getDouble("delta");
+        if (obj.has("minGain"))
+            minGain = obj.getDouble("minGain");
         switch (obj.getString("bound").toLowerCase()) {
             case "hoeffding":
                 R = java.lang.Math.log(numClasses) / java.lang.Math.log(2);
-                tieBreak = obj.getDouble("tieBreak");
-                bound = new BoundHoeffding(delta, R, tieBreak);
+                bound = new BoundHoeffding(delta, R, tieBreak, minGain);
                 break;
             case "gini":
-                tieBreak = obj.getDouble("tieBreak");
-                bound = new BoundGini(delta, tieBreak, numClasses);
+                bound = new BoundGini(delta, tieBreak, numClasses, minGain);
                 break;
             case "misclassification":
-                tieBreak = obj.getDouble("tieBreak");
-                bound = new BoundMisclassification(delta, tieBreak);
+                bound = new BoundMisclassification(delta, tieBreak, minGain);
                 break;
         }
         int      maxHeight = obj.getInt("maxHeight");
@@ -91,7 +97,9 @@ public class Config {
         }
         double minBranchFrac = obj.getDouble("minBranchFrac");
         Gain   gain          = new GainBase(impurity, minBranchFrac);
-        int    numBins       = obj.getInt("numBins");
+        Integer numBins = null;
+        if (obj.has("numBins"))
+            numBins = obj.getInt("numBins");
         String splitter      = obj.getString("splitter");
 
         SplitPolicy splitPolicy = new SplitPolicy(gracePeriod, bound, maxHeight);

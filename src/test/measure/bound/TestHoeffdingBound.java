@@ -20,7 +20,8 @@ public class TestHoeffdingBound {
         double         R        = 2;
         int            numData  = 100;
         Double         tieBreak = 0.01;
-        BoundHoeffding bound    = new BoundHoeffding(delta, R, tieBreak);
+        Double minGain = null;
+        BoundHoeffding bound    = new BoundHoeffding(delta, R, tieBreak, minGain);
         double         result   = bound.getThreshold(numData);
         double         expect   = 0.244774683;
         Assert.assertEquals(expect, result, 1e-6);

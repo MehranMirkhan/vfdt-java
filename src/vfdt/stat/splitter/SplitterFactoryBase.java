@@ -13,10 +13,10 @@ import vfdt.stat.attstat.AttStatNominal;
  */
 public class SplitterFactoryBase extends SplitterFactory {
     private final Gain   gain;
-    private final int    numBins;
+    private final Integer    numBins;
     private final String NumericalMethod;
 
-    public SplitterFactoryBase(Gain gain, int numBins, String NumericalMethod) {
+    public SplitterFactoryBase(Gain gain, Integer numBins, String NumericalMethod) {
         this.gain = gain;
         this.numBins = numBins;
         this.NumericalMethod = NumericalMethod;

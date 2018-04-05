@@ -49,12 +49,14 @@ public class ActiveLeaf extends NodeLeaf {
         super.learn(instance, label);
         numData += 1;
         this.suffStat.update(instance, label);
-        if (numData % splitPolicy.getGracePeriod() == 0) {
+        boolean checkSplit = splitPolicy.getGracePeriod() == null ||
+                numData % splitPolicy.getGracePeriod() == 0;
+        if (checkSplit) {
             AttributeInfo attToSplit = suffStat.checkSplit(splitPolicy.getBound());
             if (attToSplit != null) {       // Split is required
                 Decision decision = suffStat.getDecision();
                 SplitInfo splitInfo = new SplitInfo(attToSplit, decision);
-                logger.debug("Split is required. Num data = {}. {}",
+                logger.debug("Splitting. numData = {}. {}",
                         numData,
                         Arrays.toString(decision.describe(attToSplit)));
                 return splitInfo;
