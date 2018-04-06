@@ -35,7 +35,7 @@ public class VFDT extends DecisionTree {
 
     @Override
     public void learn(Instance instance, Attribute label, StopCriterion stopCriterion) throws Exception {
-        if (!isLearningEnded && stopCriterion.shouldStop(this)) {
+        if (!isLearningEnded && stopCriterion != null && stopCriterion.shouldStop(this)) {
             makeLeavesInActive();
             isLearningEnded = true;
         }

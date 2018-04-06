@@ -7,6 +7,10 @@ import vfdt.data.DatasetInfo;
 import vfdt.data.Instance;
 import vfdt.ml.StopCriterion;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -43,11 +47,11 @@ public abstract class TreeMaker {
         }
     }
 
-    public static SimpleDecisionTree createTree(Integer numAttributes, Integer numClasses,
+    public static SimpleDecisionTree createTree(Random rand,
+                                                Integer numAttributes, Integer numClasses,
                                                 Double minAttValue, Double maxAttValue,
                                                 Integer minHeight, Integer maxHeight,
                                                 Double leafProb, long seed) {
-        Random rand = new Random(seed);
         // Init tree
         DatasetInfo datasetInfo = createDatasetInfo(numAttributes, numClasses);
         SimpleDecisionTree tree = new SimpleDecisionTree(datasetInfo);
@@ -131,5 +135,52 @@ public abstract class TreeMaker {
         datasetInfo.setAttributeInfo(attributeInfos);
         datasetInfo.setClassIndex(numAttributes);
         return datasetInfo;
+    }
+
+    public static void generateDataset(Random rand, SimpleDecisionTree tree,
+                                       Double minAttValue, Double maxAttValue,
+                                       String filePath,
+                                       long numInstances) throws IOException {
+        DatasetInfo datasetInfo = tree.getDatasetInfo();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+        // Write arff header
+        writer.write("@relation " + datasetInfo.getDatasetName() + "\n\n");
+        for (int i = 0; i < datasetInfo.getAttributeInfo().length; i++) {
+            AttributeInfo attInfo = datasetInfo.getAttributeInfo()[i];
+            String attDesc;
+            if (attInfo.isNumerical())
+                attDesc = "numeric";
+            else {
+                attDesc = "{";
+                for (int j = 0; j < attInfo.getValues().length; j++) {
+                    attDesc += attInfo.getValues()[j];
+                    if (j != attInfo.getValues().length - 1)
+                        attDesc += ", ";
+                }
+                attDesc += "}";
+            }
+            writer.write("@attribute " + attInfo.getName() + " " + attDesc + "\n");
+        }
+        writer.write("\n@data\n");
+        Attribute[] atts = new Attribute[datasetInfo.getNumAttributes() - 1];
+        for (int j = 0; j < atts.length; j++) {
+            atts[j] = new Attribute<Double>(datasetInfo.getAttributeInfo()[j], null);
+        }
+        DecimalFormat df = new DecimalFormat("0.#####");
+        Instance instance = new Instance(atts);
+        for (int i = 0; i < numInstances; i++) {
+            for (int j = 0; j < atts.length; j++) {
+                Double value = rand.nextDouble() * (maxAttValue - minAttValue) + minAttValue;
+                atts[j].setValue(value);
+            }
+            String label = tree.classify(instance);
+            String line = "";
+            for (int j = 0; j < atts.length; j++) {         // ASSUMING classIndex = -1
+                line += df.format(atts[j].getValue()) + ", ";
+            }
+            line += label + "\n";
+            writer.write(line);
+        }
+        writer.close();
     }
 }

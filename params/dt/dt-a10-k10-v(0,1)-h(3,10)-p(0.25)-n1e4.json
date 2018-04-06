@@ -1,0 +1,28 @@
+{
+  "datasetInfo": {
+    "fileName": "~/data/dt/dt-a10-k10-v(0.00,1.00)-h(3,10)-p(0.25)-n1e+04.arff",
+    "classIndex": 10,
+    "numData": 10000
+  },
+  "_trainMethod" : {
+    "method": "split",
+    "fileName": "~/data/dt/dt-a10-k10-v(0.00,1.00)-h(3,10)-p(0.25)-n1e+04.arff",
+    "numEpochs": 2,
+    "percent": 0.8
+  },
+  "trainMethod" : {
+    "method": "kfold",
+    "fileName": "~/data/dt/dt-a10-k10-v(0.00,1.00)-h(3,10)-p(0.25)-n1e+04.arff",
+    "numEpochs": 10,
+    "k": 10
+  },
+  "gracePeriod": 1000,
+  "delta": 1e-7,
+  "tieBreak": 0.15,
+  "bound": "misclassification",
+  "maxHeight": 60,
+  "impurity": "misclassification",
+  "minBranchFrac": 0.05,
+  "numBins": 10,
+  "splitter": "bin"
+}
