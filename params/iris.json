@@ -1,0 +1,28 @@
+{
+    "datasetInfo": {
+        "fileName": "~/data/iris.arff",
+        "classIndex": 4,
+        "numData": 150
+    },
+    "_trainMethod" : {
+        "method": "split",
+        "fileName": "~/data/iris.arff",
+        "numEpochs": 2,
+        "percent": 0.8
+    },
+    "trainMethod" : {
+        "method": "kfold",
+        "fileName": "~/data/iris.arff",
+        "numEpochs": 20,
+        "k": 10
+    },
+    "gracePeriod": 150,
+    "delta": 1e-7,
+    "tieBreak": 0.15,
+    "bound": "misclassification",
+    "maxHeight": 60,
+    "impurity": "misclassification",
+    "minBranchFrac": 1e-6,
+    "numBins": 10,
+    "splitter": "exact"
+}

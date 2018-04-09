@@ -36,6 +36,8 @@ public class SplitterFactoryBase extends SplitterFactory {
                 return new SplitterGaussianExact(attStatGaussian, gain);
             case "delayed":
                 return new SplitterGaussianDelayed(attStatGaussian, gain, numBins);
+            case "all":
+                return new SplitterGaussianAll(attStatGaussian, gain, numBins);
             default:
                 return null;
         }

@@ -21,7 +21,7 @@ public class TrainMethodKFold extends TrainMethod {
     private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodKFold(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
-                            String trainFile, int numEpochs, int k, StopCriterion stopCriterion) {
+                            String trainFile, int k, int numEpochs, StopCriterion stopCriterion) {
         super(classifierFactory, datasetInfo, trainFile, numEpochs, stopCriterion);
         this.k = k;
     }

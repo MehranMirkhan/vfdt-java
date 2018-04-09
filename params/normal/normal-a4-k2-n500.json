@@ -1,0 +1,25 @@
+{
+    "datasetInfo": {
+        "fileName": "~/data/normal/normal-a4-k2-s0-n500.arff",
+        "classIndex": 4,
+        "numData": 500
+    },
+    "trainMethod" : {
+        "method": "kfold",
+        "fileName": "~/data/normal/normal-a4-k2-s0-n500.arff",
+        "numEpochs": 100,
+        "k": 10
+    },
+    "_stopCriterion": {
+        "maxSize": 20
+    },
+    "gracePeriod": 500,
+    "delta": 1e-7,
+    "tieBreak": 0.15,
+    "bound": "misclassification",
+    "maxHeight": 60,
+    "impurity": "misclassification",
+    "minBranchFrac": 1e-6,
+    "numBins": 10,
+    "splitter": "all"
+}

@@ -12,21 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * %Description%
+ * Uses both bins and intersections as candidates.
  *
  * @author Mehran Mirkhan
  * @version 1.0
  * @since 2018 Mar 12
  */
-public class SplitterGaussianExact implements Splitter {
+public class SplitterGaussianAll implements Splitter {
     private final AttStatGaussian asn;
     private final Gain            gain;
+    private final int             numBins;
     private       Double          bestSplitValue;
     private       Double          bestG;
 
-    public SplitterGaussianExact(AttStatGaussian asn, Gain gain) {
+    public SplitterGaussianAll(AttStatGaussian asn, Gain gain, int numBins) {
         this.asn = asn;
         this.gain = gain;
+        this.numBins = numBins;
     }
 
     @Override
@@ -41,7 +43,19 @@ public class SplitterGaussianExact implements Splitter {
         for (Double splitValue : points)
             if (splitValue != null)
                 bestG = checkValue(original, splitValue);
+        List<Double> binPoints = getBinValues();
+        for (Double splitValue : binPoints)
+            if (splitValue != null)
+                bestG = checkValue(original, splitValue);
         return bestG;
+    }
+
+    private List<Double> getBinValues() {
+        List<Double> points = new ArrayList<>();
+        Double       step   = (asn.getMaxValue() - asn.getMinValue()) / (numBins + 1);
+        for (int i = 1; i <= numBins; i++)
+            points.add(asn.getMinValue() + i * step);
+        return points;
     }
 
     private List<Double> getExactValues() {
@@ -62,10 +76,6 @@ public class SplitterGaussianExact implements Splitter {
                 }
             }
         }
-//        Integer numBins = 10;
-//        Double       step   = (asn.getMaxValue() - asn.getMinValue()) / (numBins + 1);
-//        points.add(asn.getMinValue() + step);
-//        points.add(asn.getMaxValue() - step);
         return points;
     }
 

@@ -1,7 +1,6 @@
 package vfdt.stat.dist;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
-import vfdt.util.*;
 
 import java.lang.Math;
 import java.text.DecimalFormat;
@@ -54,8 +53,8 @@ public class DistributionGaussian implements Distribution {
         if (numData > 0) {
             update();
             NormalDistribution normal = new NormalDistribution(mean, std);
-            double left = normal.cumulativeProbability(value) * numData;
-            double right = numData - left;
+            double left = normal.cumulativeProbability(value) * getNumData();
+            double right = getNumData() - left;
             return new Double[]{left, right};
         } else
             return null;
@@ -74,15 +73,38 @@ public class DistributionGaussian implements Distribution {
     }
 
     public double getMean() {
+        update();
         return mean;
     }
 
     public double getVar() {
+        update();
         return var;
     }
 
     public double getStd() {
+        update();
         return std;
+    }
+
+    public void setNumData(int numData) {
+        this.numData = numData;
+    }
+
+    public void setMean(double mean) {
+        this.mean = mean;
+    }
+
+    public void setVar(double var) {
+        this.var = var;
+    }
+
+    public void setStd(double std) {
+        this.std = std;
+    }
+
+    public void setStatValid(boolean statValid) {
+        isStatValid = statValid;
     }
 
     public boolean isStatValid() {
@@ -108,10 +130,13 @@ public class DistributionGaussian implements Distribution {
 
     @Override
     public String toString() {
-        DecimalFormat df = new DecimalFormat("#.0000");
+        DecimalFormat df = new DecimalFormat("#.0000000");
+        Double m = mean;
+        Double s = std;
         return "{" +
-                "mean=" + df.format(mean) +
-                ", std=" + df.format(std) +
+                "mean=" + m +
+                ", std=" + s +
+                ", N=" + numData +
                 '}';
     }
 }

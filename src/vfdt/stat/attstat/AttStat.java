@@ -2,6 +2,8 @@ package vfdt.stat.attstat;
 
 import vfdt.data.Attribute;
 
+import java.io.Serializable;
+
 /**
  * Stores the information about an attribute from the arrived data for each class.
  *

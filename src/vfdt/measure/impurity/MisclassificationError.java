@@ -15,6 +15,6 @@ public class MisclassificationError extends ImpurityBase {
     @Override
     public double measure(Counts p) throws ArithmeticException {
         double[] q = this.preprocess(p);
-        return 1 - Arrays.stream(q).max().getAsDouble();
+        return 1.0 - Arrays.stream(q).max().getAsDouble();
     }
 }

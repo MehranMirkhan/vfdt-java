@@ -51,6 +51,8 @@ public class AttStatGaussian implements AttStat {
             sb.append("-- c" + counter + ": " + dist.toString() + "\n");
             counter++;
         }
+        sb.append("minVal=" + minValue + "\n");
+        sb.append("maxVal=" + maxValue + "\n");
         return sb.toString();
     }
 }

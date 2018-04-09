@@ -11,7 +11,8 @@ import vfdt.util.Pair;
  * @since 2018 Mar 12
  */
 public class Evaluator {
-    public static Classifier train(ClassifierFactory factory, DatasetReader reader, int numEpochs, StopCriterion stopCriterion) throws Exception {
+    public static Classifier train(ClassifierFactory factory, DatasetReader reader,
+                                   int numEpochs, StopCriterion stopCriterion) throws Exception {
         Classifier model = factory.build();
         // Train model
         DatasetIterator iter = reader.epochs(numEpochs);

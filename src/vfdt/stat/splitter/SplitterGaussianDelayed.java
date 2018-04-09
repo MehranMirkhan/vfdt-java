@@ -7,7 +7,6 @@ import vfdt.stat.attstat.AttStatGaussian;
 import vfdt.stat.dist.DistributionGaussian;
 import vfdt.tree.Decision;
 import vfdt.tree.DecisionNumeric;
-import vfdt.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class SplitterGaussianDelayed implements Splitter {
         bestSplitValue = null;
         List<Double> points = getBinValues();
         for (Double splitValue : points)
-            checkValue(original, splitValue, false);
+            checkValue(original, splitValue);
         return bestG;
     }
 
@@ -60,11 +59,11 @@ public class SplitterGaussianDelayed implements Splitter {
         List<Double> points     = new ArrayList<>();
         int          numClasses = asn.getClassDist().length;
         for (int i = 0; i < numClasses; i++) {
-            if (original.getCount(i) < 2)
+            if (original.getCount(i) < 1)
                 continue;
             DistributionGaussian d1 = asn.getClassDist()[i];
             for (int j = i + 1; j < numClasses; j++) {
-                if (original.getCount(j) < 2)
+                if (original.getCount(j) < 1)
                     continue;
                 DistributionGaussian d2 = asn.getClassDist()[j];
                 Double[] X = DistributionGaussian.intersect(d1, d2);
@@ -73,10 +72,13 @@ public class SplitterGaussianDelayed implements Splitter {
                         points.add(x);
             }
         }
+        Double       step   = (asn.getMaxValue() - asn.getMinValue()) / (numBins + 1);
+        points.add(asn.getMinValue() + step);
+        points.add(asn.getMaxValue() - step);
         return points;
     }
 
-    private Double checkValue(Counts original, Double splitValue, boolean debug) throws Exception {
+    private Double checkValue(Counts original, Double splitValue) throws Exception {
         int      numClasses = asn.getClassDist().length;
         Counts[] branches   = new Counts[2];
         branches[0] = new Counts(numClasses);
@@ -85,19 +87,11 @@ public class SplitterGaussianDelayed implements Splitter {
             Double[] result = asn.getClassDist()[c].split(splitValue);
             if (result == null)
                 continue;
-//            System.out.println("split: " + result[0] + ", " + result[1]);
             branches[0].add(c, result[0]);
             branches[1].add(c, result[1]);
         }
         Split  split = new Split(original, branches);
         Double g     = gain.measure(split);
-        if (debug && Logger.isDebug()) {
-            Logger.append("~~~~ split on value " + splitValue + " ~~~~\n");
-            Logger.append("b1: " + branches[0].toString() + "\n");
-            Logger.append("b2: " + branches[1].toString() + "\n");
-            Logger.append("g: " + g + "\n");
-            Logger.append("~~~~~~~~\n");
-        }
         if (g > bestG) {
             bestG = g;
             bestSplitValue = splitValue;
@@ -107,30 +101,14 @@ public class SplitterGaussianDelayed implements Splitter {
 
     @Override
     public Decision getDecision() {
-        if (Logger.isDebug()) {
-            Logger.append("numData: " + original.sum() + "\n");
-            Logger.append("Original: " + original.toString() + "\n");
-            Logger.append("AttStat:\n" + asn.toString());
-            Logger.append("Bins: ");
-            for (Double splitValue : getBinValues())
-                Logger.append(Logger.df.format(splitValue) + ", ");
-            Logger.append("\n");
-            Logger.append("Best split value: " + bestSplitValue + "\n");
-            Logger.append("Best gain: " + bestG + "\n");
-            Logger.append("Exact: ");
-        }
         List<Double> points = getExactValues();
         for (Double splitValue : points)
             try {
-                checkValue(original, splitValue, true);
+                checkValue(original, splitValue);
             } catch (Exception e) {
                 System.out.println("Exception catched in SplitterGaussianDelayed.");
                 e.printStackTrace();
             }
-        if (Logger.isDebug()) {
-            Logger.append("Best split value: " + bestSplitValue + "\n");
-            Logger.append("Best gain: " + bestG + "\n\n");
-        }
         return new DecisionNumeric(bestSplitValue);
     }
 }

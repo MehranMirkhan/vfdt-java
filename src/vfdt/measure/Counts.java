@@ -42,8 +42,8 @@ public class Counts {
         counts[index] += value;
     }
 
-    public int sum() {
-        int sum = 0;
+    public double sum() {
+        double sum = 0;
         for (Double c : counts)
             sum += c;
         return sum;
@@ -65,5 +65,9 @@ public class Counts {
             }
         }
         return maxIndex;
+    }
+
+    public Double getMax() {
+        return getCount(getIndexOfMax());
     }
 }

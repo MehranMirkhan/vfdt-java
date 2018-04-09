@@ -133,6 +133,8 @@ public abstract class NodeBase implements Node {
             if (child instanceof ActiveLeaf) {
                 NodeLeaf leaf = new NodeLeaf(((ActiveLeaf) child).getDatasetInfo());
                 leaf.setClassCounts(((ActiveLeaf) child).getClassCounts());
+                leaf.setHeight(child.getHeight());
+                leaf.setParent(child.getParent());
                 children[i] = leaf;
             } else if (!child.isLeaf()) {
                 child.makeLeavesInActive();

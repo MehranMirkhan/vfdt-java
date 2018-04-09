@@ -80,6 +80,7 @@ public class VFDT extends DecisionTree {
         if (root instanceof ActiveLeaf) {
             NodeLeaf leaf = new NodeLeaf(((ActiveLeaf) root).getDatasetInfo());
             leaf.setClassCounts(((ActiveLeaf) root).getClassCounts());
+            leaf.setHeight(root.getHeight());
             setRoot(leaf);
         } else {
             root.makeLeavesInActive();

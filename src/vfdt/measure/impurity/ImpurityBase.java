@@ -27,7 +27,7 @@ public abstract class ImpurityBase implements Impurity {
         for (Double value : p.getCounts()) {
             if (value > 0) {
                 q[i] = value / sum;
-                i += 1;
+                i++;
             }
         }
         return q;
