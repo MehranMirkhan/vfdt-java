@@ -51,7 +51,7 @@ public abstract class TreeMaker {
                                                 Integer numAttributes, Integer numClasses,
                                                 Double minAttValue, Double maxAttValue,
                                                 Integer minHeight, Integer maxHeight,
-                                                Double leafProb, long seed) {
+                                                Double leafProb) {
         // Init tree
         DatasetInfo datasetInfo = createDatasetInfo(numAttributes, numClasses);
         SimpleDecisionTree tree = new SimpleDecisionTree(datasetInfo);

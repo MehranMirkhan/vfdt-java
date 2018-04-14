@@ -1,0 +1,36 @@
+{
+    "datasetInfo": {
+        "fileName": "~/data/normal/normal-a4-k2-s0-n1000.arff",
+        "classIndex": 4,
+        "numData": 1000
+    },
+    "trainMethod" : {
+        "method": "same",
+        "fileName":
+            ["~/data/normal/normal-a4-k2-s0-n1000.arff",
+             "~/data/normal/normal-a4-k2-s1-n1000.arff",
+             "~/data/normal/normal-a4-k2-s2-n1000.arff",
+             "~/data/normal/normal-a4-k2-s3-n1000.arff",
+             "~/data/normal/normal-a4-k2-s4-n1000.arff",
+             "~/data/normal/normal-a4-k2-s5-n1000.arff",
+             "~/data/normal/normal-a4-k2-s6-n1000.arff",
+             "~/data/normal/normal-a4-k2-s7-n1000.arff",
+             "~/data/normal/normal-a4-k2-s8-n1000.arff",
+             "~/data/normal/normal-a4-k2-s9-n1000.arff"
+            ],
+        "numEpochs": 100,
+        "k": 10
+    },
+    "_stopCriterion": {
+        "maxSize": 20
+    },
+    "gracePeriod": 500,
+    "delta": 1e-7,
+    "tieBreak": 0.15,
+    "bound": "misclassification",
+    "maxHeight": 60,
+    "impurity": "misclassification",
+    "minBranchFrac": 1e-6,
+    "numBins": 10,
+    "splitter": "all"
+}

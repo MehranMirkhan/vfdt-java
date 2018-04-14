@@ -1,19 +1,16 @@
 {
     "datasetInfo": {
-        "fileName": "~/data/normal/normal-a10-k2-s0-n500.arff",
-        "classIndex": 10,
-        "numData": 500
+        "fileName": "~/data/ecoli.arff",
+        "classIndex": 7,
+        "numData": 336
     },
     "trainMethod" : {
-        "method": "kfold",
-        "fileName": "~/data/normal/normal-a10-k2-s0-n500.arff",
+        "method": "same",
+        "fileName": ["~/data/ecoli.arff"],
         "numEpochs": 100,
         "k": 10
     },
-    "_stopCriterion": {
-        "maxSize": 20
-    },
-    "gracePeriod": 500,
+    "gracePeriod": 100,
     "delta": 1e-7,
     "tieBreak": 0.15,
     "bound": "misclassification",

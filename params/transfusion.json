@@ -12,7 +12,7 @@
     },
     "trainMethod" : {
         "method": "kfold",
-        "fileName": "~/data/transfusion.arff",
+        "fileName": ["~/data/transfusion.arff"],
         "numEpochs": 100,
         "k": 10
     },

@@ -1,19 +1,16 @@
 {
     "datasetInfo": {
-        "fileName": "~/data/normal/normal-a6-k2-s0-n500.arff",
-        "classIndex": 6,
-        "numData": 500
+        "fileName": "~/data/wifi_localization.arff",
+        "classIndex": 7,
+        "numData": 2000
     },
     "trainMethod" : {
         "method": "kfold",
-        "fileName": "~/data/normal/normal-a6-k2-s0-n500.arff",
+        "fileName": ["~/data/wifi_localization.arff"],
         "numEpochs": 100,
         "k": 10
     },
-    "_stopCriterion": {
-        "maxSize": 20
-    },
-    "gracePeriod": 500,
+    "gracePeriod": 100,
     "delta": 1e-7,
     "tieBreak": 0.15,
     "bound": "misclassification",
@@ -21,5 +18,5 @@
     "impurity": "misclassification",
     "minBranchFrac": 1e-6,
     "numBins": 10,
-    "splitter": "exact"
+    "splitter": "bin"
 }

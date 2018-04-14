@@ -1,5 +1,6 @@
 package vfdt.ml;
 
+import json.JSONArray;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import vfdt.data.*;
@@ -21,7 +22,7 @@ public class TrainMethodSeparate extends TrainMethod {
     private static final Logger logger = LogManager.getLogger();
 
     public TrainMethodSeparate(ClassifierFactory classifierFactory, DatasetInfo datasetInfo,
-                               String trainFile, String testFile, int numEpochs, StopCriterion stopCriterion) {
+                               JSONArray trainFile, String testFile, int numEpochs, StopCriterion stopCriterion) {
         super(classifierFactory, datasetInfo, trainFile, numEpochs, stopCriterion);
         this.testFile = testFile;
     }
@@ -31,7 +32,7 @@ public class TrainMethodSeparate extends TrainMethod {
         logger.traceEntry();
         List<Pair<Classifier, Double>> results = new ArrayList<>();
 
-        DatasetReader trainReader = new ArffReader(trainFile);
+        DatasetReader trainReader = new ArffReader((String) trainFile.get(0));
         trainReader.setDatasetInfo(datasetInfo);
         Integer        numDataTrain   = datasetInfo.getNumData();
         IndexCondition conditionTrain = new IndexConditionBetween(0, numDataTrain);

@@ -1,17 +1,14 @@
 {
     "datasetInfo": {
-        "fileName": "~/data/normal/normal-a8-k2-s0-n500.arff",
+        "fileName": "~/data/HTRU_2.arff",
         "classIndex": 8,
-        "numData": 500
+        "numData": 17898
     },
     "trainMethod" : {
         "method": "kfold",
-        "fileName": "~/data/normal/normal-a8-k2-s0-n500.arff",
-        "numEpochs": 100,
+        "fileName": ["~/data/HTRU_2.arff"],
+        "numEpochs": 70,
         "k": 10
-    },
-    "_stopCriterion": {
-        "maxSize": 20
     },
     "gracePeriod": 500,
     "delta": 1e-7,

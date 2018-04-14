@@ -149,22 +149,22 @@ public class Config {
         switch (method) {
             case "same":
                 tm = new TrainMethodSame(classifierFactory, datasetInfo,
-                        tm_obj.getString("fileName"),
+                        tm_obj.getJSONArray("fileName"),
                         numEpochs, stopCriterion);
                 break;
             case "split":
                 tm = new TrainMethodSplit(classifierFactory, datasetInfo,
-                        tm_obj.getString("fileName"), tm_obj.getDouble("percent"),
+                        tm_obj.getJSONArray("fileName"), tm_obj.getDouble("percent"),
                         numEpochs, stopCriterion);
                 break;
             case "separate":
                 tm = new TrainMethodSeparate(classifierFactory, datasetInfo,
-                        tm_obj.getString("trainFile"), tm_obj.getString("testFile"),
+                        tm_obj.getJSONArray("trainFile"), tm_obj.getString("testFile"),
                         numEpochs, stopCriterion);
                 break;
             case "kfold":
                 tm = new TrainMethodKFold(classifierFactory, datasetInfo,
-                        tm_obj.getString("fileName"), tm_obj.getInt("k"),
+                        tm_obj.getJSONArray("fileName"), tm_obj.getInt("k"),
                         numEpochs, stopCriterion);
                 break;
         }

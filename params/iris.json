@@ -12,8 +12,8 @@
     },
     "trainMethod" : {
         "method": "kfold",
-        "fileName": "~/data/iris.arff",
-        "numEpochs": 20,
+        "fileName": ["~/data/iris.arff"],
+        "numEpochs": 100,
         "k": 10
     },
     "gracePeriod": 150,
@@ -24,5 +24,5 @@
     "impurity": "misclassification",
     "minBranchFrac": 1e-6,
     "numBins": 10,
-    "splitter": "exact"
+    "splitter": "bin"
 }

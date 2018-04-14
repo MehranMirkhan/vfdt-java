@@ -1,5 +1,6 @@
 package vfdt.ml;
 
+import json.JSONArray;
 import vfdt.data.ArffReader;
 import vfdt.data.DatasetInfo;
 import vfdt.data.DatasetReader;
@@ -17,11 +18,11 @@ import java.util.List;
 public abstract class TrainMethod {
     protected ClassifierFactory classifierFactory;
     protected DatasetInfo       datasetInfo;
-    protected String            trainFile;
+    protected JSONArray            trainFile;
     protected int               numEpochs;
     protected StopCriterion stopCriterion;
 
-    public TrainMethod(ClassifierFactory classifierFactory, DatasetInfo datasetInfo, String trainFile,
+    public TrainMethod(ClassifierFactory classifierFactory, DatasetInfo datasetInfo, JSONArray trainFile,
                        int numEpochs, StopCriterion stopCriterion) {
         this.classifierFactory = classifierFactory;
         this.datasetInfo = datasetInfo;
@@ -31,7 +32,7 @@ public abstract class TrainMethod {
     }
 
     public Classifier onlyTrain() throws Exception {
-        DatasetReader reader = new ArffReader(trainFile);
+        DatasetReader reader = new ArffReader((String) trainFile.get(0));
         reader.setDatasetInfo(datasetInfo);
         return Evaluator.train(classifierFactory, reader, numEpochs, stopCriterion);
     }

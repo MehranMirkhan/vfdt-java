@@ -1,0 +1,22 @@
+{
+    "datasetInfo": {
+        "fileName": "~/data/Sensorless_drive_diagnosis.arff",
+        "classIndex": 48,
+        "numData": 58509
+    },
+    "trainMethod" : {
+        "method": "kfold",
+        "fileName": ["~/data/Sensorless_drive_diagnosis.arff"],
+        "numEpochs": 100,
+        "k": 10
+    },
+    "gracePeriod": 1000,
+    "delta": 1e-4,
+    "tieBreak": 0.01,
+    "bound": "misclassification",
+    "maxHeight": 60,
+    "impurity": "misclassification",
+    "minBranchFrac": 1e-6,
+    "numBins": 10,
+    "splitter": "all"
+}
